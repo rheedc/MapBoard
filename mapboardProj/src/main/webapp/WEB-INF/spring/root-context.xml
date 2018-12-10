@@ -27,7 +27,7 @@
 			 만들어 놓을지를 지정하는 부분이다
 		-->
 		<property name="configLocation" >
-			<value>classpath:/sun/com/myBatis/myBatis-config.xml</value>
+			<value>classpath:/com/mapboard/myBatis/myBatis-config.xml</value>
 		</property>
 		<!-- (중요부분) myBatis와 연결하는 데이터베이스(컨넥션 풀)을 지정하는 부분이다 
 				(우리가 만든 커넥션풀의 이름을 dataSource로 해놓았기 때문에

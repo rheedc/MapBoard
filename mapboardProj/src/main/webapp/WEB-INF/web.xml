@@ -29,5 +29,9 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.yo</url-pattern>
 	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>/home.yo</welcome-file>
+	</welcome-file-list>
 
 </web-app>
