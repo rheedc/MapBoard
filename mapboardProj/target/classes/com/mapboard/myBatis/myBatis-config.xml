@@ -28,12 +28,24 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   "HTTP://mybatis.org/dtd/mybatis-3-
 		<typeAlias alias="float" type="java.lang.Float"/>
 		<typeAlias alias="boolean" type="java.lang.Boolean"/>
 		<typeAlias alias="hmap" type="java.util.HashMap"/>
+		<!-- VO클래스 -->
+		<typeAlias alias="memberVO" type="com.mapboard.member.vo.MemberVO"/>
+		<typeAlias alias="boardcommVO" type="com.mapboard.board.vo.BoardcommVO"/>
+		<typeAlias alias="boardVO" type="com.mapboard.board.vo.BoardVO"/>
+		<typeAlias alias="fileinfoVO" type="com.mapboard.board.vo.FileinfoVO"/>
+		<typeAlias alias="commonVO" type="com.mapboard.common.vo.CommonVO"/>
+		<typeAlias alias="placeVO" type="com.mapboard.place.vo.PlaceVO"/>
 		
 	</typeAliases>	
 	
 	<!-- Sql용 xml 파일 추가할 것 -->
 	<mappers>
-		<mapper resource="/com/mapboard/sql/TestSql.xml"  />
+		<mapper resource="/com/mapboard/sql/BoardcommSql.xml"  />
+		<mapper resource="/com/mapboard/sql/BoardSql.xml"  />
+		<mapper resource="/com/mapboard/sql/CommonSql.xml"  />
+		<mapper resource="/com/mapboard/sql/FileinfoSql.xml"  />
+		<mapper resource="/com/mapboard/sql/MemberSql.xml"  />
+		<mapper resource="/com/mapboard/sql/PlaceSql.xml"  />
 		
 	</mappers>
 </configuration>
