@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC 
-				"-//mybatis.org//DTD Mapper 3.0//EN" 
-				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-				
-<!-- select m_id as id , m_password as pw, m_nick as nick  from member where m_id=user입력ID? and m_password=user입력PW; 를 만들어 보자 -->
-<mapper namespace="board">
-	<!-- ex)<select id="loginChk" parameterType="hmap" resultType="hmap"> -->
-</mapper>
