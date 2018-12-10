@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- default directory 설정 -->
+<decorators defaultdir="/WEB-INF/views/decorators">
+	<!-- sample -->
+	<decorator name="headerFooter" page="headerFooter.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+	
+	<!-- decorators를 적용시키지 않을 url 패턴 -->
+	<excludes>
+		<pattern>/excludes/*</pattern>
+		<pattern>/popup/*</pattern>
+	</excludes>
+</decorators>

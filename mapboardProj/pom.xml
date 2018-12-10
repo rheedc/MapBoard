@@ -169,10 +169,13 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
 		</dependency>
-
-
-
-
+		
+		<!-- Sitemesh  header footer을 나눠주기 위한 라이브러리 -->
+		<dependency>
+		    <groupId>opensymphony</groupId>
+		    <artifactId>sitemesh</artifactId>
+		    <version>2.4.2</version>
+		</dependency>
 
       
 	</dependencies>
