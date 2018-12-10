@@ -9,6 +9,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type="text/css">
 	/* style 작성부분 */
+		table, tr, th, td {margin : auto;
+										border : 1px solid;
+										text-align : center;
+										height : 42px;
+										}
+										
+		table {width : 1000px;
+					}
+					
+		#text-left { text-align : left;
+							padding-left:10px;
+							}
+						
+						
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
@@ -61,11 +75,12 @@
   	<form id="" action="">
   		<table>
   			<tr>
-  				<th>제목</th>
-  				<td colspan="2">제목내용</td>
+  				<th  id="text-left" colspan="2">제목 : 
+  					<input type="text" id="title" name="title"/>
+  				</th>
   			</tr>
   			<tr>
-  				<th>작성자: 	작성일:</td>
+  				<th id="text-left">작성자: 	작성일:</td>
   				<td>
   					<input type="button" id="mBtn" value="수정"/>
   					<input type="button" id="dBtn" value="삭제"/>
@@ -78,9 +93,10 @@
   			</tr>
   			<tr>
   				<th colspan="2">
-  					<textarea id="body" name="body" cols="80" rows="500" style="resize:none"/>
+  					<textarea id="body" name="body" cols="137" style="resize:none;"></textarea>
   				</th>
   			</tr>
+  			
   			<tr>
   				<td rowspan="5">지도삽입</td>
   				<td>장소명:</td>
@@ -99,7 +115,7 @@
   			</tr>
   			
   			<tr>
-  				<th>
+  				<th id="text-left">
   					<input type="button" id="cBtn" value="추천하기"/>
   				</th>
   				<td>조회수: 	추천수: 	</td>
@@ -107,7 +123,7 @@
   			
   			<tr id="review">
   				<th>
-  					<textarea id="review" name="review" cols="80" rows="5" style="resize:none"/>
+  					<textarea id="review" name="review" cols="120" rows="5" style="resize:none">댓글쓰기</textarea>
   				</th>
   				<td>
   					<input type="button" id="rBtn" value="등록"/>

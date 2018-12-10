@@ -12,6 +12,32 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
+	@RequestMapping("board/replyModify")
+	public void replyModify() {
+		System.out.println("test 컨트롤러의 replyModify");
+	}
+	
+	@RequestMapping("board/modifyForm")
+	public void replyForm() {
+		System.out.println("test 컨트롤러의 replyForm");
+	}
+	
+	@RequestMapping("board/boardDetail")
+	public void boardDetail() {
+		System.out.println("test 컨트롤러의 boardDetail");
+	}
+	
+	@RequestMapping("board/boardList")
+	public void boardList() {
+		System.out.println("test 컨트롤러의 boardList");
+	}
+	
+	@RequestMapping("board/writeForm")
+	public void writeForm() {
+		System.out.println("test 컨트롤러의 writeForm");
+	}
+	
+	
 	// 예시 함수 입니다
 		@RequestMapping("/board/example")
 		public void example() {
@@ -27,4 +53,5 @@ public class BoardController {
 			System.out.println("BoardController끝");
 			
 		}
+		
 }

@@ -9,6 +9,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type="text/css">
 	/* style 작성부분 */
+		table, tr, th, td {margin : auto;
+										border : 1px solid;
+										text-align : center;
+										height : 42px;
+										}
+										
+		table {width : 1000px;
+					}
+					
+		#left {text-align:left;
+					padding-left:10px;}
+					
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
@@ -16,7 +28,7 @@
 		$(document).ready(function(){
 			var count=1;		//업로드할 파일 개수
 			
-			$("#wBtn").click(function(){//글쓰기 버튼 클릭
+			$("#mBtn").click(function(){//수정하기 버튼 클릭
 				if(!$("#place").val()){
 					alert("장소명을 입력해주세요.");
 					$("#place").focus();
@@ -68,8 +80,8 @@
 				count--;
 			});
 			
-			//목록보기
-			$("#lBtn").click(function(){
+			//취소하기(목록보기로 이동)
+			$("#cBtn").click(function(){
 				//boardList로 가기
 			});
 		});
@@ -81,57 +93,58 @@
 		<table>
 			<tr>
 				<th>장소명</th>
-				<td><input type="text" id="place" name="place"/></td>
+				<td id="left"><input type="text" id="place" name="place"/></td>
 			</tr>
 			<tr>
 			<!-- 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타 -->
 				<th>분류명</th>
-				<td>
+				<td id="left">
 					<select>
-						<option value="">관광/여가/오락</option>
-						<option value="">숙박</option>
-						<option value="">의료</option>
-						<option value="food">식당</option>
-						<option value="cafe">커피점/카페</option>
-						<option value="etc">기타</option>
+						<option>--분류명 선택--</option>
+						<option value="1">관광/여가/오락</option>
+						<option value="2">숙박</option>
+						<option value="3">의료</option>
+						<option value="4">식당</option>
+						<option value="5">커피점/카페</option>
+						<option value="6">기타</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td><input type="text" id="title" name="title"/></td>
+				<td id="left"><input type="text" id="title" name="title"/></td>
 			</tr>
 			<tr>
 				<th>글내용</th>
-				<td><textarea id="body" name="body" cols="80" rows="5" style="resize:none"/></td>
-			</tr>
-			<tr>
-				<th>장소평가</th>
 				<td>
-					<select>
-						<option value="good">Good</option>
-						<option value="soso">Soso</option><!-- default 값 -->
-						<option value="bad">Bad</option>
-					</select>
+					<textarea id="body" name="body" cols="120" rows="5" style="resize:none;"></textarea>
 				</td>
 			</tr>
 			<tr>
-				<th>파일첨부(1)</th>
-				<td>
+				<th>장소평가</th>
+				<td id="left">
+					<input type="checkbox" name="point" value="5">Good
+					<input type="checkbox" name="point" value="3">Soso<!-- default -->
+					<input type="checkbox" name="point" value="1">Bad
+				</td>
+			</tr>
+			<tr>
+				<th>파일 추가/삭제</th>
+				<td id="left">
 					<input type="button" id="aBtn" value="추가"/>
 					<input type="button" id="dBtn" value="삭제"/>
 				</td>
 			</tr>
 			<tr>
-				<th>파일첨부(2)</th>
-				<td>
+				<th>파일첨부</th>
+				<td id="left">
 					<input type="file" id="files" name="files" value="파일선택"/>
 				</td>
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input type="button" id="wBtn" value="글등록"/>
-					<input type="button" id="lBtn" value="목록보기"/>
+					<input type="button" id="mBtn" value="수정"/>
+					<input type="button" id="cBtn" value="취소"/>
 				</th>
 			</tr>
 		</table>
