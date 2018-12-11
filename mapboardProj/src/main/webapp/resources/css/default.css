@@ -36,9 +36,8 @@
 }
 
 .navbar-logo2 {
-	float: left;
     height: 60px;
-    padding: 15px 15px;
+    padding: 0px 0px;
     font-size: 18px;
     line-height: 20px;
 }

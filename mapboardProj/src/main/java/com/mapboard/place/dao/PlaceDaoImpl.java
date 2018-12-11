@@ -26,7 +26,7 @@ public class PlaceDaoImpl implements PlaceDao{
 		
 		// 값을 받아 set해준다 밑에건 임시로 넣었다
 		vo.setSigungu_code(11680);
-		vo.setCategory_no(4);
+		vo.setCategory_no(3);
 		//	질의 실행
 		arrayList	=	(ArrayList)sqlSession.selectList("placeSql.placeList", vo);
 		System.out.println("PlaceDao끝");

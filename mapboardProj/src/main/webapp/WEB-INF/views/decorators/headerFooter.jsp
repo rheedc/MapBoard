@@ -36,8 +36,8 @@
 	              <span class="icon-bar"></span>
 	              <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-logo" href="/"><img src="../resources/img/seoul1.png" class="img-circle" style="width:60px; height:60px;" alt="mapboard logo" title="mapboard logo" /></a>
-	            <a class="navbar-logo2" href="/" >I KNOW YOU KNOW</a>
+	            <a class="navbar-logo" href="/"><img src="../resources/img/seoul1.png" class="img-circle" style="width:59px; height:59px;" alt="mapboard logo" title="mapboard logo" /></a>
+	            <a class="navbar-logo2" href="/" ><img src="../resources/img/iknowyouknow.png" style="width:auto; height:59px;" alt="iknowyouknowlogo" title="iknowyouknowlogo" /></a>
 	            
           	</div>
           	<div class="navbar-collapse collapse" style="float:right;">

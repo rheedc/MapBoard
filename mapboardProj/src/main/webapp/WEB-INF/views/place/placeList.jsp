@@ -68,7 +68,7 @@
 	    customOverlay = new daum.maps.CustomOverlay({}),
 	    infowindow = new daum.maps.InfoWindow({removable: true});
 	
-		$.getJSON("/resources/json/abcd.json", function(json) {
+		$.getJSON("/resources/json/abc.json", function(json) {
 		 
 		    var data = json.features;
 		    var coordinates = [];    //좌표 저장할 배열
@@ -89,7 +89,7 @@
 		 
 		 
 		var polygons=[];                //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
-		    
+		var gupath=[];    
 		//행정구역 폴리곤
 		function displayArea(coordinates, name) {
 		 
@@ -165,11 +165,16 @@
 		        
 		        deletePolygon(polygons);                    //폴리곤 제거 
 		        customOverlay.setContent('<div class="area"></div>');
-		     
+		     	
+		        // 해당 구의 path를 기억한다
+		        if(gupath=="")
+		        	gupath = path;
+		        
+		        
 		     // 폴리건 클릭한 곳에서 생성
 		        var polygon = new daum.maps.Polygon({
 			        map : map, // 다각형을 표시할 지도 객체
-			        path : path,
+			        path : gupath,
 			        strokeWeight : 4,
 			        strokeColor : 'red',
 			        strokeOpacity : 0.8,
@@ -177,7 +182,8 @@
 			        fillOpacity : 0.3
 			    });
 		     
-		     
+		     //console.log(gupath);
+		        
 		     // ----------------------------------------------------
 		     // 주소-좌표 변환 객체를 생성합니다
 			var geocoder = new daum.maps.services.Geocoder();
@@ -215,6 +221,8 @@
 			// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
 			daum.maps.event.addListener(map, 'idle', function() {
 			    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+			    // 중심좌표 표시
+			    getInfo()
 			});
 
 			function searchAddrFromCoords(coords, callback) {

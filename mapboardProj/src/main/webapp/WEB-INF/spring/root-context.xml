@@ -41,25 +41,6 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
-	<!-- DAO 등록 부분 -->
-	<bean id = "Member" class = "com.mapboard.dao.MemberDAO">
-		<property name ="sqlSessionTemplate" ref = "sqlSession"/> 
-	</bean>
-	
-	<bean id = "Board" class = "com.mapboard.dao.BoardDAO">
-		<property name ="sqlSessionTemplate" ref = "sqlSession"/> 
-	</bean>
-	
-	<bean id = "Place" class = "com.mapboard.dao.PlaceDAO">
-		<property name ="sqlSessionTemplate" ref = "sqlSession"/> 
-	</bean>
-	
-	
-	
-	
-	
-	
-	
 	
 	
 </beans>

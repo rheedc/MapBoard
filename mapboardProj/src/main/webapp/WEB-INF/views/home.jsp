@@ -17,7 +17,7 @@
 	<table align="center">
 		<tr >
 			<td>
-				<a href="/place/placeList.yo"><img src="../resources/img/u38.jpg" style="width:700px; height:500px;" alt="map_logo" title="map_logo" /></a>
+				<a href="/place/placeList.yo"><img src="../resources/img/seoul10.png" style="width:700px; height:500px;" alt="map_logo" title="map_logo" /></a>
 			</td>
 			<td>
 				<a href="#"><img src="../resources/img/u32.jpg" style="width:700px; height:500px;" alt="board_logo" title="board_logo" /></a>
