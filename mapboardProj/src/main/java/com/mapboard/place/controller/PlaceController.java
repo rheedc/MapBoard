@@ -47,6 +47,11 @@ public class PlaceController {
 
 			return mv;			
 		}
+		
+		@RequestMapping("place/totalPlaceList")
+		public void placeListTotal() {
+			System.out.println("합친페이지 호출");
+		}
 	
 	
 }
