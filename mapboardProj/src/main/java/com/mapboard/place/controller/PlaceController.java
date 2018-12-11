@@ -18,6 +18,8 @@ public class PlaceController {
 	@Autowired
 	private PlaceService pservice;
 	
+	//PlaceListService plistService;
+	
 	// 지도에다가 상가좌표를 뿌려줄 함수입니다.
 		@RequestMapping("/place/placeList")
 		public ModelAndView placeList(
@@ -39,10 +41,11 @@ public class PlaceController {
 			double longitude	=	placeList.get(2026).getLongitude();
 			
 			System.out.println(doroJuso+latitude+juso+"placeList끝"+longitude);
+			
+			//plist = plistService.getPList(vo);
+			//mv.addObject("?",plist);
 
-			return mv;
-			
-			
+			return mv;			
 		}
 	
 	

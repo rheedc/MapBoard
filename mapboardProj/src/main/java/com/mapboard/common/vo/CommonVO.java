@@ -14,7 +14,30 @@ public class CommonVO {
 	private int place_no;		//common
 	private long bidx;		//common
 	
+	//페이징처리를 위해 필요한 변수들
+	private int rno;			//common
+	private int start;		//common
+	private int end;		//common
 	
+	
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
+	public int getStart() {
+		return start;
+	}
+	public void setStart(int start) {
+		this.start = start;
+	}
+	public int getEnd() {
+		return end;
+	}
+	public void setEnd(int end) {
+		this.end = end;
+	}
 	public String getUserid() {
 		return userid;
 	}
