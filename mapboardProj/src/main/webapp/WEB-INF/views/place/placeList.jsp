@@ -12,8 +12,8 @@
 		.area {
 	    position: absolute;
 	    background: #fff;
-	    border: 1px solid #888;
-	    border-radius: 3px;
+	    border: 5px solid skyblue;
+	    border-radius: 30px;
 	    font-size: 12px;
 	    top: -5px;
 	    left: 15px;
@@ -40,6 +40,7 @@
 	
 	$(function(){		
 		
+		// 중심좌표 구해주기
 		function centroid (points) {
 		    var i, j, len, p1, p2, f, area, x, y;
 		 
@@ -57,7 +58,8 @@
 		    return new daum.maps.LatLng((x/area), (y/area));
 		}
 		
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		// 지도를 표시할 div 
+		var mapContainer = document.getElementById('map'), 
 	    mapOption = { 
 	        center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
 	        level: 9 // 지도의 확대 레벨
@@ -67,43 +69,52 @@
 		var map = new daum.maps.Map(mapContainer, mapOption),
 	    customOverlay = new daum.maps.CustomOverlay({}),
 	    infowindow = new daum.maps.InfoWindow({removable: true});
-	
+		
+		//	json 데이터를 불러와서 폴리곤 생성하기
 		$.getJSON("/resources/json/abc.json", function(json) {
 		 
 		    var data = json.features;
 		    var coordinates = [];    //좌표 저장할 배열
 		    var name = '';            //행정 구 이름
 		 
-		 
 		    $.each(data, function(index, val) {
 		 
 		        coordinates = val.geometry.coordinates;
 		        name = val.properties.SIG_KOR_NM;
-		        //console.log(coordinates)
-		       	//console.log(name)
-		        //displayArea(coordinates, name);
-		        console.log(index)
-		        displayArea(coordinates, name);
+		        // 폴리곤 생성
+		        if(guname==''){
+		        	displayArea(coordinates, name);	
+		        }
+		        
 		    })
 		})
 		 
-		 
+		// 전역 변수 모음-------------------------------------시작
 		var polygons=[];                //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
-		var gupath=[];    
-		//행정구역 폴리곤
+		var gupath=[];    	//	gupath 전역변수
+		var guname='';		//	guname 전역변수
+		var mouseLat=0;		//mouseLat 위도 전역변수
+		var mouseLng=0;		//mouseLng 경도 전역변수
+		
+		// 전역 변수 모음-------------------------------------끝
+		
+		//행정구역 폴리곤 생성 함수
 		function displayArea(coordinates, name) {
 		 
-		    var path = [];            //폴리곤 그려줄 path
+		    var path = [];           //폴리곤 그려줄 path
 		    var points = [];        //중심좌표 구하기 위한 지역구 좌표들
 		    
-		    $.each(coordinates[0], function(index, coordinate) {        //console.log(coordinates)를 확인해보면 보면 [0]번째에 배열이 주로 저장이 됨.  그래서 [0]번째 배열에서 꺼내줌.
-
+		    //	반복
+		    $.each(coordinates[0], function(index, coordinate) {        
+		    	//console.log(coordinates)를 확인해보면 보면 [0]번째에 배열이 주로 저장이 됨.  그래서 [0]번째 배열에서 꺼내줌.
 		        var point = new Object();
 		        
 		        point.x = coordinate[1];
 		        point.y = coordinate[0];
 		        points.push(point);
-		        path.push(new daum.maps.LatLng(coordinate[1], coordinate[0]));            //new daum.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
+		        // path 넣어주기
+		        path.push(new daum.maps.LatLng(coordinate[1], coordinate[0]));            
+		        //new daum.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
 		    })
 		    
 		    // 다각형을 생성합니다 
@@ -111,8 +122,8 @@
 		        map : map, // 다각형을 표시할 지도 객체
 		        path : path,
 		        strokeWeight : 2,
-		        strokeColor : '#004c80',
-		        strokeOpacity : 0.8,
+		        strokeColor : '#0c5d94',
+		        strokeOpacity : 0.7,
 		        fillColor : '#fff',
 		        fillOpacity : 0.7
 		    });
@@ -155,7 +166,7 @@
 		    	// 개발자 모드에서 지도 정보에 대해 console로 출력했다
 		    	 getInfo();
 		    	
-		        // 현재 지도 레벨에서 2레벨 확대한 레벨
+		        // 현재 지도 레벨에서 3레벨 확대한 레벨
 		        var level = map.getLevel()-3;
 		        
 		        // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
@@ -169,9 +180,9 @@
 		        // 해당 구의 path를 기억한다
 		        if(gupath=="")
 		        	gupath = path;
+		        	guname = name;
 		        
-		        
-		     // 폴리건 클릭한 곳에서 생성
+		     	// 폴리건 클릭한 곳에서 생성
 		        var polygon = new daum.maps.Polygon({
 			        map : map, // 다각형을 표시할 지도 객체
 			        path : gupath,
@@ -181,7 +192,6 @@
 			        fillColor : 'white',
 			        fillOpacity : 0.3
 			    });
-		     
 		     //console.log(gupath);
 		        
 		     // ----------------------------------------------------
@@ -205,10 +215,17 @@
 			                            '<span class="title">법정동 주소정보</span>' + 
 			                            detailAddr + 
 			                        '</div>';
+			                        
+                        var latlng = mouseEvent.latLng;
+                        mouseLat = latlng.getLat();		//mouseLat 위도 전역변수
+                		mouseLng = latlng.getLng();		//mouseLng 경도 전역변수
+                		console.log('위도=',mouseLat,'경도=',mouseLng);
 			
 			            // 마커를 클릭한 위치에 표시합니다 
 			            marker.setPosition(mouseEvent.latLng);
 			            marker.setMap(map);
+			            
+			            
 			
 			            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
 			            infowindow.setContent(content);
@@ -217,7 +234,6 @@
 			    });
 			});
 			
-
 			// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
 			daum.maps.event.addListener(map, 'idle', function() {
 			    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
@@ -252,7 +268,6 @@
 		     
 		     // -----------------------------------------------
 		      
-		     
 			// 마커를 표시할 위치와 title 객체 배열입니다 
 			var positions = [
 				<c:forEach var="m" items="${PLACELIST}" varStatus="status">
@@ -265,12 +280,12 @@
 			];
 		     
 			// 마커 이미지의 이미지 주소입니다
-			var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+			var imageSrc = "../resources/img/dot_good.png"; 
 			    
 			for (var i = 0; i < positions.length; i ++) {
 			    
 			    // 마커 이미지의 이미지 크기 입니다
-			    var imageSize = new daum.maps.Size(10, 17); 
+			    var imageSize = new daum.maps.Size(8, 8); 
 			    
 			    // 마커 이미지를 생성합니다    
 			    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
@@ -284,7 +299,10 @@
 			    });
 			}
 		    
-		     
+			// refresh시 서울시 전체보기로 이동
+		     window.onbeforeunload = function() {
+				return "새로고침시 서울시 전체보기로 돌아갑니다";
+			}
 		        
 	    	});// 구 클릭 끝
 		    
@@ -296,8 +314,9 @@
 			    polygons = [];
 			}
 		    
-		}
+		} // display함수 끝
 		
+		// 서울시 전체보기를 클릭시 place/placeList.yo로 다시 요청
 		$('#seoul').click(function(){
 			$(location).attr('href', '../place/placeList.yo')
 		});
@@ -340,7 +359,7 @@
 		
 		
 		
-	});	
+	}); // function 끝	
 	
 	</script>
 </head>

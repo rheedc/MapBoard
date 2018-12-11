@@ -9,6 +9,6 @@
 	<!-- decorators를 적용시키지 않을 url 패턴 -->
 	<excludes>
 		<pattern>/excludes/*</pattern>
-		<pattern>/popup/*</pattern>
+		<pattern>/place/placeList*</pattern>
 	</excludes>
 </decorators>
