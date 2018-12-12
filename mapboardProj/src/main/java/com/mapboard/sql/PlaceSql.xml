@@ -16,4 +16,116 @@
 					and
 					    CATEGORY_NO=#{category_no}
 	</select>
+	
+	<!-- 
+	작성자 : 조은비 
+	작성일 : 2018-12-12
+	-->
+	<!-- 자주쓰는건 빼놓자 -->
+	<sql id="place_jo">
+		rownum rno, 
+	    p.PLACE_NO,
+	    p.USERID,
+	    p.PLACE_NAME,
+	    p.CATEGORY_NO,
+	    p.SIGUNGU_CODE,
+	    p.SIGUNGU_NAME,
+	    p.JUSO,
+	    p.DORO_JUSO,
+	    p.LATITUDE,
+	    p.LONGITUDE,
+	    p.CREATEDT,
+	    p.UPDATEDT,
+	    p.STATUS,
+	    nvl(b.meanP,0) avgpoint,
+	    nvl(c.gcnt,0) goodcnt,
+	    nvl(d.scnt,0) sosocnt,
+	    nvl(e.bcnt,0) badcnt,
+	    nvl(reviewcnt_total,0) reviewcnt
+	</sql>
+	<sql id="join_jo">
+		from  PLACE p
+		left outer join
+		(
+		select PLACE_NO, avg(POINT) as meanP
+		from BOARD
+		group by  PLACE_NO
+		) b
+		on b.PLACE_NO = p.PLACE_NO
+		left outer join
+		(
+		select PLACE_NO, count(*) as gcnt
+		from BOARD
+		where POINT=5
+		group by  PLACE_NO
+		) c
+		on p.PLACE_NO=c.PLACE_NO
+		left outer join
+		(
+		select PLACE_NO, count(*) as scnt
+		from BOARD
+		where POINT=3
+		group by  PLACE_NO
+		) d
+		on p.PLACE_NO=d.PLACE_NO
+		left outer join
+		(
+		select PLACE_NO, count(*) as bcnt
+		from BOARD
+		where POINT=1
+		group by  PLACE_NO
+		) e
+		on p.PLACE_NO=e.PLACE_NO
+		left outer join
+		(
+		select PLACE_NO, count(*) as reviewcnt_total
+		from BOARD
+		group by  PLACE_NO
+		) f
+		on p.PLACE_NO=f.PLACE_NO
+		join member m
+		on m.userid=p.userid
+	</sql>
+	
+	<!-- 장소검색결과 뿌려주는 select문 -->
+	<select id="placeList_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	</select>
+	<select id="placeList_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.category_no=#{category_no}
+	</select>
+	<select id="placeList_p_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like %#{place_name}%
+	</select>
+	<select id="placeList_p_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like %#{place_name}%
+	    and p.category_no=#{category_no}
+	</select>
+	
+	
+	<!-- 장소검색결과 개수 구하기 -->
+	
 </mapper>

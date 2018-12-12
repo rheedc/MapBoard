@@ -105,9 +105,12 @@
 		<tr height="30px">
 			<td colspan="2">장소(**	건)</td>
 		</tr>
+		<c:forEach var="data" items="${PLIST}">
 		<tr>
-			<td colspan="2">내용들어올공간</td>
+			<td>장소명</td>
+			<td>${data.place_name}</td>
 		</tr>
+		</c:forEach>
 	</table>
 	<table width="500px" height="50px">	
 		<tr>

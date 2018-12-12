@@ -102,30 +102,10 @@ public class PlaceController {
 			System.out.println("장소이름"+place_name);
 			System.out.println("카테고리번호"+category_no);
 			
-			//2.서비스위임
-			//시군구이름/장소이름 값의 길이가 0되는 경우를 고려해야함
-			//카테고리의 값이 0되는 경우를 고려해야함
-
-			//3.모델
-			req.setAttribute("DATA", vo);
-			
-			//4.뷰호출
-		}
-	
-		//결과 목록보기 요청에 대한 함수
-		@RequestMapping("place/searchResult")
-		public void searchResult(PlaceVO vo) {
-			System.out.println("결과목록보기 요청");
-			
-			//파라미터 받기
-			String sigungu_name=vo.getSigungu_name();
-			String place_name=vo.getPlace_name();
-			int category_no=vo.getCategory_no();
-			
 			//케이스 분류를 위한 변수
+			//시군구 이름이 존재하지 않을때
 			int situation=0;
 			
-			//비지니스로직수행
 			//시군구 이름이 존재할때
 			if(sigungu_name!=null && sigungu_name.length()>0) {
 				//장소이름X, 카테고리 번호X
@@ -134,18 +114,49 @@ public class PlaceController {
 				}
 				//장소이름X, 카테고리 번호O
 				if((place_name==null || place_name.length()==0)&&(category_no>0)) {
-					situation=2;
+					//카테고리 전체를 선택한 경우
+					if(category_no==10) {
+						situation=2;
+					}
+					//세부카테고리를 선택한 경우
+					else {
+						situation=3;
+					}
 				}
 				//장소이름O, 카테고리 번호X
 				if((place_name!=null && place_name.length()>0)&&(category_no==0)) {
-					situation=3;
+					situation=4;
 				}
 				//장소이름O, 카테고리 번호O
 				if((place_name!=null && place_name.length()>0)&&(category_no>0)) {
-					situation=4;
+					//카테고리 전체를 선택한 경우
+					if(category_no==10) {
+						situation=5;
+					}
+					//세부카테고리를 선택한 경우
+					else {
+						situation=6;
+					}
 				}
 				System.out.println("situation : "+situation);
 			}
+			System.out.println("situation : "+situation);
+			
+			//비지니스로직수행
+			//2.서비스위임
+			//시군구이름/장소이름 값의 길이가 0되는 경우를 고려해야함
+			//카테고리의 값이 0되는 경우를 고려해야함
+			
+			//장소검색결과 목록불러오기
+			ArrayList plist=pservice.getPlaceList(vo,situation);
+			
+			//게시물검색결과 목록불러오기
+			/*ArrayList blist=pservice.getBoardList(vo,situation);*/
+
+			//3.모델
+			req.setAttribute("DATA", vo);
+			req.setAttribute("situation", situation);
+			req.setAttribute("PLIST", plist);
+			//4.뷰호출
 		}
-	
 }
