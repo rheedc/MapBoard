@@ -29,6 +29,29 @@
 	    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
 	    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 		
+		
+		/* 은비 스타일 s*/
+		#top_content {
+		width:1900px;
+		height:100px;
+		text-align:center;
+		background-color:pink;
+		}
+		#left_content {
+		width:500px;
+		height:800px;
+		float:left;
+		text-align:left;
+		background-color:yellow;
+		}
+		#right_content {
+		width:1900px;
+		height:800px;
+		text-align:center;
+		background-color:brown;
+		}
+		/* 은비 스타일 e*/
+		
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
@@ -354,40 +377,85 @@
 		    console.log(message);
 		}
 		
+		// 은비 스크립트  s
 		
+		//세부카테고리 숨기기
+		$("#check_category").hide();
 		
+		//분류에서 전체를 선택했을 때 
+		$(".check_all").click(function(){
+			//전체 체크를 하지 않으면 카테고리 목록 보여주기
+			if(!$(".check_all").is(":checked")){
+				$("#check_category").show();	
+			}
+			//전체 체크를 했다면 카테고리 목록 숨기기
+			else{
+				$("#check_category").hide();
+			}
+		})
+		//세부카테고리에서 클릭이벤트 발생할 때
+		$(".category").click(function(){
+			alert(this.value);
+		})
 		
-		
+		// 은비 스크립트  e
 		
 	}); // function 끝	
 	
 	</script>
 </head>
 <body>
-	<table>
-		<tr>
-			<td>
-				
-				<div class="map_wrap">
-				    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-				    <div class="hAddr">
-				        <span class="title">지도중심기준 행정동 주소정보</span>
-				        <span id="centerAddr"></span>
-				    </div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td align="center">
-				<input type="button" id="seoul" value="서울시 전체지도보기"/>
-			</td>
-		</tr>
-		<tr>
-			<td >
-				<div id="clickLatlng"></div>
-				
-			</td>
-		</tr>
-	</table>
+
+	<div id="div_root">
+		<div id="top_content">윗부분
+		<table>
+			<tr>
+				<td><input type="text" id="place_name_j" name="place_name_j" placeholder="장소이름을 입력해주세요"></td>
+				<td><input type="button" id="sBtn_j" name="sBtn_j" value="검색"></td>
+				<td><input type="checkbox" name="c_check" class="check_all" value=0 checked="checked"/> 전체</td>
+				<td id="check_category">
+					<input type="checkbox" name="c_check" class="category" value=1> 관광/여가/오락
+					<input type="checkbox" name="c_check" class="category" value=2> 숙박
+					<input type="checkbox" name="c_check" class="category" value=3> 의료
+					<input type="checkbox" name="c_check" class="category" value=4> 한식/중식/양식
+					<input type="checkbox" name="c_check" class="category" value=5> 커피점/카페
+					<input type="checkbox" name="c_check" class="category" value=6> 기타
+				</td>
+			</tr>
+		</table>
+		</div>
+		<div id="left_content">왼쪽내용</div>
+		<div id="right_content">
+			<table>
+				<tr>
+					<td>
+						<div class="map_wrap">
+						    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+						    <div class="hAddr">
+						        <span class="title">지도중심기준 행정동 주소정보</span>
+						        <span id="centerAddr"></span>
+						    </div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<input type="button" id="seoul" value="서울시 전체지도보기"/>
+					</td>
+				</tr>
+				<tr>
+					<td >
+						<div id="clickLatlng"></div>
+						
+					</td>
+				</tr>
+			</table>
+			오른쪽내용
+		</div>
+	</div>
+
+
+
+	
 </body>
 </html>

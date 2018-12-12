@@ -48,7 +48,7 @@ public class PlaceController {
 			return mv;			
 		}
 		
-		@RequestMapping("place/totalPlaceList")
+		@RequestMapping("total/totalPlaceList")
 		public void placeListTotal() {
 			System.out.println("합친페이지 호출");
 		}

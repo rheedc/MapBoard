@@ -6,9 +6,14 @@
 		<pattern>/*</pattern>
 	</decorator>
 	
+	<!-- sample -->
+	<!-- <decorator name="nondecorator" page="nondecoraters.jsp">
+		<pattern>/place/*</pattern>
+	</decorator> -->
+	
 	<!-- decorators를 적용시키지 않을 url 패턴 -->
 	<excludes>
-		<pattern>/excludes/*</pattern>
-		<pattern>/place/placeList*</pattern>
+		<pattern></pattern>
 	</excludes>
+	
 </decorators>

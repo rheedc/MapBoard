@@ -80,7 +80,7 @@
 	</table>
 	</div>
 	<div id="left_content">왼쪽내용</div>
-	<div id="right_content"><c:import url="/place/placeList.yo" />오른쪽내용</div>
+	<div id="right_content">지도 부분 오른쪽내용</div>
 	</div>
 </body>
 </html>
