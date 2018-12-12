@@ -58,6 +58,23 @@
 	<script>
 	
 	
+	// 쿠키 설정 함수
+	var setCookie = function(name, value, exp) {
+		var date = new Date();
+		date.setTime(date.getTime() + exp*24*60*60*1000);
+		document.cookie = namae + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+	};
+	
+	// 쿠키 얻기 함수
+	var getCookie = function(name) {
+		var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+		return value? value[2] : null;
+	};
+	
+	// 쿠키 삭제 함수
+	var deleteCookie = function(name) {
+		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	};
 	
 	//행정구역 구분
 	
@@ -105,8 +122,12 @@
 		        coordinates = val.geometry.coordinates;
 		        name = val.properties.SIG_KOR_NM;
 		        // 폴리곤 생성
-		        if(guname==''){
+		        // 쿠키를 얻어서 guname이 없다면 서울시 전체를 있다면 해당 구화면을 보여준다
+		        guname=getCookie('guname');
+		        if(guname!=''){
 		        	displayArea(coordinates, name);	
+		        }else{
+		        	
 		        }
 		        
 		    })
@@ -181,6 +202,8 @@
 		        customOverlay.setMap(null);
 		    });
 		 
+		    // 클릭시 해당구 표현 하는 것을 함수로 만들고 이곳에 함수실행 함수는 전역으로
+		    
 		    daum.maps.event.addListener(polygon, 'click', function() {		       		    
 		    	
 		    	// 클릭한 곳에 클릭한 좌표를 전역변수 clickpath를 담는다.	
@@ -206,6 +229,9 @@
 		        	guname = name;
 		        }
 	        	$("#sigungu_name").val(guname);
+	        	
+	        	
+	        	
 	        	//$("#guname1").html('<span>'+guname+'</span>');
 		     	// 폴리건 클릭한 곳에서 생성
 		        var polygon = new daum.maps.Polygon({
@@ -379,14 +405,38 @@
 		    console.log(message);
 		}
 		
+		
+		// 쿠키를 set하는 과정
+		function placeSetCookie(){
+			deleteCookie('gupath');
+			deleteCookie('guname');
+			deleteCookie('mouseLat');
+			deleteCookie('mouseLng');
+			// 쿠키에다가 gupath랑 guname저장-----------------------        	
+			setCookie('gupath', gupath, 5); /* gupath=gupath, 5분 뒤 만료됨 */
+			setCookie('guname',guname, 5); 
+			setCookie('mouseLat',mouseLat, 5); 
+			setCookie('mouseLng',mouseLng, 5); 
+	    	// 쿠키에다가 gupath랑 guname 마우스 위도경도 도 넘겼다 -----------------------
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		// 은비 스크립트  s----------------------------------------------------------------------
 		
 		//카테고리에서 클릭이벤트 발생할 때
 		$(".category_no").click(function(){
+			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
 		//검색버튼 클릭이벤트 발생했을 때
 		$("#sBtn_j").click(function(){
+			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
 		
