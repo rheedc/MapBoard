@@ -62,7 +62,7 @@
 	var setCookie = function(name, value, exp) {
 		var date = new Date();
 		date.setTime(date.getTime() + exp*24*60*60*1000);
-		document.cookie = namae + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+		document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
 	};
 	
 	// 쿠키 얻기 함수
@@ -73,13 +73,16 @@
 	
 	// 쿠키 삭제 함수
 	var deleteCookie = function(name) {
-		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		setCookie(name,'',-1);
 	};
 	
 	//행정구역 구분
 	
 	$(function(){		
 		
+		// 삭제 쿠키 되는지 확인 중입니다. 꼭 삭제해야한다
+		//deleteCookie('guname');
+		//console.log('guname 될까?'+getCookie('guname'));
 		// 중심좌표 구해주기
 		function centroid (points) {
 		    var i, j, len, p1, p2, f, area, x, y;
@@ -124,7 +127,8 @@
 		        // 폴리곤 생성
 		        // 쿠키를 얻어서 guname이 없다면 서울시 전체를 있다면 해당 구화면을 보여준다
 		        guname=getCookie('guname');
-		        if(guname!=''){
+		        console.log('guname='+guname);
+		        if(guname==null){
 		        	displayArea(coordinates, name);	
 		        }else{
 		        	
@@ -203,7 +207,7 @@
 		    });
 		 
 		    // 클릭시 해당구 표현 하는 것을 함수로 만들고 이곳에 함수실행 함수는 전역으로
-		    
+		    //-------함수로 만들자-----------------------------------------------------끝
 		    daum.maps.event.addListener(polygon, 'click', function() {		       		    
 		    	
 		    	// 클릭한 곳에 클릭한 좌표를 전역변수 clickpath를 담는다.	
@@ -275,8 +279,6 @@
 			            // 마커를 클릭한 위치에 표시합니다 
 			            marker.setPosition(mouseEvent.latLng);
 			            marker.setMap(map);
-			            
-			            
 			
 			            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
 			            infowindow.setContent(content);
@@ -356,7 +358,8 @@
 			}
 		        
 	    	});// 구 클릭 끝
-		    
+	    	//-------함수로 만들자-----------------------------------------------------끝
+	    	
 		  //지도 위 표시되고 있는 폴리곤 제거
 			function deletePolygon(polygons) {
 			    for (var i = 0; i < polygons.length; i++) {
@@ -367,10 +370,7 @@
 		    
 		} // display함수 끝
 		
-		// 서울시 전체보기를 클릭시 place/placeList.yo로 다시 요청
-		$('#seoul').click(function(){
-			$(location).attr('href', '../place/placeList.yo')
-		});
+		
 		
 		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 		var mapTypeControl = new daum.maps.MapTypeControl();
@@ -405,6 +405,15 @@
 		    console.log(message);
 		}
 		
+		// 서울시 전체보기를 클릭시 place/placeList.yo로 다시 요청
+		$('#seoul').click(function(){			
+			deleteCookie('gupath');
+			deleteCookie('guname');
+			deleteCookie('mouseLat');
+			deleteCookie('mouseLng');
+			console.log(getCookie('guname'));
+			$(location).attr('href', '../place/placeList.yo')
+		});
 		
 		// 쿠키를 set하는 과정
 		function placeSetCookie(){
@@ -413,7 +422,7 @@
 			deleteCookie('mouseLat');
 			deleteCookie('mouseLng');
 			// 쿠키에다가 gupath랑 guname저장-----------------------        	
-			setCookie('gupath', gupath, 5); /* gupath=gupath, 5분 뒤 만료됨 */
+			setCookie('gupath', gupath, 5); /* gupath=gupath, 5일 뒤 만료됨 */
 			setCookie('guname',guname, 5); 
 			setCookie('mouseLat',mouseLat, 5); 
 			setCookie('mouseLng',mouseLng, 5); 
