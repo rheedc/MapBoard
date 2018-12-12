@@ -2,6 +2,7 @@ package com.mapboard.place.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +62,33 @@ public class PlaceController {
 		}
 		
 		
-		
 		@RequestMapping("total/totalPlaceList")
-		public void placeListTotal() {
+		public void placeListTotal(PlaceVO vo) {
 			System.out.println("합친페이지 호출");
+			//할일
+			//1.파라미터 받고
+			//PlaceVO를 이용해서 받기
+			String sigungu_name=vo.getSigungu_name();
+			String place_name=vo.getPlace_name();
+			int category_name=vo.getCategory_no();
+			
+			System.out.println("시군구이름"+sigungu_name);
+			System.out.println("장소이름"+place_name);
+			System.out.println("카테고리번호"+category_name);
+			
+			//2.서비스위임
+			//시군구이름/장소이름 값의 길이가 0되는 경우를 고려해야함
+			//카테고리의 값이 0되는 경우를 고려해야함
+			
+			
+			//3.모델
+			//4.뷰호출
 		}
 	
+		//결과 목록보기 요청에 대한 함수
+		@RequestMapping("place/searchResult")
+		public void searchResult() {
+			System.out.println("결과목록보기 요청");
+		}
 	
 }

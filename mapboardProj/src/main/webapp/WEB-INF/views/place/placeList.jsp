@@ -205,7 +205,7 @@
 		        	gupath = path;
 		        	guname = name;
 		        }
-	        	$("#guname").val(guname);
+	        	$("#sigungu_name").val(guname);
 	        	//$("#guname1").html('<span>'+guname+'</span>');
 		     	// 폴리건 클릭한 곳에서 생성
 		        var polygon = new daum.maps.Polygon({
@@ -381,23 +381,13 @@
 		
 		// 은비 스크립트  s----------------------------------------------------------------------
 		
-		//세부카테고리 숨기기
-		$("#check_category").hide();
-		
-		//분류에서 전체를 선택했을 때 
-		$(".check_all").click(function(){
-			//전체 체크를 하지 않으면 카테고리 목록 보여주기
-			if(!$(".check_all").is(":checked")){
-				$("#check_category").show();	
-			}
-			//전체 체크를 했다면 카테고리 목록 숨기기
-			else{
-				$("#check_category").hide();
-			}
+		//카테고리에서 클릭이벤트 발생할 때
+		$(".category_no").click(function(){
+			$("#searchFrm_j").submit()
 		})
-		//세부카테고리에서 클릭이벤트 발생할 때
-		$(".category").click(function(){
-			alert(this.value);
+		//검색버튼 클릭이벤트 발생했을 때
+		$("#sBtn_j").click(function(){
+			$("#searchFrm_j").submit()
 		})
 		
 		// 은비 스크립트  e----------------------------------------------------------------------
@@ -410,23 +400,26 @@
 
 	<div id="div_root">
 		<div id="top_content">윗부분
+	<form id="searchFrm_j" method="get" action="../place/placeList.yo">
 		<table>
 			<tr>
-				<td><input type="text" id="guname" name="guname" placeholder="서울특별시" readonly/><div id="guname1"></div></td>
-				<td><input type="text" id="place_name_j" name="place_name_j" placeholder="장소이름을 입력해주세요"></td>
+				<td><input type="text" id="sigungu_name" name="sigungu_name" placeholder="서울특별시" readonly/><div id="guname1"></div></td>
+				<!-- <td><input type="text" id="sigungu_name" name="sigungu_name" placeholder="서울특별시"  value="구로구"></td> -->
+				<td><input type="text" id="place_name" name="place_name" placeholder="장소이름을 입력해주세요"></td>
 				<td><input type="button" id="sBtn_j" name="sBtn_j" value="검색"></td>
-				<td><input type="checkbox" name="c_check" class="check_all" value=0 checked="checked"/> 전체</td>
-				<td id="check_category">
-					<input type="checkbox" name="c_check" class="category" value=1> 관광/여가/오락
-					<input type="checkbox" name="c_check" class="category" value=2> 숙박
-					<input type="checkbox" name="c_check" class="category" value=3> 의료
-					<input type="checkbox" name="c_check" class="category" value=4> 한식/중식/양식
-					<input type="checkbox" name="c_check" class="category" value=5> 커피점/카페
-					<input type="checkbox" name="c_check" class="category" value=6> 기타
+				<td>
+					<input type="radio" name="category_no" value=10 class="category_no"> 전체
+					<input type="radio" name="category_no" value=1 class="category_no"> 관광/여가/오락
+					<input type="radio" name="category_no" value=2 class="category_no"> 숙박
+					<input type="radio" name="category_no" value=3 class="category_no"> 의료
+					<input type="radio" name="category_no" value=4 class="category_no"> 한식/중식/양식
+					<input type="radio" name="category_no" value=5 class="category_no"> 커피점/카페
+					<input type="radio" name="category_no" value=6 class="category_no"> 기타
 				</td>
 			</tr>
 		</table>
-		</div>
+	</form>
+	</div>
 		<div id="left_content">왼쪽내용</div>
 		<div id="right_content">
 			<table>
