@@ -115,7 +115,7 @@
 		// 전역 변수 모음-------------------------------------시작
 		var polygons=[];                //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
 		var gupath=[];    	//	gupath 전역변수
-		var guname='';		//	guname 전역변수
+		var guname='';		//	guname 전역변수		
 		var mouseLat=0;		//mouseLat 위도 전역변수
 		var mouseLng=0;		//mouseLng 경도 전역변수
 		
@@ -201,10 +201,12 @@
 		        customOverlay.setContent('<div class="area"></div>');
 		     	
 		        // 해당 구의 path를 기억한다
-		        if(gupath=="")
+		        if(gupath==""){
 		        	gupath = path;
 		        	guname = name;
-		        
+		        }
+	        	$("#guname").val(guname);
+	        	//$("#guname1").html('<span>'+guname+'</span>');
 		     	// 폴리건 클릭한 곳에서 생성
 		        var polygon = new daum.maps.Polygon({
 			        map : map, // 다각형을 표시할 지도 객체
@@ -377,7 +379,7 @@
 		    console.log(message);
 		}
 		
-		// 은비 스크립트  s
+		// 은비 스크립트  s----------------------------------------------------------------------
 		
 		//세부카테고리 숨기기
 		$("#check_category").hide();
@@ -398,7 +400,7 @@
 			alert(this.value);
 		})
 		
-		// 은비 스크립트  e
+		// 은비 스크립트  e----------------------------------------------------------------------
 		
 	}); // function 끝	
 	
@@ -410,6 +412,7 @@
 		<div id="top_content">윗부분
 		<table>
 			<tr>
+				<td><input type="text" id="guname" name="guname" placeholder="서울특별시" readonly/><div id="guname1"></div></td>
 				<td><input type="text" id="place_name_j" name="place_name_j" placeholder="장소이름을 입력해주세요"></td>
 				<td><input type="button" id="sBtn_j" name="sBtn_j" value="검색"></td>
 				<td><input type="checkbox" name="c_check" class="check_all" value=0 checked="checked"/> 전체</td>
