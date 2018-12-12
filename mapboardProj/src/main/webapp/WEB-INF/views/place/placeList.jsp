@@ -10,14 +10,14 @@
 	<style type="text/css">
 	
 		.area {
-	    position: absolute;
-	    background: #fff;
-	    border: 5px solid skyblue;
-	    border-radius: 30px;
-	    font-size: 12px;
-	    top: -5px;
-	    left: 15px;
-	    padding:2px;
+		    position: absolute;
+		    background: #fff;
+		    border: 5px solid skyblue;
+		    border-radius: 30px;
+		    font-size: 12px;
+		    top: -5px;
+		    left: 15px;
+		    padding:2px;
 		}
 		
 		.info {font-size: 12px; padding: 5px;}
@@ -32,23 +32,23 @@
 		
 		/* 은비 스타일 s*/
 		#top_content {
-		width:1900px;
-		height:50px;
-		text-align:center;
-		background-color:pink;
+			width:1900px;
+			height:50px;
+			text-align:center;
+			background-color:pink;
 		}
 		#left_content {
-		width:500px;
-		height:750px;
-		float:left;
-		text-align:left;
-		background-color:yellow;
+			width:500px;
+			height:750px;
+			float:left;
+			text-align:left;
+			background-color:yellow;
 		}
 		#right_content {
-		width:1900px;
-		height:750px;
-		text-align:center;
-		background-color:brown;
+			width:1900px;
+			height:750px;
+			text-align:center;
+			background-color:brown;
 		}
 		/* 은비 스타일 e*/
 		
