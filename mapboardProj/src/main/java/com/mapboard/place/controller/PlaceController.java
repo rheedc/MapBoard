@@ -48,6 +48,20 @@ public class PlaceController {
 			return mv;			
 		}
 		
+		// 신규장소 등록폼 페이지 보여주기
+		@RequestMapping("place/newPlaceForm")
+		public void newPlaceForm() {
+			System.out.println("신규장소 등록폼 페이지 호출");
+		}
+		
+		// my장소 등록폼 페이지 보여주기
+		@RequestMapping("place/myPlaceForm")
+		public void myPlaceForm() {
+			System.out.println("my장소 등록폼 페이지 호출");
+		}
+		
+		
+		
 		@RequestMapping("total/totalPlaceList")
 		public void placeListTotal() {
 			System.out.println("합친페이지 호출");
