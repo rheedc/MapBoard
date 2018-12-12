@@ -17,20 +17,20 @@
 	/* style 작성부분 */
 	#top_content {
 	width:1900px;
-	height:100px;
+	height:50px;
 	text-align:center;
 	background-color:pink;
 	}
 	#left_content {
 	width:500px;
-	height:800px;
+	height:750px;
 	float:left;
 	text-align:left;
 	background-color:yellow;
 	}
 	#right_content {
 	width:1900px;
-	height:800px;
+	height:750px;
 	text-align:center;
 	background-color:brown;
 	}
@@ -39,6 +39,27 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
 	$(document).ready(function(){
+		
+		category_no="${DATA.category_no}";
+		sigungu_name="${DATA.sigungu_name}";
+		place_name="${DATA.place_name}";
+		
+		//구이름,장소이름,카테고리 정보가 넘어온게 있다면 
+		//그 값을 화면에 세팅해놓기
+		if(category_no!=0){
+			if(category_no!=10){
+				$('input[name="category_no"]:eq('+category_no+')').attr('checked','checked')			
+			}
+			if(category_no==10){
+				$('input[name="category_no"]:eq(0)').attr('checked','checked')
+			}
+		}	
+		if(sigungu_name.length!=0){
+			$("#sigungu_name").val(sigungu_name)
+		}
+		if(place_name.length!=0){
+			$("#place_name").val(place_name)
+		}
 		
 		//카테고리에서 클릭이벤트 발생할 때
 		$(".category_no").click(function(){
@@ -54,6 +75,7 @@
 <body>
   <div id="div_root">
 	<div id="top_content">윗부분
+	<!-- <form id="searchFrm_j" method="get" action="../place/placeList.yo"> -->
 	<form id="searchFrm_j" method="get" action="../total/totalPlaceList.yo">
 		<table>
 			<tr>
@@ -74,7 +96,50 @@
 		</table>
 	</form>
 	</div>
-	<div id="left_content">왼쪽내용</div>
+	<div id="left_content">
+	<table border="1px" width="500px" height="750px">
+		<tr height="30px">
+			<th align="center">장소검색결과</th>
+			<th align="center">게시글검색결과</th>
+		</tr>
+		<tr height="30px">
+			<td colspan="2">장소(**	건)</td>
+		</tr>
+		<tr>
+			<td colspan="2">내용들어올공간</td>
+		</tr>
+	</table>
+	<table width="500px" height="50px">	
+		<tr>
+			<td align="center">
+			[1][2][3]
+			<!--  
+			<%-- <%-- 이전링크만들기 --%>
+			<c:if test="${PINFO.startPage eq 1}">
+				[이전]
+			</c:if>
+			<c:if test="${PINFO.startPage ne 1}">
+				<a href="../board/boardBoardList.yo?nowPage=${PINFO.startPage-1}">[이전]</a>		
+				링크는 목록보기를 요청 + 원하는 페이지를 알려주면 된다
+			</c:if>
+			
+			[1][2][3]만들기
+			<c:forEach var="page" begin="${PINFO.startPage}"  end="${PINFO.endPage }">
+				<a href="../board/boardBoardList.yo?nowPage=${page}">[${page}]</a>
+			</c:forEach>
+	
+			다음링크만들기
+			<c:if test="${PINFO.endPage eq PINFO.totalPage}">
+				[다음]
+			</c:if>
+			<c:if test="${PINFO.endPage ne PINFO.totalPage}">
+				<a href="../board/boardBoardList.yo?nowPage=${PINFO.endPage+1}">[다음]</a>
+			</c:if> --%>
+			-->
+			</td>
+		</tr>
+	</table>
+	</div>
 	<div id="right_content">지도 부분 오른쪽내용</div>
 	</div>
 </body>
