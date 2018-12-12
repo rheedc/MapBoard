@@ -17,13 +17,12 @@
 	</script>
 </head>
 <body>
-<%--
-	뷰는 처리결과(모델)를 클라이언트에게 보여주는 문서
-	글쓰기 후에는 보여줄 것이 없으므로 다른문서가 대신 응답하게끔 할 예정.
- --%>
- <%
- 		response.sendRedirect("../board/boardList.yo");
- %>
-<h1>WriteProc.jsp</h1>  
+ 	<%--	이 문서는 댓글 등록을 한 후
+	          상세보기를 보여줌으로써 댓글이 등록된 결과를 확인하도록..
+	--%>
+	<c:redirect url="../board/boardDetail.yo">
+		<c:param name="oriNo" value="${oriNo}" />
+		<c:param name="nowPage" value="${nowPage}" />
+	</c:redirect> 
 </body>
 </html>

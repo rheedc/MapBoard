@@ -17,12 +17,12 @@
 										
 		table {width : 1000px;
 					}	
-	
-		#left {text-align:left;
-					padding-left:10px;}
-					
-		#right {text-align:right;
-						padding-right:10px;}
+		
+		#reply {width: 100px;
+						}
+		
+		#wide {width : 700px;
+					 }
 	
 	
 	</style>
@@ -35,9 +35,9 @@
 				
 			});
 			
-			//댓글수정 취소
+			//댓글수정 취소 (특정 상세보기로 이동)
 			$("#cBtn").click(function(){
-				
+				$(location).attr("href","../board/boardDetail.yo");
 			});
 		});
 	</script>
@@ -46,16 +46,16 @@
   	<form id="" action="">
   		<table>
   			<tr>
-  				<th id="left" colspan="2">닉네임</th>
+  				<th>닉네임</th>
+  				<td id="wide" rowspan="2">
+  					<textarea id="" name="" cols="95" rows="5" style="resize:none;"></textarea>
+  				</td>
+  				<td>
+  				</td>
   			</tr>
   			<tr>
-  				<th colspan="2">
-  					<textarea id="" name="" cols="137" rows="5" style="resize:none;"></textarea>
-  				</th>
-  			</tr>
-  			<tr>
-  				<th id="left">sysdate</th>
-  				<td id="right">
+  				<th>sysdate</th>
+  				<td id="reply">
   					<input type="button" id="wBtn" value="등록"/>
   					<input type="button" id="cBtn" value="취소"/>
   				</td>
