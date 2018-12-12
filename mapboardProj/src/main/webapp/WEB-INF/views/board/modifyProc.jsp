@@ -17,6 +17,14 @@
 	</script>
 </head>
 <body>
-  
+<h1>ModifyProc.jsp</h1>
+<%--
+수정이 완료되었으므로 보여줄건 없고.. 
+대신 수정내용을 확인하기 위해 상세보기로 가겠다
+ --%>
+<c:redirect url="../board/boardDetail.yo">
+	<c:param name="oriNo" value="${oriNo}"/>
+	<c:param name="nowPage" value="${nowPage}"/>
+</c:redirect>  
 </body>
 </html>

@@ -17,6 +17,9 @@
 	</script>
 </head>
 <body>
-  
+<c:redirect url="../board/boardDetail.yo">
+	<c:param name="oriNo" value="${oriNo}"/>
+	<c:param name="nowPage" value="${nowPage}"/>
+</c:redirect>  
 </body>
 </html>

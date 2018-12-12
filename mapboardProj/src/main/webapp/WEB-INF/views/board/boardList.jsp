@@ -27,14 +27,27 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
-		$(document).read(function(){
+		$(document).ready(function(){
 		//제목검색 sBtn
 		$("#sBtn").click(function(){
-			
+			//지역(구) 선택
+			if($('select[name="gu"]>option:selected').index()<1){
+				alert('지역(구)를 선택해주세요')
+				$('select[name="gu"]').focus()
+				return false;
+			}
+			//키워드 검색
+			if(!$("#select").val()){
+				alert("검색어를 입력해주세요.");
+				$("#select").focus();
+				return false;
+			}
 		});
+		
 		//지도로 보기 mBtn
 		$("#mBtn").click(function(){
-			//지도보기로 가기
+			//placeList로 가기
+			$(location).attr("href","../place/placeList.yo");
 		});
 	});
 	</script>
@@ -45,8 +58,8 @@
 	  		<table >
 	  			<tr>
 	  				<th width="50%">
-	  					<select>
-	  						<option>--시군구 선택--</option>
+	  					<select name="gu">
+	  						<option>--지역(구) 선택--</option>
 	  						<option value="11680">강남구</option>
 	  						<option value="11740">강동구</option>
 	  						<option value="11305">강북구</option>
@@ -106,7 +119,7 @@
   			<!-- 페이징 처리 -->
   				<th colspan="2">페이징</th>
   				<td>
-  					<input type="button" id="mBtn" value="지도로 즐기기" action=""/>
+  					<input type="button" id="mBtn" value="지도로 즐기기" action="../place/placeList.yo"/>
   				</td>
   			</tr>
   		</table>

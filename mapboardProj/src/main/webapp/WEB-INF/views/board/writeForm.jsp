@@ -21,6 +21,9 @@
 		#left {text-align:left;
 					padding-left:10px;}
 					
+		#center{text-align:center;
+						}
+					
 		
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -30,27 +33,42 @@
 			var count=1;		//업로드할 파일 개수
 			
 			$("#wBtn").click(function(){//글쓰기 버튼 클릭
+				
+				//1. 장소명
 				if(!$("#place").val()){
 					alert("장소명을 입력해주세요.");
 					$("#place").focus();
 					return false;
 				}
-				//관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타
-				if(!$("#category").val()){
-					alert("분류명을 입력해주세요.");
-					$("#category").focus();
+			
+				//2. 장소분류 : 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타
+				if($('select[name="category"]>option:selected').index()<1){
+					alert('장소분류를 선택해주세요')
+					$('select[name="category"]').focus()
 					return false;
 				}
+				
+				//3. 제목
 				if(!$("#title").val()){
 					alert("제목을 입력해주세요.");
 					$("#title").focus();
 					return false;
 				}
+				
+				//4. 내용
 				if(!$("#body").val()){
 					alert("내용을 입력해주세요.");
 					$("#body").focus();
 					return false;
 				}
+				
+				//5. 평가
+				if(!$('input[name="point"]').is(':checked')){
+					alert('장소 평가를 해주세요')
+					$('input[name="point"]:eq[1]').focus()
+					return false;
+				}
+				
 				$("#wForm").submit();
 			});
 			
@@ -60,11 +78,11 @@
 				if(count==6){
 					alert("5개 이상은 추가할 수 없습니다.")
 					count=5;
-					return false;
+					return;
 				}
 				//폼 추가
-				var tr= "<tr><th>첨부파일"+count+"</th>"+
-				"<td><input type='file' name='files'  id='files"+count+"'/>"+
+				var tr= "<tr><th>파일첨부"+count+"</th>"+
+				"<td id='left'><input type='file' id='files"+count+"' name='files' value='파일첨부'/>"+
 				"</td></tr>"
 				$("#copy").before(tr);
 			});
@@ -72,7 +90,7 @@
 			//첨부파일 삭제하기
 			$("#dBtn").click(function(){
 				if(count==1){
-					alert=("더 이상 삭제 할 수 없습니다.")
+					alert=("더 이상 삭제 할 수 없습니다.")												//alert-error!
 					count=1;
 					return false;
 				}
@@ -84,12 +102,15 @@
 			//목록보기
 			$("#lBtn").click(function(){
 				//boardList로 가기
+				$(location).attr("href","../board/boardList.yo");
 			});
 		});
 	</script>
 </head>
 <body>
-	<form id="wForm" method="post" action=""
+<h1 id="center" style="color:darkblue;">게시글 등록</h1>
+<h4 id="center">해당 장소에 대한 게시글을 등록해주세요</h4>
+	<form id="wForm" method="post" action="../board/writeProc.yo"
 											encType="multipart/form-data">
 		<table>
 			<tr>
@@ -98,9 +119,9 @@
 			</tr>
 			<tr>
 			<!-- 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타 -->
-				<th>분류명</th>
+				<th>장소분류</th>
 				<td id="left">
-					<select>
+					<select name="category">
 						<option>--분류명 선택--</option>
 						<option value="1">관광/여가/오락</option>
 						<option value="2">숙박</option>
@@ -118,31 +139,27 @@
 			<tr>
 				<th>글내용</th>
 				<td>
-					<textarea id="body" name="body" cols="120" rows="5" style="resize:none;"></textarea>
+					<textarea id="body" name="body" cols="124" rows="10" style="resize:none;"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<th>장소평가</th>
 				<td id="left">
-					<input type="checkbox" name="point" value="5">Good
-					<input type="checkbox" name="point" value="3">Soso<!-- default -->
-					<input type="checkbox" name="point" value="1">Bad
+					<input type="radio" name="point" value="5">Good
+					<input type="radio" name="point" value="3">Soso<!-- default -->
+					<input type="radio" name="point" value="1">Bad
 				</td>
 			</tr>
+			
 			<tr>
-				<th>파일 추가/삭제</th>
+				<th>파일첨부1</th>
 				<td id="left">
+					<input type="file" id="files" name="files" value="파일선택"/>
 					<input type="button" id="aBtn" value="추가"/>
 					<input type="button" id="dBtn" value="삭제"/>
 				</td>
 			</tr>
-			<tr>
-				<th>파일첨부</th>
-				<td id="left">
-					<input type="file" id="files" name="files" value="파일선택"/>
-				</td>
-			</tr>
-			<tr>
+			<tr id="copy">
 				<th colspan="2">
 					<input type="button" id="wBtn" value="글등록"/>
 					<input type="button" id="lBtn" value="목록보기"/>

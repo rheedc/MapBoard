@@ -17,6 +17,22 @@
 	</script>
 </head>
 <body>
-  
+<h1>ReplyDelete.jsp</h1>
+<%-- 삭제여부 실행결과로 넘어오는 값이 
+0이면 실패 "삭제가 실패되었습니다" 메세지출력
+1이면 성공 "삭제성공" 메세지 출력 --%>
+<c:if test="${CHANGE eq 0 }">
+	<script>
+		alert("삭제가 실패되었습니다")
+	</script>
+</c:if>
+<c:if test="${CHANGE eq 1 }">
+	<script>
+		alert("삭제가 성공되었습니다")
+	</script>
+</c:if>
+<script>
+	location.href="../board/boardDetail.yo?oriNo=${oriNo}&nowPage=${nowPage}"
+</script>  
 </body>
 </html>
