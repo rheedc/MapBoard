@@ -23,7 +23,7 @@
 		.info {font-size: 12px; padding: 5px;}
 		.info .title {font-weight: bold;}
 		
-		 .map_wrap {position:relative;width:1000px;height:800px;}
+		 .map_wrap {position:relative;width:1150px;height:720px;}
 	    .title {font-weight:bold;display:block;}
 	    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
 	    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
@@ -33,20 +33,20 @@
 		/* 은비 스타일 s*/
 		#top_content {
 		width:1900px;
-		height:100px;
+		height:50px;
 		text-align:center;
 		background-color:pink;
 		}
 		#left_content {
 		width:500px;
-		height:800px;
+		height:750px;
 		float:left;
 		text-align:left;
 		background-color:yellow;
 		}
 		#right_content {
 		width:1900px;
-		height:800px;
+		height:750px;
 		text-align:center;
 		background-color:brown;
 		}
@@ -458,7 +458,7 @@
 <body>
 
 	<div id="div_root">
-		<div id="top_content">윗부분
+		<div id="top_content">
 	<form id="searchFrm_j" method="get" action="../place/placeList.yo">
 		<table>
 			<tr>
@@ -501,11 +501,9 @@
 				<tr>
 					<td >
 						<div id="clickLatlng"></div>
-						
 					</td>
 				</tr>
 			</table>
-			오른쪽내용
 		</div>
 	</div>
 
