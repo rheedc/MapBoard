@@ -31,8 +31,7 @@
 		#width {width : 100px;
 						}		
 							
-		#reply {width: 100px;
-						}
+		
 						
 		#wide {width : 700px;
 					 }
@@ -155,14 +154,12 @@
   				<td>조회수: 	</td>
   				<td>추천수: 	</td>
   			</tr>
-  		</table>
   		
-  		<table>
   			<tr id="copy">
   				<th colspan="2">
   					<textarea id="review" name="review" cols="120" rows="5" style="resize:none">댓글쓰기</textarea>
   				</th>
-  				<td id="reply" >
+  				<td >
   					<input type="button" id="rBtn" value="등록"/>
   				</td>
   			</tr>
