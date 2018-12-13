@@ -112,7 +112,7 @@
 	where 
 	    p.status='Y'
 	    and p.sigungu_name=#{sigungu_name}
-	    and p.place_name like %#{place_name}%
+	    and p.place_name like '%' || #{place_name} || '%'
 	</select>
 	<select id="placeList_p_cd" resultType="PlaceVO" parameterType="PlaceVO">
 	select 
@@ -121,9 +121,13 @@
 	where 
 	    p.status='Y'
 	    and p.sigungu_name=#{sigungu_name}
-	    and p.place_name like %#{place_name}%
+	    and p.place_name like '%' || #{place_name} || '%'
 	    and p.category_no=#{category_no}
+	    
+	    
 	</select>
+	
+	
 	
 	
 	<!-- 장소검색결과 개수 구하기 -->
