@@ -64,6 +64,7 @@
 		date.setTime(date.getTime() + exp*24*60*60*1000);
 		document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
 	};
+
 	
 	// 쿠키 얻기 함수
 	var getCookie = function(name) {
@@ -127,15 +128,15 @@
 		        // 폴리곤 생성
 		        // 쿠키를 얻어서 guname이 없다면 서울시 전체를 있다면 해당 구화면을 보여준다
 		        guname=getCookie('guname');
-		        console.log('guname='+guname);
 		        if(guname==null){
 		        	displayArea(coordinates, name);	
-		        }else{
+		        }else if(guname==name){
+		        	displayArea(coordinates, name);	
 		        	
 		        }
 		        
-		    })
-		})
+		    }); // each 끝
+		})	// json 데이터 부르기 끝
 		 
 		// 전역 변수 모음-------------------------------------시작
 		var polygons=[];                //function 안 쪽에 지역변수로 넣으니깐 폴리곤 하나 생성할 때마다 배열이 비어서 클릭했을 때 전체를 못 없애줌.  그래서 전역변수로 만듦.
@@ -206,6 +207,147 @@
 		        customOverlay.setMap(null);
 		    });
 		 
+		    
+		    if(guname==name){
+		    	daum.maps.event.addListener(polygon, 'mouseover', function() {
+
+		    		var level = map.getLevel()-3;
+			        
+			        // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
+			        map.setLevel(level, {anchor: centroid(points), animate: {
+			            duration: 350            //확대 애니메이션 시간
+			        }});            
+			        
+			        deletePolygon(polygons);                    //폴리곤 제거 
+			        customOverlay.setContent('<div class="area"></div>');
+			        //setCookieArray('gupath', path, 1);
+			        
+			        // 해당 구의 path를 기억한다
+			       	gupath = path;
+			        guname = name;
+		        	$("#sigungu_name").val(guname);
+		        	
+			     	// 폴리건 클릭한 곳에서 생성
+			        var polygon = new daum.maps.Polygon({
+				        map : map, // 다각형을 표시할 지도 객체
+				        path : gupath,
+				        strokeWeight : 4,
+				        strokeColor : 'red',
+				        strokeOpacity : 0.8,
+				        fillColor : 'white',
+				        fillOpacity : 0.3
+				    });
+			     	
+			        // 주소-좌표 변환 객체를 생성합니다
+					var geocoder = new daum.maps.services.Geocoder();
+					
+					var marker = new daum.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
+					    infowindow = new daum.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+					
+					// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
+					searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+					
+					// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+					daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+					    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+					        if (status === daum.maps.services.Status.OK) {
+					            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+					            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+					            
+					            var content = '<div class="bAddr">' +
+					                            '<span class="title">법정동 주소정보</span>' + 
+					                            detailAddr + 
+					                        '</div>';
+					                        
+		                        var latlng = mouseEvent.latLng;
+		                        mouseLat = latlng.getLat();		//mouseLat 위도 전역변수
+		                		mouseLng = latlng.getLng();		//mouseLng 경도 전역변수
+		                		console.log('위도=',mouseLat,'경도=',mouseLng);
+					
+					            // 마커를 클릭한 위치에 표시합니다 
+					            marker.setPosition(mouseEvent.latLng);
+					            marker.setMap(map);
+					
+					            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+					            infowindow.setContent(content);
+					            infowindow.open(map, marker);
+					        }   
+					    });
+					});
+					
+					// 중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+					daum.maps.event.addListener(map, 'idle', function() {
+					    searchAddrFromCoords(map.getCenter(), displayCenterInfo);
+					    // 중심좌표 표시
+					    getInfo()
+					});
+
+					function searchAddrFromCoords(coords, callback) {
+					    // 좌표로 행정동 주소 정보를 요청합니다
+					    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+					}
+
+					function searchDetailAddrFromCoords(coords, callback) {
+					    // 좌표로 법정동 상세 주소 정보를 요청합니다
+					    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+					}
+
+					// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
+					function displayCenterInfo(result, status) {
+					    if (status === daum.maps.services.Status.OK) {
+					        var infoDiv = document.getElementById('centerAddr');
+
+					        for(var i = 0; i < result.length; i++) {
+					            // 행정동의 region_type 값은 'H' 이므로
+					            if (result[i].region_type === 'H') {
+					                infoDiv.innerHTML = result[i].address_name;
+					                break;
+					            }
+					        }
+					    }    
+					}
+				     
+				     // -----------------------------------------------
+				      
+					// 마커를 표시할 위치와 title 객체 배열입니다 
+					var positions = [
+						<c:forEach var="m" items="${PLACELIST}" varStatus="status">
+					    {
+					        title: "${m.place_name}",
+					        latlng: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
+					    }
+					    <c:if test="${status.count < fn:length(PLACELIST)}">,</c:if>
+					    </c:forEach>
+					];
+				     
+					// 마커 이미지의 이미지 주소입니다
+					var imageSrc = "../resources/img/dot_good.png"; 
+					    
+					for (var i = 0; i < positions.length; i ++) {
+					    
+					    // 마커 이미지의 이미지 크기 입니다
+					    var imageSize = new daum.maps.Size(8, 8); 
+					    
+					    // 마커 이미지를 생성합니다    
+					    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
+					    
+					    // 마커를 생성합니다
+					    var marker5 = new daum.maps.Marker({
+					        map: map, // 마커를 표시할 지도
+					        position: positions[i].latlng, // 마커를 표시할 위치
+					        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+					        image : markerImage // 마커 이미지 
+					    });
+					}
+		    		
+			     	
+			     	
+			     	
+			     	
+			     	
+			    });
+	        }
+		    
 		    // 클릭시 해당구 표현 하는 것을 함수로 만들고 이곳에 함수실행 함수는 전역으로
 		    //-------함수로 만들자-----------------------------------------------------끝
 		    daum.maps.event.addListener(polygon, 'click', function() {		       		    
@@ -226,17 +368,13 @@
 		        
 		        deletePolygon(polygons);                    //폴리곤 제거 
 		        customOverlay.setContent('<div class="area"></div>');
-		     	
+		        //setCookieArray('gupath', path, 1);
+		        
 		        // 해당 구의 path를 기억한다
-		        if(gupath==""){
-		        	gupath = path;
-		        	guname = name;
-		        }
+		       	gupath = path;
+		        guname = name;
 	        	$("#sigungu_name").val(guname);
 	        	
-	        	
-	        	
-	        	//$("#guname1").html('<span>'+guname+'</span>');
 		     	// 폴리건 클릭한 곳에서 생성
 		        var polygon = new daum.maps.Polygon({
 			        map : map, // 다각형을 표시할 지도 객체
@@ -247,7 +385,6 @@
 			        fillColor : 'white',
 			        fillOpacity : 0.3
 			    });
-		     //console.log(gupath);
 		        
 		     // ----------------------------------------------------
 		     // 주소-좌표 변환 객체를 생성합니다
@@ -269,11 +406,20 @@
 			            var content = '<div class="bAddr">' +
 			                            '<span class="title">법정동 주소정보</span>' + 
 			                            detailAddr + 
+			                            '<span class="new">'+'<input type="button" id="newBtn"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
+			                            '<span class="my">'+'<input type="button" id="myBtn"  value="내 기준지 등록" onclick="location.href=\'../place/myPlaceForm.yo\'"/>'+'</span>'+
 			                        '</div>';
 			                        
+                        deleteCookie('mouseLat');
+            			deleteCookie('mouseLng');
+            			            	
                         var latlng = mouseEvent.latLng;
                         mouseLat = latlng.getLat();		//mouseLat 위도 전역변수
                 		mouseLng = latlng.getLng();		//mouseLng 경도 전역변수
+                		setCookie('mouseLat',mouseLat, 1); 
+            			setCookie('mouseLng',mouseLng, 1); 
+            			setCookie('detailAddr',detailAddr, 1);
+            			console.log('detailAddr'+detailAddr);
                 		console.log('위도=',mouseLat,'경도=',mouseLng);
 			
 			            // 마커를 클릭한 위치에 표시합니다 
@@ -351,12 +497,15 @@
 			        image : markerImage // 마커 이미지 
 			    });
 			}
+			
+			daum.maps.event.addListener(marker5, 'rightclick', function() {
+			    alert('marker5 rightclick 상가정보와 글감정정보 표현, 게시글보기, 새글쓰기!');
+			});
+			daum.maps.event.addListener(marker, 'rightclick', function() {
+				alert('marker rightclick 신규장소 등록, 내 기준지 등록!');
+			});
+					
 		    
-			// refresh시 서울시 전체보기로 이동
-		     window.onbeforeunload = function() {
-				return "새로고침시 서울시 전체보기로 돌아갑니다";
-			}
-		        
 	    	});// 구 클릭 끝
 	    	//-------함수로 만들자-----------------------------------------------------끝
 	    	
@@ -405,15 +554,16 @@
 		    console.log(message);
 		}
 		
-		// 서울시 전체보기를 클릭시 place/placeList.yo로 다시 요청
-		$('#seoul').click(function(){			
+		// 서울시 전체보기를 클릭시 place/placeList2.yo로 다시 요청
+		$('#seoul').click(function(){	
 			deleteCookie('gupath');
 			deleteCookie('guname');
 			deleteCookie('mouseLat');
 			deleteCookie('mouseLng');
 			console.log(getCookie('guname'));
-			$(location).attr('href', '../place/placeList.yo')
+			$(location).attr('href', '../place/placeList2.yo')
 		});
+		
 		
 		// 쿠키를 set하는 과정
 		function placeSetCookie(){
@@ -459,7 +609,7 @@
 
 	<div id="div_root">
 		<div id="top_content">
-	<form id="searchFrm_j" method="get" action="../place/placeList.yo">
+	<form id="searchFrm_j" method="get" action="../place/placeList2.yo">
 		<table>
 			<tr>
 				<td><input type="text" id="sigungu_name" name="sigungu_name" placeholder="서울특별시" readonly/><div id="guname1"></div></td>
@@ -496,6 +646,7 @@
 				<tr>
 					<td align="center">
 						<input type="button" id="seoul" value="서울시 전체지도보기"/>
+						<button type="button" onclick="location.href='joinUs.jsp' ">회원가입</button>
 					</td>
 				</tr>
 				<tr>

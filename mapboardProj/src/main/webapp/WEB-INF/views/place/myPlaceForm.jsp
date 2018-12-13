@@ -13,6 +13,16 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
+	
+		// 쿠키 얻기 함수
+		var getCookie = function(name) {
+			var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+			return value? value[2] : null;
+		};
+		
+		var mouseLat="";
+		var mouseLng="";
+		
 		$(function(){
 			
 			// myWBtn 클릭시
@@ -48,6 +58,16 @@
 			});	// resetBtn 끝
 			
 			
+			mouseLat	=	getCookie('mouseLat'); 
+			mouseLng	=	getCookie('mouseLng');
+			detailAddr	=	getCookie('detailAddr');
+			console.log('x'+mouseLat);
+			console.log('y'+mouseLng);
+			
+			$("#myPlaceLocationX").val(mouseLat);
+			$("#myPlaceLocationY").val(mouseLng);
+			$("#myPlaceAddress1").val(detailAddr);
+			
 		});
 	</script>
 </head>
@@ -65,19 +85,18 @@
   		<tr>
   			<td>좌표정보</td>
   			<td>
-  				<input type="text" id="myPlaceLocation" name="myPlaceLocation" value="위도=,경도="  readonly/>
-  				<input type="hidden" id="myPlaceLocationX" name="myPlaceLocationX"/>
-  				<input type="hidden" id="myPlaceLocationY" name="myPlaceLocationY"/>
+  				위도:<input type="text" id="myPlaceLocationX" name="myPlaceLocationX"readonly/>
+  				경도:<input type="text" id="myPlaceLocationY" name="myPlaceLocationY" readonly/>
   			</td>
   		</tr>
   		<tr>
   			<td>주소</td>
   			<td>
-  				<input type="text" id="myPlaceAddress" name="myPlaceAddress"  readonly/>
+  				<textarea rows="2" cols="80" id="myPlaceAddress1" readonly></textarea>
   			</td>
   		</tr>
   		<tr>
-  			<td>상세주소</td>
+  			<td >상세주소</td>
   			<td>
   				<input type="text" id="myPlaceDetailAddress" name="myPlaceDetailAddress" placeholder="상세주소를 한 글자 이상 입력해주세요"/ >
   			</td>

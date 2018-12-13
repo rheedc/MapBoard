@@ -279,11 +279,20 @@
 			            var content = '<div class="bAddr">' +
 			                            '<span class="title">법정동 주소정보</span>' + 
 			                            detailAddr + 
+			                            '<span class="new">'+'<input type="button" id="newBtn"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
+			                            '<span class="my">'+'<input type="button" id="myBtn"  value="내 기준지 등록" onclick="location.href=\'../place/myPlaceForm.yo\'"/>'+'</span>'+
 			                        '</div>';
 			                        
+                        deleteCookie('mouseLat');
+            			deleteCookie('mouseLng');
+            			            	
                         var latlng = mouseEvent.latLng;
                         mouseLat = latlng.getLat();		//mouseLat 위도 전역변수
                 		mouseLng = latlng.getLng();		//mouseLng 경도 전역변수
+                		setCookie('mouseLat',mouseLat, 1); 
+            			setCookie('mouseLng',mouseLng, 1); 
+            			setCookie('detailAddr',detailAddr, 1);
+            			console.log('detailAddr'+detailAddr);
                 		console.log('위도=',mouseLat,'경도=',mouseLng);
 			
 			            // 마커를 클릭한 위치에 표시합니다 
@@ -333,12 +342,12 @@
 		      
 			// 마커를 표시할 위치와 title 객체 배열입니다 
 			var positions = [
-				<c:forEach var="m" items="${PLACELIST}" varStatus="status">
+				<c:forEach var="m" items="${PLIST}" varStatus="status">
 			    {
 			        title: "${m.place_name}",
 			        latlng: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
 			    }
-			    <c:if test="${status.count < fn:length(PLACELIST)}">,</c:if>
+			    <c:if test="${status.count < fn:length(PLIST)}">,</c:if>
 			    </c:forEach>
 			];
 		     
@@ -360,11 +369,6 @@
 			        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 			        image : markerImage // 마커 이미지 
 			    });
-			}
-		    
-			// refresh시 서울시 전체보기로 이동
-		     window.onbeforeunload = function() {
-				return "새로고침시 서울시 전체보기로 돌아갑니다";
 			}
 		        
 	    	});// 구 클릭 끝
