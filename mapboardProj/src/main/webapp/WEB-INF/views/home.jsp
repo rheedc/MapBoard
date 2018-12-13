@@ -20,7 +20,7 @@
 				<a href="/place/placeList.yo"><img src="../resources/img/seoul10.png" style="width:700px; height:500px;" alt="map_logo" title="map_logo" /></a>
 			</td>
 			<td>
-				<a href="#"><img src="../resources/img/u32.jpg" style="width:700px; height:500px;" alt="board_logo" title="board_logo" /></a>
+				<a href="/board/boardList.yo"><img src="../resources/img/u32.jpg" style="width:700px; height:500px;" alt="board_logo" title="board_logo" /></a>
 			</td>
 		</tr>
 		<tr>
@@ -28,7 +28,7 @@
 				<a href="/place/placeList.yo"><h1>지도로 즐기기</h1></a>
 			</td>
 			<td>
-				<a href="#"><h1>글로 즐기기</h1></a>
+				<a href="/board/boardList.yo"><h1>글로 즐기기</h1></a>
 			</td>
 		</tr>
 	</table>
