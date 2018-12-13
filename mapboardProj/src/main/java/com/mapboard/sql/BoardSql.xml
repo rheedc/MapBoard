@@ -6,4 +6,106 @@
 <!-- select m_id as id , m_password as pw, m_nick as nick  from member where m_id=user입력ID? and m_password=user입력PW; 를 만들어 보자 -->
 <mapper namespace="board">
 	<!-- ex)<select id="loginChk" parameterType="hmap" resultType="hmap"> -->
+
+	<!-- 자주 사용되는 명령은 한번만 만들어 놓는다. -->
+	<sql id="isShow">
+		UPPER(fb_IsShow)='Y'
+	</sql>
+	
+	<sql id="selectField">
+			fb_No				AS NO,
+			fb_Writer		AS ID,
+			m_Nick			AS NICK,
+			fb_Title			AS TITLE,
+			fb_Date			AS WDAY,
+			fb_Hit				AS HIT
+	</sql>
+
+
+	<!-- 해당 페이지에 보여줄 게시물 정보 구하기 질의 -->	
+	<select id="boardList" resultType="fileBoard">
+		SELECT
+			*
+		FROM 
+			(SELECT
+				<include refid="selectField" />, 
+				ROW_NUMBER() over(order by fb_no asc) as rno,
+				nvl(t1.cnt,0)	AS FILECOUNT
+		from
+		 	fileboard,
+			(select
+				count(*) as cnt,
+				fi_orino
+			from 
+				fileinfo
+			group by 
+				fi_orino) t1,
+			member
+		where
+			<include refid="isShow" /> 
+			AND fb_no=t1.fi_OriNo(+) 
+			AND fb_writer=m_id)
+		where
+			rno between #{start} and #{end}
+	</select>
+	
+	
+	<!-- 게시물 수 구하기 -->
+	<select id="totalCount" resultType="int">
+		SELECT 
+			COUNT(*) AS CNT
+		FROM 
+			FileBoard
+		WHERE 
+			<include refid="isShow" />
+	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="insertBoard" parameterType="fileBoard"><!-- fileBoard:mB의 alias -->
+		<selectKey order="BEFORE" resultType="int" keyProperty="no">	<!-- int : myBatis에 부여한 alias -->
+			SELECT 
+				NVL(MAX(fb_No),0)+1  
+			FROM 
+				FileBoard
+		</selectKey>
+		INSERT INTO
+			FileBoard
+		VALUES  (#{no},#{id},#{title},#{body},SYSDATE,#{pw},0,'Y')		<!-- #{vo에 있는 변수명} -->
+	</insert>
+	<insert id="insertFileInfo" parameterType="fileBoard">
+		INSERT INTO
+			FileInfo
+		VALUES ((SELECT NVL(MAX(fi_No),0)+1 FROM FileInfo),
+							#{oriNo},#{path},#{oriName},#{saveName},#{len})
+	</insert>
+
+
+	<resultMap id="clobView" type="fileBoard">
+		<!-- CLOB필드를 선언한다. --><!-- fb_Body는 body로 함 -->
+		<result property="body" 	column="fb_Body"						
+						jdbcType="CLOB"  javaType="java.lang.String"/>
+	</resultMap>
+
+	<!-- 상세보기 질의 명령 -->
+	<select id="boardView" resultMap="clobView" parameterType="int">
+		SELECT
+			fb_Body,
+			<include refid="selectField"/> 
+		FROM
+			FileBoard, Member
+		WHERE
+								fb_NO = #{no}
+				AND		fb_Writer = m_ID	
+	</select>	
+	
+	<!-- 조회수 증가 질의  -->
+	<update id="updateHit"  parameterType="int">
+		UPDATE
+			FileBoard
+		SET
+			fb_Hit = fb_Hit + 1
+		WHERE
+			fb_No = #{no}
+	</update>		
+
 </mapper>

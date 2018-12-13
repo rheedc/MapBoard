@@ -6,4 +6,33 @@
 <!-- select m_id as id , m_password as pw, m_nick as nick  from member where m_id=user입력ID? and m_password=user입력PW; 를 만들어 보자 -->
 <mapper namespace="fileinfo">
 	<!-- ex)<select id="loginChk" parameterType="hmap" resultType="hmap"> -->
+
+	<!-- 자주 사용되는 명령은 한번만 만들어 놓는다. -->
+	<sql id="selectFile">
+		SELECT
+			fi_No					AS	no,
+			fi_OriNo				AS	oriNo,
+			fi_Path				AS	path,
+			fi_OriName		AS	oriName,
+			fi_SaveName	AS	saveName,
+			fi_Length			AS	len
+		FROM
+			FileInfo 
+	</sql>
+
+	<!-- 해당 페이지에 보여줄 게시물 정보 구하기 질의 -->
+	<!-- 첨부파일 검색 질의 -->
+	<select id="fileInfo"	parameterType="int" resultType="fileBoard">
+		<include refid="selectFile"/> 
+		WHERE
+			fi_OriNo = #{oriNo}
+	</select>
+	
+	<!-- 다운로드 파일 정보 검색 질의 -->
+	<select id="download"	parameterType="int" resultType="fileBoard">
+		<include refid="selectFile"/> 
+		WHERE
+			fi_No = #{fileNo}
+	</select>	
+	
 </mapper>
