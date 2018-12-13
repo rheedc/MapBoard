@@ -22,14 +22,14 @@
 
 	<!-- 해당 페이지에 보여줄 게시물 정보 구하기 질의 -->
 	<!-- 첨부파일 검색 질의 -->
-	<select id="fileInfo"	parameterType="int" resultType="fileBoard">
+	<select id="fileInfo"	parameterType="int" resultType="fileinfoVO">
 		<include refid="selectFile"/> 
 		WHERE
 			fi_OriNo = #{oriNo}
 	</select>
 	
 	<!-- 다운로드 파일 정보 검색 질의 -->
-	<select id="download"	parameterType="int" resultType="fileBoard">
+	<select id="download"	parameterType="int" resultType="fileinfoVO">
 		<include refid="selectFile"/> 
 		WHERE
 			fi_No = #{fileNo}

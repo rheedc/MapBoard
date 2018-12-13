@@ -23,7 +23,7 @@
 
 
 	<!-- 해당 페이지에 보여줄 게시물 정보 구하기 질의 -->	
-	<select id="boardList" resultType="fileBoard">
+	<select id="boardList" resultType="boardVO">
 		SELECT
 			*
 		FROM 
@@ -61,7 +61,7 @@
 	</select>
 	
 	<!-- 게시물 등록 -->
-	<insert id="insertBoard" parameterType="fileBoard"><!-- fileBoard:mB의 alias -->
+	<insert id="insertBoard" parameterType="boardVO"><!-- fileBoard:mB의 alias -->
 		<selectKey order="BEFORE" resultType="int" keyProperty="no">	<!-- int : myBatis에 부여한 alias -->
 			SELECT 
 				NVL(MAX(fb_No),0)+1  
@@ -72,7 +72,7 @@
 			FileBoard
 		VALUES  (#{no},#{id},#{title},#{body},SYSDATE,#{pw},0,'Y')		<!-- #{vo에 있는 변수명} -->
 	</insert>
-	<insert id="insertFileInfo" parameterType="fileBoard">
+	<insert id="insertFileInfo" parameterType="boardVO">
 		INSERT INTO
 			FileInfo
 		VALUES ((SELECT NVL(MAX(fi_No),0)+1 FROM FileInfo),
@@ -80,7 +80,7 @@
 	</insert>
 
 
-	<resultMap id="clobView" type="fileBoard">
+	<resultMap id="clobView" type="boardVO">
 		<!-- CLOB필드를 선언한다. --><!-- fb_Body는 body로 함 -->
 		<result property="body" 	column="fb_Body"						
 						jdbcType="CLOB"  javaType="java.lang.String"/>
