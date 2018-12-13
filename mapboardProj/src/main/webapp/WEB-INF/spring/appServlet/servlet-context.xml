@@ -40,7 +40,7 @@
 	<interceptors>
 		<interceptor>
 			<!-- 인터셉터가 발생되는 상황 -->
-			<mapping path="/member/loginproc.yo" />
+			<mapping path="/member/LoginCheckInfo.yo" />
 						
 						
 			<!-- 사용할 인터셉터 클래스를 등록하는 부분 -->

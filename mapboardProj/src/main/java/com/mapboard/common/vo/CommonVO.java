@@ -14,7 +14,7 @@ public class CommonVO {
 	private int place_no;		//common
 	private long bidx;		//common
 	
-	//ÆäÀÌÂ¡Ã³¸®¸¦ À§ÇØ ÇÊ¿äÇÑ º¯¼öµé
+	//í˜ì´ì§•ì²˜ë¦¬ë¥¼ ìœ„í•´ í•„ìš”í•œ ë³€ìˆ˜ë“¤
 	private int rno;			//common
 	private int start;		//common
 	private int end;		//common

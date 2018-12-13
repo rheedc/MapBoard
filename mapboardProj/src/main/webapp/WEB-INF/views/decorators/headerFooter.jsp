@@ -48,7 +48,7 @@
 		   					<li><a href="/place/placeList.yo"><span class="glyphicon glyphicon-cloud"></span> 지도</a></li>
 						    <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> 커뮤니티</a></li>
 		   					<c:if test="${sessionScope.userid eq null}">
-							  <li <c:if test="${conPath eq '/member/loginFormAction.yo'}">class="active"</c:if>><a href="/member/loginFormAction.yo" ><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+							  <li <c:if test="${conPath eq '/member/loginFormAction.yo'}">class="active"</c:if>><a href="/member/LoginForm.yo" ><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
 							  <li <c:if test="${conPath eq '/member/joinFormAction.yo'}">class="active"</c:if>><a href="/member/joinFormAction.yo"><span class="glyphicon glyphicon-cloud-upload"></span> 회원가입</a></li>
 							</c:if>
 							<c:if test="${sessionScope.userid ne null}">
@@ -56,7 +56,7 @@
 								<c:if test="${sessionScope.ulevel eq 10}">
 								<li><a href="/admin/orderHistoryListAction.yo"><span class="glyphicon glyphicon-lock"></span> 사이트관리</a></li>
 								</c:if>
-								<li><a href="/member/logOutAction.yo"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
+								<li><a href="/member/LogoutProc.yo"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
 							</c:if>
 						</ul>
 	   				</li>

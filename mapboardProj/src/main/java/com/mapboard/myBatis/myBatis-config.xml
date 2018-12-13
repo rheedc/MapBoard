@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   "HTTP://mybatis.org/dtd/mybatis-3-
 		<typeAlias alias="double" type="java.lang.Double"/>
 		<typeAlias alias="float" type="java.lang.Float"/>
 		<typeAlias alias="boolean" type="java.lang.Boolean"/>
+		<typeAlias alias="String" type="java.lang.String"/>
 		<typeAlias alias="hmap" type="java.util.HashMap"/>
 		<!-- VO클래스 -->
 		<typeAlias alias="memberVO" type="com.mapboard.member.vo.MemberVO"/>

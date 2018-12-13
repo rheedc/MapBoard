@@ -3,16 +3,18 @@
 				"-//mybatis.org//DTD Mapper 3.0//EN" 
 				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 				
-<!-- select m_id as id , m_password as pw, m_nick as nick  from member where m_id=user입력ID? and m_password=user입력PW; 를 만들어 보자 -->
+
 <mapper namespace="member">
-	<select id="loginChk" parameterType="hmap" resultType="hmap">
-		select m_id as ID , 
-				m_password as PW, 
-				m_nick as NICK  
+	<!-- 로그인 처리를 위해 ID,PW를 조회하는 쿼리문 -->
+	<select id="loginChk" resultType="String">
+		select USERID
 				from member 
-				where 
-					m_id=#{id} 
-					and 
-					m_password=#{pw}
+				where USERID=#{userid} and PASSWD=#{passwd}
+	</select>
+	<!-- 회원 정보 조회 쿼리문 -->
+	<select id="viewMember" resultType="memberVO">
+		select USERID, PASSWD, NICK, ULEVEL, STATUS, JUSO, LATITUDE, LONGITUDE   
+				from member 
+				where USERID=#{userid} and PASSWD=#{passwd}
 	</select>
 </mapper>
