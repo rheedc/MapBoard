@@ -89,14 +89,18 @@
 	
 	<!-- 장소검색결과 뿌려주는 select문 -->
 	<select id="placeList_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
 	select 
 	    <include refid="place_jo" />
 	<include refid="join_jo" />
 	where 
 	    p.status='Y'
 	    and p.sigungu_name=#{sigungu_name}
+	    )
+		where rno BETWEEN #{start} AND #{end}
 	</select>
 	<select id="placeList_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
 	select 
 	    <include refid="place_jo" />
 	<include refid="join_jo" />
@@ -104,8 +108,11 @@
 	    p.status='Y'
 	    and p.sigungu_name=#{sigungu_name}
 	    and p.category_no=#{category_no}
+	    )
+		where rno BETWEEN #{start} AND #{end}
 	</select>
 	<select id="placeList_p_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
 	select 
 	    <include refid="place_jo" />
 	<include refid="join_jo" />
@@ -113,8 +120,11 @@
 	    p.status='Y'
 	    and p.sigungu_name=#{sigungu_name}
 	    and p.place_name like '%' || #{place_name} || '%'
+	     )
+		where rno BETWEEN #{start} AND #{end}
 	</select>
 	<select id="placeList_p_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
 	select 
 	    <include refid="place_jo" />
 	<include refid="join_jo" />
@@ -123,13 +133,46 @@
 	    and p.sigungu_name=#{sigungu_name}
 	    and p.place_name like '%' || #{place_name} || '%'
 	    and p.category_no=#{category_no}
-	    
-	    
+	     )
+		where rno BETWEEN #{start} AND #{end}
 	</select>
 	
-	
-	
-	
 	<!-- 장소검색결과 개수 구하기 -->
+	<select id="cnt_placeList_ct" resultType="int" parameterType="PlaceVO">
+	select 
+	    count(*) placecnt_total
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	</select>
+	<select id="cnt_placeList_cd" resultType="int" parameterType="PlaceVO">
+	select 
+	    count(*) placecnt_total
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.category_no=#{category_no}
+	</select>
+	<select id="cnt_placeList_p_ct" resultType="int" parameterType="PlaceVO">
+	select 
+	    count(*) placecnt_total
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	</select>
+	<select id="cnt_placeList_p_cd" resultType="int" parameterType="PlaceVO">
+	select 
+	    count(*) placecnt_total
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	    and p.category_no=#{category_no}
+	</select>
 	
 </mapper>

@@ -19,20 +19,30 @@
 	width:1900px;
 	height:50px;
 	text-align:center;
-	background-color:pink;
+	padding:10px;
+	background-color:#ebf6f9;
 	}
 	#left_content {
 	width:500px;
 	height:750px;
 	float:left;
 	text-align:left;
-	background-color:yellow;
+	background-color:white;
 	}
 	#right_content {
 	width:1900px;
 	height:750px;
 	text-align:center;
-	background-color:brown;
+	}
+	.placeResult_jo,.boardResult_jo{
+	overflow-y:scroll;
+	height:600px;
+	border:1px solid #444444;
+	}
+	.placeResult_jo td,.placeResult_jo th,
+	.boardResult_jo td,.boardResult_jo th{
+	border-bottom: 1px solid #444444;
+	padding:10px;
 	}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -74,7 +84,7 @@
 </head>
 <body>
   <div id="div_root">
-	<div id="top_content">윗부분
+	<div id="top_content">
 	<!-- <form id="searchFrm_j" method="get" action="../place/placeList.yo"> -->
 	<form id="searchFrm_j" method="get" action="../total/totalPlaceList.yo">
 		<table>
@@ -96,50 +106,79 @@
 		</table>
 	</form>
 	</div>
+	
 	<div id="left_content">
-	<table border="1px" width="500px" height="750px">
-		<tr height="30px">
-			<th align="center">장소검색결과</th>
-			<th align="center">게시글검색결과</th>
-		</tr>
-		<tr height="30px">
-			<td colspan="2">장소(**	건)</td>
-		</tr>
-		<c:forEach var="data" items="${PLIST}">
+	<table border="1px" width="500px" height="70px">
 		<tr>
-			<td>장소명</td>
-			<td>${data.place_name}</td>
+			<td align="center">장소검색결과</td>
+			<td align="center">게시글검색결과</td>
 		</tr>
-		</c:forEach>
 	</table>
-	<table width="500px" height="50px">	
+	
+	<table border="1px" width="500px" height="30px">
+		<tr>
+			<td colspan="2" style="padding:10px;">검색결과(${placecnt_total}건)</td>
+		</tr>
+	</table>
+	
+	<div  class="placeResult_jo">
+		<c:if test="${empty PLIST }">
+		<table width="500px" height="600px">
+			<tr align="center">
+				<td>검색결과가 없습니다</td>
+			</tr>
+		</table>
+		</c:if>
+		<table width="500px" >
+			<c:forEach var="data" items="${PLIST}">
+				<tr height="100px">
+					<td width="350px">
+					${data.place_name}<br/>
+					${data.juso}<br/>
+					관련글:${data.reviewcnt}건
+					</td>
+					<td>
+					good:${data.goodcnt}<br/>
+					soso:${data.sosocnt}<br/>
+					bad:${data.badcnt}
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	
+	<table border="1px" width="500px" height="50px">	
 		<tr>
 			<td align="center">
-			[1][2][3]
-			<!--  
-			<%-- <%-- 이전링크만들기 --%>
-			<c:if test="${PINFO.startPage eq 1}">
-				[이전]
-			</c:if>
-			<c:if test="${PINFO.startPage ne 1}">
-				<a href="../board/boardBoardList.yo?nowPage=${PINFO.startPage-1}">[이전]</a>		
-				링크는 목록보기를 요청 + 원하는 페이지를 알려주면 된다
-			</c:if>
-			
-			[1][2][3]만들기
-			<c:forEach var="page" begin="${PINFO.startPage}"  end="${PINFO.endPage }">
-				<a href="../board/boardBoardList.yo?nowPage=${page}">[${page}]</a>
-			</c:forEach>
-	
-			다음링크만들기
-			<c:if test="${PINFO.endPage eq PINFO.totalPage}">
-				[다음]
-			</c:if>
-			<c:if test="${PINFO.endPage ne PINFO.totalPage}">
-				<a href="../board/boardBoardList.yo?nowPage=${PINFO.endPage+1}">[다음]</a>
-			</c:if> --%>
-			-->
-			</td>
+	  		<%-- 완성예시 : [<][1][2][3][4][5][>] --%>
+	  		<%-- 이전페이지 --%>
+	  		<%-- 현재 보고있는 페이지가 첫번째 페이지라면 --%>
+	  		<c:if test="${PINFO.nowPage eq 1}">
+	  			이전
+	  		</c:if>
+	  		<c:if test="${PINFO.nowPage ne 1}">
+	  			<a href="../total/totalPlaceList.yo?nowPage=${PINFO.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">이전</a>
+	  		</c:if>
+	  		
+	  		<%-- [1][2][3][4][5] --%>
+	  		<c:forEach var="page" begin="${PINFO.startPage }" end="${PINFO.endPage}">
+	  			<c:if test="${PINFO.nowPage eq page }">
+	  			<a href="../total/totalPlaceList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}"><font color="blue">[${page}]</font></a>
+	  			</c:if>
+	  			<c:if test="${PINFO.nowPage ne page }">
+	  			<a href="../total/totalPlaceList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">${page}</a>
+	  			</c:if>
+	  		</c:forEach>
+	  		
+	  		<%-- 다음페이지 --%>
+	  		<%-- 현재 보고있는 페이지가 마지막 페이지까지 갔으면 --%>
+	  		<c:if test="${PINFO.nowPage eq PINFO.totalPage}">
+	  			다음
+	  		</c:if>
+	  		<c:if test="${PINFO.nowPage ne PINFO.totalPage}">
+	  			<a href="../total/totalPlaceList.yo?nowPage=${PINFO.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">다음</a>
+	  		</c:if>
+	  		</td>
 		</tr>
 	</table>
 	</div>

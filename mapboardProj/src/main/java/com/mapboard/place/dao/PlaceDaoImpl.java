@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mapboard.place.vo.PlaceVO;
+import com.mapboard.util.PageUtil;
 
 @Service("placeDao")
 public class PlaceDaoImpl implements PlaceDao{
@@ -41,12 +42,24 @@ public class PlaceDaoImpl implements PlaceDao{
 	 * 작성일 : 2018-12-12
 	 */
 	//게시물 총개수 구하기 질의실행 함수
-	public int getTotalCount(PlaceVO vo, int situation) {
+	public int getPlaceListCnt(PlaceVO vo, int situation) {
 		//질의를 실행할 스테이트먼트 구하기
 		/*int result=sqlSession.selectOne("fileBoardName.totalCount");*/
-		int result=0;
+		int placecnt_total=0;
+		if(situation==2) {
+			placecnt_total=sqlSession.selectOne("placeSql.cnt_placeList_ct",vo);
+		}
+		if(situation==3) {
+			placecnt_total=sqlSession.selectOne("placeSql.cnt_placeList_cd",vo);
+		}
+		if(situation==4||situation==5) {
+			placecnt_total=sqlSession.selectOne("placeSql.cnt_placeList_p_ct",vo);
+		}
+		if(situation==6) {
+			placecnt_total=sqlSession.selectOne("placeSql.cnt_placeList_p_cd",vo);
+		}
 		//결과를 반환
-		return result;
+		return placecnt_total;
 	}
 	
 	//장소검색결과 목록 불러오는 함수
@@ -66,5 +79,9 @@ public class PlaceDaoImpl implements PlaceDao{
 		}
 		return plist;
 	}
-	
+
+	public int getBoardListCnt(PlaceVO vo, int situation) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
