@@ -28,6 +28,7 @@
 					  margin: 4px 2px;
 					  cursor: pointer;}
 	#joinBtn{background-color: #555555; /* black */}
+	#subTitle{font-size:50px; text-align:center; font-weight:bold;width:800px;}
 
 	</style>
 	
@@ -63,7 +64,7 @@
 </head>
 <body>
 <div class="loginFrm">
-<h1 style="font-size:5vw;" align="center">로그인</h1>
+<p id="subTitle">로그인</p>
 <br>
 
 <form id="loginForm" name="loginForm"  method="post" action="/member/LoginProc.yo" class="navbar-form navbar-left">

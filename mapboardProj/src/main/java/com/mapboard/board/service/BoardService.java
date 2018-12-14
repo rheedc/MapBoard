@@ -10,9 +10,9 @@ import com.mapboard.board.vo.FileinfoVO;
 
 public interface BoardService {
 
-	// ¿¹½ÃÀÔ´Ï´Ù ÀÌ°÷¿¡´Ù Service ÇÔ¼ö¸¦ Á¤ÀÇÇÏ°í °¢ Å¬·¡½º¿¡ ±¸ÇöÇØÁÖ¼Å¿ä
-	// void ¸»°í String, VOÅ¬·¡½º µîÀ» »ç¿ë°¡´ÉÇÏ°í 
-	// ¸Å°³º¯¼ö
+	// ì˜ˆì‹œì…ë‹ˆë‹¤ ì´ê³³ì—ë‹¤ Service í•¨ìˆ˜ë¥¼ ì •ì˜í•˜ê³  ê° í´ë˜ìŠ¤ì— êµ¬í˜„í•´ì£¼ì…”ìš”
+	// void ë§ê³  String, VOí´ë˜ìŠ¤ ë“±ì„ ì‚¬ìš©ê°€ëŠ¥í•˜ê³  
+	// ë§¤ê°œë³€ìˆ˜
 	//	Board
 	public BoardVO boardSelectService(int oriNo) throws Exception;
 	public void boardInsertService(BoardVO vo, HttpSession session, ArrayList list) throws Exception;

@@ -12,18 +12,18 @@ public class CommonDaoImpl implements CommonDao{
 	
 	@Override
 	public void excuteDao() throws Exception {
-		System.out.println("CommonDao½ÃÀÛ");
-		// sql µé¾î°¡¾ßÇÒ ºÎºĞ
+		System.out.println("CommonDaoì‹œì‘");
+		// sql ë“¤ì–´ê°€ì•¼í•  ë¶€ë¶„
 		
-		/*mybatis¿¡ Á¤ÀÇµÈ °ÍÀ» »ç¿ëÇØ¾ßÇÑ´Ù.
-		*	ÇÑ°³¸é selectOne ¿©·¯°³¸é selectList
-		*	voidÀÏ ¼ö ÀÖ´Â °ÍÀº insert¿Íupdate, deleteÀÔ´Ï´Ù. 
-		*	sqlSession.update or insert, delete ¹æ½ÄÀ¸·Î »ç¿ëÇÕ´Ï´Ù 
+		/*mybatisì— ì •ì˜ëœ ê²ƒì„ ì‚¬ìš©í•´ì•¼í•œë‹¤.
+		*	í•œê°œë©´ selectOne ì—¬ëŸ¬ê°œë©´ selectList
+		*	voidì¼ ìˆ˜ ìˆëŠ” ê²ƒì€ insertì™€update, deleteì…ë‹ˆë‹¤. 
+		*	sqlSession.update or insert, delete ë°©ì‹ìœ¼ë¡œ ì‚¬ìš©í•©ë‹ˆë‹¤ 
 		*/
 		
 		// sqlSession.selectList("~~~.~~~~");
 		
-		System.out.println("CommonDao³¡");
+		System.out.println("CommonDaoë");
 		
 	}
 

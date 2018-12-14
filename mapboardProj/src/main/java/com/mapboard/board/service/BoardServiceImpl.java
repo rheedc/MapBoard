@@ -1,25 +1,16 @@
 /*package com.mapboard.board.service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.mapboard.board.dao.BoardDao;
 import com.mapboard.board.dao.BoardcommDao;
 import com.mapboard.board.dao.FileinfoDao;
 import com.mapboard.board.vo.BoardVO;
 import com.mapboard.board.vo.FileinfoVO;
-
-
-
-
 @Service("boardService")
 public class BoardServiceImpl implements BoardService{
-
 	@Autowired
 	private BoardcommDao bcDao;
 	@Autowired
@@ -27,160 +18,149 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private FileinfoDao fDao;
 	
-	// board-----------------------------------------------------½ÃÀÛ
-	//»ó¼¼º¸±â ÇÔ¼ö
+	// board-----------------------------------------------------ì‹œì‘
+	//ìƒì„¸ë³´ê¸° í•¨ìˆ˜
 	@Override
 	public BoardVO boardSelectService(int oriNo) throws Exception {
 		BoardVO vo = bDao.getBoardView(oriNo);
 		return vo;
 	}
 	
-	//°Ô½Ã¹° ±â·Ï ÇÔ¼ö
+	//ê²Œì‹œë¬¼ ê¸°ë¡ í•¨ìˆ˜
 	@Override
 	public void boardInsertService(BoardVO vo, HttpSession session, ArrayList list) throws Exception {
-		System.out.println("ÁúÀÇ¹® ½ÇÇà ÀüÀÇ no º¯¼ö °ª="+vo.getNo());
+		System.out.println("ì§ˆì˜ë¬¸ ì‹¤í–‰ ì „ì˜ no ë³€ìˆ˜ ê°’="+vo.getNo());
 		
 		String id = (String)session.getAttribute("UID");	//MemberService
-		//ÁúÀÇ ¸í·ÉÀ» ½ÇÇàÇÒ ¶§ ÇÊ¿äÇÑ µ¥ÀÌÅÍ´Â vo·Î ¹­¾î¼­ ¾Ë·ÁÁÖ±â·Î ÇßÀ¸¹Ç·Î...
+		//ì§ˆì˜ ëª…ë ¹ì„ ì‹¤í–‰í•  ë•Œ í•„ìš”í•œ ë°ì´í„°ëŠ” voë¡œ ë¬¶ì–´ì„œ ì•Œë ¤ì£¼ê¸°ë¡œ í–ˆìœ¼ë¯€ë¡œ...
 		vo.setId(id);
-		//°Ô½Ã¹°À» µî·Ï
+		//ê²Œì‹œë¬¼ì„ ë“±ë¡
 		fDao.insertBoard(vo, "board");	//FileBoardDAO
-		System.out.println("ÁúÀÇ¹® ½ÇÇà ÈÄ"+vo.getNo());
+		System.out.println("ì§ˆì˜ë¬¸ ì‹¤í–‰ í›„"+vo.getNo());
 		
-		//¾÷·ÎµåµÈ ÆÄÀÏÁ¤º¸¸¦ µî·Ï
-		//ÆÄÀÏÀÇ Á¤º¸´Â list°¡ °¡Áö°í ÀÖ´Â °³¼ö¸¸Å­ Ã³¸®µÇ¾î¾ß ÇÑ´Ù.
+		//ì—…ë¡œë“œëœ íŒŒì¼ì •ë³´ë¥¼ ë“±ë¡
+		//íŒŒì¼ì˜ ì •ë³´ëŠ” listê°€ ê°€ì§€ê³  ìˆëŠ” ê°œìˆ˜ë§Œí¼ ì²˜ë¦¬ë˜ì–´ì•¼ í•œë‹¤.
 		for(int i=0; i<list.size(); i++) {
-			//ÁúÀÇ¹®À» ½ÇÇàÇÒ ¶§ ÇÊ¿äÇÑ ¸ğµç Á¤º¸´Â vo¸¦ ÀÌ¿ëÇØ¼­ ¾Ë·ÁÁÖ±â·Î ÇßÀ¸¹Ç·Î...
+			//ì§ˆì˜ë¬¸ì„ ì‹¤í–‰í•  ë•Œ í•„ìš”í•œ ëª¨ë“  ì •ë³´ëŠ” voë¥¼ ì´ìš©í•´ì„œ ì•Œë ¤ì£¼ê¸°ë¡œ í–ˆìœ¼ë¯€ë¡œ...
 			vo.setOriNo(vo.getNo());
-			//ÆÄÀÏ¿¡ ´ëÇÑ Á¤º¸´Â list°¡ °¡Áö°í ÀÖ°í
-			//ÇÏ³ªÀÇ ÆÄÀÏÀÇ Á¤º¸´Â MapÀ¸·Î ÀúÀåÇØ ³õ¾ÒÀ¸¹Ç·Î 
+			//íŒŒì¼ì— ëŒ€í•œ ì •ë³´ëŠ” listê°€ ê°€ì§€ê³  ìˆê³ 
+			//í•˜ë‚˜ì˜ íŒŒì¼ì˜ ì •ë³´ëŠ” Mapìœ¼ë¡œ ì €ì¥í•´ ë†“ì•˜ìœ¼ë¯€ë¡œ 
 			HashMap map = (HashMap)list.get(i);
 			vo.setPath((String)map.get("path"));
 			vo.setOriName((String)map.get("oriName"));
 			vo.setSaveName((String)map.get("saveName"));
 			vo.setLen((Long)map.get("len"));
-			//ÁúÀÇ ¸í·É ½ÇÇà
+			//ì§ˆì˜ ëª…ë ¹ ì‹¤í–‰
 			fDao.insertBoard(vo, "fileInfo");
 		}//end for
 	}
-
 	@Override
 	public void boardUpdateService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void boardDeleteService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	//Á¶È¸¼ö Áõ°¡ÁúÀÇ ½ÇÇà ÇÔ¼ö(»ó¼¼º¸±â È­¸é »Ñ·ÁÁö±â À§ÇÔ)
+	//ì¡°íšŒìˆ˜ ì¦ê°€ì§ˆì˜ ì‹¤í–‰ í•¨ìˆ˜(ìƒì„¸ë³´ê¸° í™”ë©´ ë¿Œë ¤ì§€ê¸° ìœ„í•¨)
 	@Override
 	public void updateHit(int oriNo, HttpSession session) {
-		//ÇØ´ç °Ô½Ã¹° Á¶È¸¼ö Áõ°¡Ã³¸®¸¦ ÇØÁÖ±â À§ÇØ¼­ ¼¼¼ÇÀ» ¾Ë¾Æ³»¼­ Áõ°¡¿©ºÎ¸¦ ÆÇ´Ü
-		//oriNo Á¶È¸¼ö Áõ°¡ÇÒ ±Û¹øÈ£
-		//¼¼¼Ç¿¡ "HIT"¶ó´Â Å°°ªÀ¸·Î °ú°Å¿¡ º» °Ô½Ã¹° ¹øÈ£
-		//ArrayList·Î ¹­¾î¼­ ±â¾ïÇØÁÙ ¿¹Á¤
-		¿¹) 1,3¹ø ºÃÀ¸¸é
+		//í•´ë‹¹ ê²Œì‹œë¬¼ ì¡°íšŒìˆ˜ ì¦ê°€ì²˜ë¦¬ë¥¼ í•´ì£¼ê¸° ìœ„í•´ì„œ ì„¸ì…˜ì„ ì•Œì•„ë‚´ì„œ ì¦ê°€ì—¬ë¶€ë¥¼ íŒë‹¨
+		//oriNo ì¡°íšŒìˆ˜ ì¦ê°€í•  ê¸€ë²ˆí˜¸
+		//ì„¸ì…˜ì— "HIT"ë¼ëŠ” í‚¤ê°’ìœ¼ë¡œ ê³¼ê±°ì— ë³¸ ê²Œì‹œë¬¼ ë²ˆí˜¸
+		//ArrayListë¡œ ë¬¶ì–´ì„œ ê¸°ì–µí•´ì¤„ ì˜ˆì •
+		ì˜ˆ) 1,3ë²ˆ ë´¤ìœ¼ë©´
 		 * ArrayList list = new ArrayList();
 		 * list.add(1);
 		 * list.add(3);
 		 * session.setAttribute("HIT",list);
 		
-		boolean isHit = false;	//Á¶È¸¼ö¸¦ Áõ°¡ÇÒÁö ¸»Áö¸¦ ±â¾ïÇÒ º¯¼ö
+		boolean isHit = false;	//ì¡°íšŒìˆ˜ë¥¼ ì¦ê°€í• ì§€ ë§ì§€ë¥¼ ê¸°ì–µí•  ë³€ìˆ˜
 		ArrayList hitList = (ArrayList)session.getAttribute("HIT");
 		
-		//ÃÖÁ¶ ¹æ¹®ÇÑ »ç¶÷ÀÎ °æ¿ì
+		//ìµœì¡° ë°©ë¬¸í•œ ì‚¬ëŒì¸ ê²½ìš°
 		if(hitList==null || hitList.size()==0) {
 			isHit = true;
 			hitList = new ArrayList();
 			hitList.add(oriNo);
 			session.setAttribute("HIT",hitList);
 		}
-		else if(!hitList.contains(oriNo)) {//Ã³À½ ¹æ¹®Àº ¾Æ´ÏÁö¸¸ ÇØ´ç ±ÛÀº Ã³À½º¸´Â °æ¿ì
+		else if(!hitList.contains(oriNo)) {//ì²˜ìŒ ë°©ë¬¸ì€ ì•„ë‹ˆì§€ë§Œ í•´ë‹¹ ê¸€ì€ ì²˜ìŒë³´ëŠ” ê²½ìš°
 			isHit = true;
 			hitList.add(oriNo);
 			session.setAttribute("HIT",hitList);
 		}
 		else {
-			isHit = false;	//Á¶È¸¼ö Áõ°¡x
+			isHit = false;	//ì¡°íšŒìˆ˜ ì¦ê°€x
 		}
 		
 		if(isHit == true) {
-			fDao.updateHit(oriNo); //Á¶È¸¼ö Áõ°¡
+			fDao.updateHit(oriNo); //ì¡°íšŒìˆ˜ ì¦ê°€
 		}
 		
 	}
-	// board-----------------------------------------------------³¡
-	// boardcomm-----------------------------------------------------½ÃÀÛ
+	// board-----------------------------------------------------ë
+	// boardcomm-----------------------------------------------------ì‹œì‘
 	@Override
 	public void boardcommSelectService() throws Exception {
-		System.out.println("boardcommSelectService½ÃÀÛ");
+		System.out.println("boardcommSelectServiceì‹œì‘");
 		
 		bcDao.example();
 		
-		System.out.println("boardcommSelectService³¡");
+		System.out.println("boardcommSelectServiceë");
 		
 	}
-
 	@Override
 	public void boardcommInsertService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void boardcommUpdateService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void boardcommDeleteService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-	// boardcomm-----------------------------------------------------³¡
-	// fileinfo-----------------------------------------------------½ÃÀÛ
+	// boardcomm-----------------------------------------------------ë
+	// fileinfo-----------------------------------------------------ì‹œì‘
 	
-	//»ó¼¼º¸±â Ã·ºÎÆÄÀÏ
+	//ìƒì„¸ë³´ê¸° ì²¨ë¶€íŒŒì¼
 	@Override
 	public ArrayList fileinfoSelectService(int oriNo) throws Exception {
-		//Ã·ºÎÆÄÀÏ Á¤º¸ °Ë»öÇØ¼­ ¾Ë·ÁÁØ´Ù.
+		//ì²¨ë¶€íŒŒì¼ ì •ë³´ ê²€ìƒ‰í•´ì„œ ì•Œë ¤ì¤€ë‹¤.
 		ArrayList list = fDao.getFileInfo(oriNo);
 		return list;
 	}
-
 	@Override
 	public void fileinfoInsertService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void fileinfoUpdateService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void fileinfoDeleteService() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
-
-	//´Ù¿î·Îµå ÆÄÀÏ Á¤º¸ °Ë»ö ÁúÀÇ ½ÇÇà ÇÔ¼ö
+	//ë‹¤ìš´ë¡œë“œ íŒŒì¼ ì •ë³´ ê²€ìƒ‰ ì§ˆì˜ ì‹¤í–‰ í•¨ìˆ˜
 	@Override
 	public FileinfoVO getDownload(int fileNo) {
 		FileinfoVO vo = fDao.getDownload(fileNo);
 		return vo;
 	}
-	// filrinfo-----------------------------------------------------³¡	
-
+	// filrinfo-----------------------------------------------------ë	
 	
 	
-
 }
 */

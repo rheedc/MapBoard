@@ -1,168 +1,159 @@
 /*package com.mapboard.board.controller;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
 import com.mapboard.board.service.BoardService;
 import com.mapboard.board.vo.BoardVO;
 import com.mapboard.board.vo.FileinfoVO;
 import com.mapboard.util.PageUtil;
-
-
-
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
 	@Autowired
 	private BoardService service;
 	
-	//1. ¸ñ·Ïº¸±â
+	//1. ëª©ë¡ë³´ê¸°
 	@RequestMapping("/boardList")
 	public void boardList(@RequestParam(value="nowPage", defaultValue="1") int nowPage,
 									HttpServletRequest req) {
 		
-		System.out.println("controllerÀÇ boardList ½ÃÀÛ");
+		System.out.println("controllerì˜ boardList ì‹œì‘");
 		
-		//1) ÆäÀÌÁö ÀÌµ¿ ±â´É
+		//1) í˜ì´ì§€ ì´ë™ ê¸°ëŠ¥
 		PageUtil pInfo =service.getPageInfo(nowPage);
 		
-		//2) °Ô½Ã¹° ²¨³»¿À±â
+		//2) ê²Œì‹œë¬¼ êº¼ë‚´ì˜¤ê¸°
 		ArrayList list = service.getBoardList(pInfo);
-		System.out.println("°Ô½Ã¹°¼ö = "+list.size());
+		System.out.println("ê²Œì‹œë¬¼ìˆ˜ = "+list.size());
 		
-		//3) ¸ğµ¨ ¸¸µé±â
+		//3) ëª¨ë¸ ë§Œë“¤ê¸°
 		req.setAttribute("PINFO", pInfo);
 		req.setAttribute("LIST", list);
 		
-		System.out.println("controllerÀÇ  boardList ³¡");
+		System.out.println("controllerì˜  boardList ë");
 	}
 	
-	//2. ±Û¾²±â Æûº¸±â ¿äÃ»
+	//2. ê¸€ì“°ê¸° í¼ë³´ê¸° ìš”ì²­
 	@RequestMapping("/writeForm")
 	public void writeForm() {
-		//ÀÎÅÍ¼ÁÅÍ¸¦ ÀÌ¿ëÇÏ¿© ·Î±×ÀÎ Ã³¸® Çß±â ¶§¹®¿¡ µüÈ÷ ÇÒÀÏÀÌ ¾ø´Ù.
-		System.out.println("controllerÀÇ writeForm ½ÃÀÛ°ú ³¡");
+		//ì¸í„°ì…‰í„°ë¥¼ ì´ìš©í•˜ì—¬ ë¡œê·¸ì¸ ì²˜ë¦¬ í–ˆê¸° ë•Œë¬¸ì— ë”±íˆ í• ì¼ì´ ì—†ë‹¤.
+		System.out.println("controllerì˜ writeForm ì‹œì‘ê³¼ ë");
 	}									
 	
 	
-	//3. ±Û¾²±â
+	//3. ê¸€ì“°ê¸°
 	@RequestMapping("/writeProc")
 	public ModelAndView writeProc(BoardVO vo, HttpSession session) {
-		System.out.println("controllerÀÇ writeProc ½ÃÀÛ");
+		System.out.println("controllerì˜ writeProc ì‹œì‘");
 		
-		//1) ÆÄ¶ó¹ÌÅÍ
+		//1) íŒŒë¼ë¯¸í„°
 		String path = "E:\\upload";
-		//ÆÄÀÏÁ¤º¸¸¦ ÇÏ³ª·Î ¹­±â À§ÇÑ º¯¼ö
+		//íŒŒì¼ì •ë³´ë¥¼ í•˜ë‚˜ë¡œ ë¬¶ê¸° ìœ„í•œ ë³€ìˆ˜
 		ArrayList list = new ArrayList();
 		for(int i=0 ; i<vo.getFiles().length ; i++) {
-			//ÇÏ³ª¾¿ ÆÄÀÏÀÇ ½ÇÁ¦ ÀÌ¸§À» ¾Ë¾Æ³»ÀÚ
+			//í•˜ë‚˜ì”© íŒŒì¼ì˜ ì‹¤ì œ ì´ë¦„ì„ ì•Œì•„ë‚´ì
 			String oriName = vo.getFiles()[i].getOriginalFilename();
-			//ÆÄÀÏÀÌ ¾÷·Îµå µÇÁö ¾ÊÀ¸¸é ´ÙÀ½ ÆÄÀÏÀÛ¾÷À» ½ÃµµÇÑ´Ù.
+			//íŒŒì¼ì´ ì—…ë¡œë“œ ë˜ì§€ ì•Šìœ¼ë©´ ë‹¤ìŒ íŒŒì¼ì‘ì—…ì„ ì‹œë„í•œë‹¤.
 			if(oriName==null || oriName.length()==0) {
 				continue;
 			}
 			String saveName = FileUtil.renameTo(path, oriName);		//FileUtil			
 			File file = new File(path, saveName);					
-			//transferTo()¸¦ ÀÌ¿ëÇØ¼­ º¹»ç
+			//transferTo()ë¥¼ ì´ìš©í•´ì„œ ë³µì‚¬
 			try {
-				vo.getFiles()[i].transferTo(file);	//path¿¡ saveNameÀ» ÀúÀå
+				vo.getFiles()[i].transferTo(file);	//pathì— saveNameì„ ì €ì¥
 			} catch (Exception e) {
-				System.out.println("°­Á¦º¹»ç ¿¡·¯ = "+e);
+				System.out.println("ê°•ì œë³µì‚¬ ì—ëŸ¬ = "+e);
 			} 			
-			//ÀÌÁ¦ ÇÏ³ªÀÇ ÆÄÀÏÀÌ ¾÷·ÎµåµÈ »óÅÂ
-			//¾÷·ÎµåµÈ ÆÄÀÏÀÇ Á¤º¸¸¦ MapÀ¸·Î ¹­ÀÚ.(path,oriName,saveName,len)
+			//ì´ì œ í•˜ë‚˜ì˜ íŒŒì¼ì´ ì—…ë¡œë“œëœ ìƒíƒœ
+			//ì—…ë¡œë“œëœ íŒŒì¼ì˜ ì •ë³´ë¥¼ Mapìœ¼ë¡œ ë¬¶ì.(path,oriName,saveName,len)
 			HashMap map = new HashMap();
 			map.put("path", path);
 			map.put("oriName", oriName);
 			map.put("saveName", saveName);
 			map.put("len", file.length());			
-			list.add(map);	//ÇÑ¹ø¾¿ µ¹ ¶§¸¶´Ù ¸®½ºÆ®¿¡ Ãß°¡			
-		}//for ³¡
+			list.add(map);	//í•œë²ˆì”© ëŒ ë•Œë§ˆë‹¤ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€			
+		}//for ë
 		
-		//2) ¼­ºñ½º
+		//2) ì„œë¹„ìŠ¤
 		service.insertBoard(vo, session, list); 
 		
-		//3) ¸ğµ¨
-		//4) ºä È£Ãâ
+		//3) ëª¨ë¸
+		//4) ë·° í˜¸ì¶œ
 		ModelAndView mv = new ModelAndView();
 		RedirectView view = new RedirectView("../fileBoard/boardList.sun");
 		mv.setView(view);
 		return mv;
 	}
 	
-	//4. Á¶È¸¼ö Áõ°¡
+	//4. ì¡°íšŒìˆ˜ ì¦ê°€
 	@RequestMapping("/hitProc")
 	public ModelAndView boardHitProc(HttpServletRequest req, ModelAndView mv,
 																					HttpSession session) {
-		//1) ÆÄ¶ó¹ÌÅÍ
+		//1) íŒŒë¼ë¯¸í„°
 		String strNo = req.getParameter("oriNo");
 		int oriNo = Integer.parseInt(strNo);
-		String nowPage = req.getParameter("nowPage");	//¸±·¹ÀÌ¿ë
+		String nowPage = req.getParameter("nowPage");	//ë¦´ë ˆì´ìš©
 		
-		//2) ¼­ºñ½º	
+		//2) ì„œë¹„ìŠ¤	
 		service.updateHit(oriNo, session);
 		
-		//3) ¸ğµ¨ 4)ºä
-		//ÄÁÆ®·Ñ·¯¿¡¼­ °­Á¦·Î »ó¼¼º¸±â Redirect
+		//3) ëª¨ë¸ 4)ë·°
+		//ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ ê°•ì œë¡œ ìƒì„¸ë³´ê¸° Redirect
 		RedirectView rv = new RedirectView("../fileBoard/boardView.sun");
-		//ÄÁÆ®·Ñ·¯¿¡¼­ RedirectÇÏ¸é¼­ ÆÄ¶ó¹ÌÅÍ¸¦ º¸³»°í ½Í´Ù¸é 
-		//rv.addStaticAttribute(StringÇüÅÂ "Å°°ª",  µ¥ÀÌÅÍ);
+		//ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ Redirectí•˜ë©´ì„œ íŒŒë¼ë¯¸í„°ë¥¼ ë³´ë‚´ê³  ì‹¶ë‹¤ë©´ 
+		//rv.addStaticAttribute(Stringí˜•íƒœ "í‚¤ê°’",  ë°ì´í„°);
 		rv.addStaticAttribute("oriNo", oriNo);
 		rv.addStaticAttribute("nowPage", nowPage);
 		mv.setView(rv);
 		return mv;
 	}
 	
-	//5. »ó¼¼º¸±â ÇÔ¼ö
+	//5. ìƒì„¸ë³´ê¸° í•¨ìˆ˜
 	@RequestMapping("/boardView")
 	public ModelAndView boardView(@RequestParam(value="oriNo") int oriNo,
 			@RequestParam(value="nowPage") int nowPage) {		
-
-		//2) ¼­ºñ½º
-		//(1) »ó¼¼º¸±â ³»¿ë°Ë»ö
+		//2) ì„œë¹„ìŠ¤
+		//(1) ìƒì„¸ë³´ê¸° ë‚´ìš©ê²€ìƒ‰
 		BoardVO vo = service.getBoardView(oriNo);
 						
-		//(2) ÆÄÀÏÁ¤º¸ °Ë»ö
+		//(2) íŒŒì¼ì •ë³´ ê²€ìƒ‰
 		ArrayList list = service.getFileInfo(oriNo);
 		
-		//3) ¸ğµ¨
+		//3) ëª¨ë¸
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("VIEW", vo);									//³»¿ë
-		mv.addObject("LIST", list);									//Ã·ºÎÆÄÀÏ Á¤º¸
-		mv.addObject("nowPage", nowPage);			//¸±·¹ÀÌ¿ë
+		mv.addObject("VIEW", vo);									//ë‚´ìš©
+		mv.addObject("LIST", list);									//ì²¨ë¶€íŒŒì¼ ì •ë³´
+		mv.addObject("nowPage", nowPage);			//ë¦´ë ˆì´ìš©
 		
-		//4) ºä
+		//4) ë·°
 		mv.setViewName("fileBoard/boardView");
 		return mv;
 	}
 	
-	//6. ÆÄÀÏ ´Ù¿î·Îµå
+	//6. íŒŒì¼ ë‹¤ìš´ë¡œë“œ
 	@RequestMapping("/fileDownload")
 	public ModelAndView fileDownload(
 			@RequestParam(value="fileNo") int fileNo) {
 		
-		//2) ¼­ºñ½º
+		//2) ì„œë¹„ìŠ¤
 		FileinfoVO vo = service.getDownload(fileNo);
-		//´Ù¿î·Îµå ÇÒ ÆÄÀÏÀ» FileÀÌ¶ó´Â Å¬·¡½º·Î ¸¸µé¾î¼­ Á¦°øÇÏ±â·Î Çß´Ù.
+		//ë‹¤ìš´ë¡œë“œ í•  íŒŒì¼ì„ Fileì´ë¼ëŠ” í´ë˜ìŠ¤ë¡œ ë§Œë“¤ì–´ì„œ ì œê³µí•˜ê¸°ë¡œ í–ˆë‹¤.
 		File file = new File(vo.getPath(),vo.getSaveName());
 		
-		//3) ¸ğµ¨ 4) ºä
-		//setView : redirect¿ë
-		//setViewName : ÀÏ¹İºä
-		//¡Ú¡Ú¡Ú»ç¿ëÀÚ Á¤ÀÇ ºä È£ÃâÇÏ±â
-		//Çü½Ä> new ModelAndView("»ç¿ëÀÚÁ¤ÀÇ ºä¸í","Àü´ŞÇÒ µ¥ÀÌÅÍ Å°°ª",Àü´ŞÇÒ µ¥ÀÌÅÍ);
+		//3) ëª¨ë¸ 4) ë·°
+		//setView : redirectìš©
+		//setViewName : ì¼ë°˜ë·°
+		//â˜…â˜…â˜…ì‚¬ìš©ì ì •ì˜ ë·° í˜¸ì¶œí•˜ê¸°
+		//í˜•ì‹> new ModelAndView("ì‚¬ìš©ìì •ì˜ ë·°ëª…","ì „ë‹¬í•  ë°ì´í„° í‚¤ê°’",ì „ë‹¬í•  ë°ì´í„°);
 		ModelAndView mv = 
 					new ModelAndView("download", "downloadFile", file); 	//sun-context.xml
 		return mv;
@@ -172,20 +163,20 @@ public class BoardController {
 	
 	
 	
-	//7. ´ñ±Û----------------------------------------------------³ªÁß¿¡ ÇÏ±â
+	//7. ëŒ“ê¸€----------------------------------------------------ë‚˜ì¤‘ì— í•˜ê¸°
 	@RequestMapping("board/replyModify")
 	public void replyModify() {
-		System.out.println("test ÄÁÆ®·Ñ·¯ÀÇ replyModify");
+		System.out.println("test ì»¨íŠ¸ë¡¤ëŸ¬ì˜ replyModify");
 	}
 	
 	@RequestMapping("board/modifyForm")
 	public void replyForm() {
-		System.out.println("test ÄÁÆ®·Ñ·¯ÀÇ replyForm");
+		System.out.println("test ì»¨íŠ¸ë¡¤ëŸ¬ì˜ replyForm");
 	}
 	
 	@RequestMapping("board/boardDetail")
 	public void boardDetail() {
-		System.out.println("test ÄÁÆ®·Ñ·¯ÀÇ boardDetail");
+		System.out.println("test ì»¨íŠ¸ë¡¤ëŸ¬ì˜ boardDetail");
 	}
 	
 	
@@ -193,19 +184,19 @@ public class BoardController {
 	
 	
 	
-	// ¿¹½Ã ÇÔ¼ö ÀÔ´Ï´Ù-----------------------------------------------------------------------------------------------
+	// ì˜ˆì‹œ í•¨ìˆ˜ ì…ë‹ˆë‹¤-----------------------------------------------------------------------------------------------
 		@RequestMapping("/board/example")
 		public void example() {
-			System.out.println("BoardController½ÃÀÛ");
+			System.out.println("BoardControllerì‹œì‘");
 			
 			try {
-				//	service ÇÔ¼ö ½ÇÇà¹®
+				//	service í•¨ìˆ˜ ì‹¤í–‰ë¬¸
 				service.boardcommSelectService();
 			} catch (Exception e) {
-				System.out.println("BoardController ¿À·ù"+e);
+				System.out.println("BoardController ì˜¤ë¥˜"+e);
 			}
 			
-			System.out.println("BoardController³¡");
+			System.out.println("BoardControllerë");
 			
 		}
 		

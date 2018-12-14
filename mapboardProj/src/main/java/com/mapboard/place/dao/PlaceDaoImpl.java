@@ -12,38 +12,38 @@ import com.mapboard.util.PageUtil;
 @Service("placeDao")
 public class PlaceDaoImpl implements PlaceDao{
 	
-	//	Statement ¿ªÇÒÀ» ÇØÁÙ sqlSessionTemplate¸¦ ÇÊ¿ä
+	//	Statement ì—­í• ì„ í•´ì¤„ sqlSessionTemplateë¥¼ í•„ìš”
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
 
 	
-	//	Áöµµ¿¡ »ó°¡µ¥ÀÌÅÍ »Ñ·ÁÁÖ±â
+	//	ì§€ë„ì— ìƒê°€ë°ì´í„° ë¿Œë ¤ì£¼ê¸°
 	@Override
 	public ArrayList<PlaceVO> getPlaceDao(PlaceVO vo) {
 		
-		System.out.println("PlaceDao½ÃÀÛ");
-		//	ÁúÀÇ¸¦ ½ÇÇàÇÒ ½ºÅ×ÀÌÆ®¸ÕÆ® ±¸ÇÏ±â
+		System.out.println("PlaceDaoì‹œì‘");
+		//	ì§ˆì˜ë¥¼ ì‹¤í–‰í•  ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ êµ¬í•˜ê¸°
 		ArrayList<PlaceVO> arrayList	=	null;
 		
-		// °ªÀ» ¹Ş¾Æ setÇØÁØ´Ù ¹Ø¿¡°Ç ÀÓ½Ã·Î ³Ö¾ú´Ù
+		// ê°’ì„ ë°›ì•„ setí•´ì¤€ë‹¤ ë°‘ì—ê±´ ì„ì‹œë¡œ ë„£ì—ˆë‹¤
 		vo.setSigungu_code(11680);
 		vo.setCategory_no(3);
-		//	ÁúÀÇ ½ÇÇà
+		//	ì§ˆì˜ ì‹¤í–‰
 		arrayList	=	(ArrayList)sqlSession.selectList("placeSql.placeList", vo);
-		System.out.println("PlaceDao³¡");
+		System.out.println("PlaceDaoë");
 		
-		//	°á°ú¸¦ ¼­ºñ½º¿¡°Ô ¹İÈ¯
+		//	ê²°ê³¼ë¥¼ ì„œë¹„ìŠ¤ì—ê²Œ ë°˜í™˜
 		return arrayList;
 				
 	}
 	
 	/*
-	 * ÀÛ¼ºÀÚ : Á¶Àººñ 
-	 * ÀÛ¼ºÀÏ : 2018-12-12
+	 * ì‘ì„±ì : ì¡°ì€ë¹„ 
+	 * ì‘ì„±ì¼ : 2018-12-12
 	 */
-	//°Ô½Ã¹° ÃÑ°³¼ö ±¸ÇÏ±â ÁúÀÇ½ÇÇà ÇÔ¼ö
+	//ê²Œì‹œë¬¼ ì´ê°œìˆ˜ êµ¬í•˜ê¸° ì§ˆì˜ì‹¤í–‰ í•¨ìˆ˜
 	public int getPlaceListCnt(PlaceVO vo, int situation) {
-		//ÁúÀÇ¸¦ ½ÇÇàÇÒ ½ºÅ×ÀÌÆ®¸ÕÆ® ±¸ÇÏ±â
+		//ì§ˆì˜ë¥¼ ì‹¤í–‰í•  ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ êµ¬í•˜ê¸°
 		/*int result=sqlSession.selectOne("fileBoardName.totalCount");*/
 		int placecnt_total=0;
 		if(situation==2) {
@@ -58,11 +58,11 @@ public class PlaceDaoImpl implements PlaceDao{
 		if(situation==6) {
 			placecnt_total=sqlSession.selectOne("placeSql.cnt_placeList_p_cd",vo);
 		}
-		//°á°ú¸¦ ¹İÈ¯
+		//ê²°ê³¼ë¥¼ ë°˜í™˜
 		return placecnt_total;
 	}
 	
-	//Àå¼Ò°Ë»ö°á°ú ¸ñ·Ï ºÒ·¯¿À´Â ÇÔ¼ö
+	//ì¥ì†Œê²€ìƒ‰ê²°ê³¼ ëª©ë¡ ë¶ˆëŸ¬ì˜¤ëŠ” í•¨ìˆ˜
 	public ArrayList getPlaceList(PlaceVO vo,int situation) {
 		ArrayList plist=new ArrayList();
 		if(situation==2) {

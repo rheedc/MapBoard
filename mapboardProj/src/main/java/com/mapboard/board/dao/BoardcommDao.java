@@ -2,7 +2,7 @@ package com.mapboard.board.dao;
 
 public interface BoardcommDao {
 
-	//¿©±â¼­ ÇÔ¼ö¸¦ ÀÛ¼º ÈÄ BoardcommDaoImpl.java¿¡ ±¸ÇöÇØÁÖ¼¼¿ä
+	//ì—¬ê¸°ì„œ í•¨ìˆ˜ë¥¼ ì‘ì„± í›„ BoardcommDaoImpl.javaì— êµ¬í˜„í•´ì£¼ì„¸ìš”
 	//ex)
 	public void example() throws Exception;
 }

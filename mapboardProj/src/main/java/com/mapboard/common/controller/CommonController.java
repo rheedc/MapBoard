@@ -12,19 +12,19 @@ public class CommonController {
 	@Autowired
 	private CommonService service;
 	
-	// ¿¹½Ã ÇÔ¼ö ÀÔ´Ï´Ù
+	// ì˜ˆì‹œ í•¨ìˆ˜ ì…ë‹ˆë‹¤
 	@RequestMapping("/common/example")
 	public void example() {
-		System.out.println("CommonController½ÃÀÛ");
+		System.out.println("CommonControllerì‹œì‘");
 		
 		try {
-			//	service ÇÔ¼ö ½ÇÇà¹®
+			//	service í•¨ìˆ˜ ì‹¤í–‰ë¬¸
 			service.excuteService();
 		} catch (Exception e) {
-			System.out.println("CommonService ¿À·ù"+e);
+			System.out.println("CommonService ì˜¤ë¥˜"+e);
 		}
 		
-		System.out.println("CommonController³¡");
+		System.out.println("CommonControllerë");
 		
 	}
 	

@@ -1,7 +1,5 @@
 package com.mapboard.member.dao;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;

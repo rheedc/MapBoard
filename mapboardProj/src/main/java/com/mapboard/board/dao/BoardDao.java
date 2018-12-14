@@ -8,7 +8,7 @@ import com.mapboard.board.vo.BoardVO;
 
 public interface BoardDao {
 
-	//¿©±â¼­ ÇÔ¼ö¸¦ ÀÛ¼º ÈÄ BoardDaoImpl.java¿¡ ±¸ÇöÇØÁÖ¼¼¿ä
+	//ì—¬ê¸°ì„œ í•¨ìˆ˜ë¥¼ ì‘ì„± í›„ BoardDaoImpl.javaì— êµ¬í˜„í•´ì£¼ì„¸ìš”
 	public void insertBoard()  throws Exception;
 	public int getTotalCount()  throws Exception;
 	public ArrayList getBoardList() throws Exception;

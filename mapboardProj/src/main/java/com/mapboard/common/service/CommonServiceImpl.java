@@ -10,14 +10,14 @@ public class CommonServiceImpl implements CommonService{
 
 	@Autowired
 	private CommonDao dao;
-	//	±¸Çö ¿¹½ÃÀÔ´Ï´Ù
+	
 
 	@Override
 	public void excuteService() throws Exception {
-		System.out.println("CommonService½ÃÀÛ");
+		System.out.println("CommonServiceÂ½ÃƒÃ€Ã›");
 		dao.excuteDao();
 		
-		System.out.println("CommonService³¡");
+		System.out.println("CommonServiceÂ³Â¡");
 	}
 
 	@Override

@@ -1,31 +1,24 @@
 /*package com.mapboard.board.dao;
-
 import java.util.ArrayList;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.mapboard.board.vo.FileinfoVO;
-
-
 @Service("fileinfoDao")
 public class FileinfoDaoImpl implements FileinfoDao{
-
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
 	
 	public void insertBoard(FileinfoVO vo,String kind) {
 		sqlSession.insert("fileBoardName.insertFileInfo", vo);
 	}
-
-	//Ã·ºÎÆÄÀÏ °Ë»öÁúÀÇ ½ÇÇà ÇÔ¼ö(»ó¼¼º¸±â È­¸é¿¡ »Ñ·ÁÁú ³»¿ë)
+	//ì²¨ë¶€íŒŒì¼ ê²€ìƒ‰ì§ˆì˜ ì‹¤í–‰ í•¨ìˆ˜(ìƒì„¸ë³´ê¸° í™”ë©´ì— ë¿Œë ¤ì§ˆ ë‚´ìš©)
 	public ArrayList getFileInfo(int oriNo) {
-		//½ºÅ×ÀÌÆ®¸ÕÆ® ±¸ÇÏ±â -> ÁúÀÇ½ÇÇà
+		//ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ êµ¬í•˜ê¸° -> ì§ˆì˜ì‹¤í–‰
 		return (ArrayList)sqlSession.selectList("fileBoardName.fileInfo", oriNo);	
 	}
 	
-	//´Ù¿î·Îµå ÆÄÀÏ Á¤º¸ °Ë»ö ÁúÀÇ ½ÇÇà ÇÔ¼ö
+	//ë‹¤ìš´ë¡œë“œ íŒŒì¼ ì •ë³´ ê²€ìƒ‰ ì§ˆì˜ ì‹¤í–‰ í•¨ìˆ˜
 	public FileinfoVO getDownload(int fileNo) {
 		return (FileinfoVO)sqlSession.selectOne("fileBoardName.download", fileNo);
 	}

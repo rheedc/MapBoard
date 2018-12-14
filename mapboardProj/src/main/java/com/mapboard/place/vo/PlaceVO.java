@@ -9,23 +9,23 @@ public class PlaceVO extends CommonVO{
 	private String sigungu_name;
 	private String doro_juso;
 	
-	//Áöµµ°Ô½ÃÆÇ¿¡¼­ ÇÏ³ªÀÇ VO¸¦ »ç¿ëÇÏ·Á¸é 
-	//°Ô½Ã¹° Á¤º¸¸¦ °¡Á®¿À±â À§ÇÑ º¯¼öµµ ¼±¾ğÇØ¾ßÇÑ´Ù  
+	//ì§€ë„ê²Œì‹œíŒì—ì„œ í•˜ë‚˜ì˜ VOë¥¼ ì‚¬ìš©í•˜ë ¤ë©´ 
+	//ê²Œì‹œë¬¼ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ê¸° ìœ„í•œ ë³€ìˆ˜ë„ ì„ ì–¸í•´ì•¼í•œë‹¤  
 	private String subject;
 	private String comm;
 	private int point;
 	private int likecnt;
 	private int readcnt;
 	
-	//Á¤º¸¸¦ »Ñ¸®±â À§ÇØ Ãß°¡·Î ÇÊ¿äÇÑ º¯¼öµé
+	//ì •ë³´ë¥¼ ë¿Œë¦¬ê¸° ìœ„í•´ ì¶”ê°€ë¡œ í•„ìš”í•œ ë³€ìˆ˜ë“¤
 	
-	private int placecnt_total;		//ÃÑ ÇÊÅÍ¸µµÈ Àå¼Ò°³¼ö
-	private float avgpoint;			//Àå¼Òº° Æò±ÕÆòÁ¡
-	private int goodcnt;				//good°³¼ö
-	private int sosocnt;					//soso°³¼ö
-	private int badcnt;					//bad°³¼ö
-	private int reviewcnt;				//Àå¼Ò¿¡ ³²±ä °Ô½Ã¹°°³¼ö
-	private int reviewcnt_total;	//ÃÑ ÇÊÅÍ¸µµÈ °Ô½Ã¹°°³¼ö
+	private int placecnt_total;		//ì´ í•„í„°ë§ëœ ì¥ì†Œê°œìˆ˜
+	private float avgpoint;			//ì¥ì†Œë³„ í‰ê· í‰ì 
+	private int goodcnt;				//goodê°œìˆ˜
+	private int sosocnt;					//sosoê°œìˆ˜
+	private int badcnt;					//badê°œìˆ˜
+	private int reviewcnt;				//ì¥ì†Œì— ë‚¨ê¸´ ê²Œì‹œë¬¼ê°œìˆ˜
+	private int reviewcnt_total;	//ì´ í•„í„°ë§ëœ ê²Œì‹œë¬¼ê°œìˆ˜
 	
 
 	public int getPlacecnt_total() {

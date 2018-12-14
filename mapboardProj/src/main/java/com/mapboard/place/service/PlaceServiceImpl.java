@@ -16,37 +16,37 @@ public class PlaceServiceImpl implements PlaceService{
 	private PlaceDao pdao;
 
 	
-	//		Áöµµ ÁÂÇ¥Á¤º¸¸¦ °¡Á®¿ÍÁÖ´Â ÇÔ¼ö
+	//		ì§€ë„ ì¢Œí‘œì •ë³´ë¥¼ ê°€ì ¸ì™€ì£¼ëŠ” í•¨ìˆ˜
 	@Override
 	public ArrayList<PlaceVO> getPlaceService(PlaceVO vo) {
-		System.out.println("PlaceService½ÃÀÛ");
-		//	ÇÒÀÏ
-		// Áöµµ ÁÂÇ¥ ±¸ÇÏ±â dao¿¡°Ô ÇÒÀÏÀ» ³Ñ±ä´Ù
+		System.out.println("PlaceServiceì‹œì‘");
+		//	í• ì¼
+		// ì§€ë„ ì¢Œí‘œ êµ¬í•˜ê¸° daoì—ê²Œ í• ì¼ì„ ë„˜ê¸´ë‹¤
 		ArrayList<PlaceVO> arrayList	=	null;
 		arrayList	=	pdao.getPlaceDao(vo);
 		
 		System.out.println(arrayList.size());
-		System.out.println("PlaceService³¡");
+		System.out.println("PlaceServiceë");
 		
 		
 		return arrayList;
 	}
 	
-	/*-----------------------------------ÀÛ¼ºÀÚ : Á¶Àººñ-----------------------------------	 */
+	/*-----------------------------------ì‘ì„±ì : ì¡°ì€ë¹„-----------------------------------	 */
 	
-	//ÆäÀÌÁö ÀÌµ¿Á¤º¸¸¦ ¸¸µé¾îÁÖ´Â ÇÔ¼ö
+	//í˜ì´ì§€ ì´ë™ì •ë³´ë¥¼ ë§Œë“¤ì–´ì£¼ëŠ” í•¨ìˆ˜
 	public PageUtil getPageInfo(PlaceVO vo,int nowPage,int situation,String searchType) {
-		//ÇÒÀÏ
+		//í• ì¼
 		int totalCount=0;
-		//Àå¼Ò°Ë»ö °á°úº¸±â½Ã ÃÑ°³¼ö±¸ÇÏ±â
+		//ì¥ì†Œê²€ìƒ‰ ê²°ê³¼ë³´ê¸°ì‹œ ì´ê°œìˆ˜êµ¬í•˜ê¸°
 		if(searchType=="placeSearch") {
 			totalCount=pdao.getPlaceListCnt(vo, situation);
 		}
-		//°Ô½Ã¹°°Ë»ö °á°úº¸±â½Ã ÃÑ°³¼ö±¸ÇÏ±â
+		//ê²Œì‹œë¬¼ê²€ìƒ‰ ê²°ê³¼ë³´ê¸°ì‹œ ì´ê°œìˆ˜êµ¬í•˜ê¸°
 		if(searchType=="boardSearch") {
 			totalCount=pdao.getBoardListCnt(vo, situation);
 		}
-		//ÇÑ ÆäÀÌÁö´ç 10°³ÀÇ °Ô½Ã¹°À» »Ñ¸®°í, 5ÆäÀÌÁö¾¿ º¸¿©ÁÖÀÚ
+		//í•œ í˜ì´ì§€ë‹¹ 10ê°œì˜ ê²Œì‹œë¬¼ì„ ë¿Œë¦¬ê³ , 5í˜ì´ì§€ì”© ë³´ì—¬ì£¼ì
 		PageUtil pInfo=new PageUtil(nowPage, totalCount, 10, 5);
 		System.out.println(pInfo.getTotalCount());
 		System.out.println(pInfo.getStartPage());
@@ -54,14 +54,14 @@ public class PlaceServiceImpl implements PlaceService{
 		return pInfo;
 		}
 	
-	//Àå¼Ò°Ë»ö°á°ú¸¦ °¡Á®¿ÍÁÖ´Â ÇÔ¼ö
+	//ì¥ì†Œê²€ìƒ‰ê²°ê³¼ë¥¼ ê°€ì ¸ì™€ì£¼ëŠ” í•¨ìˆ˜
 	public ArrayList getPlaceList(PlaceVO vo,int situation,PageUtil pInfo) {
-		System.out.println("Àå¼Ò°Ë»ö°á°ú»Ñ¸®±â");
+		System.out.println("ì¥ì†Œê²€ìƒ‰ê²°ê³¼ë¿Œë¦¬ê¸°");
 		
-		//ÆäÀÌÂ¡Ã³¸® Àû¿ë
-		//½ÃÀÛ=(ÇöÀçÆäÀÌÁö-1)*(ÇÑ ÆäÀÌÁö¿¡ º¸¿©ÁÙ °Ô½Ã¹° ¼ö )
+		//í˜ì´ì§•ì²˜ë¦¬ ì ìš©
+		//ì‹œì‘=(í˜„ì¬í˜ì´ì§€-1)*(í•œ í˜ì´ì§€ì— ë³´ì—¬ì¤„ ê²Œì‹œë¬¼ ìˆ˜ )
 		int start=(pInfo.getNowPage()-1)*pInfo.getListCount()+1;
-		//³¡=½ÃÀÛÆäÀÌÁö+±× ÆäÀÌÁö¿¡¼­ º¸¿©ÁÙ °Ô½Ã¹°¼ö-1
+		//ë=ì‹œì‘í˜ì´ì§€+ê·¸ í˜ì´ì§€ì—ì„œ ë³´ì—¬ì¤„ ê²Œì‹œë¬¼ìˆ˜-1
 		int end=start+pInfo.getListCount()-1;
 		vo.setStart(start);
 		vo.setEnd(end);
@@ -70,14 +70,14 @@ public class PlaceServiceImpl implements PlaceService{
 		return plist;
 	}
 	
-	//°Ô½Ã¹°°Ë»ö°á°ú¸¦ °¡Á®¿ÍÁÖ´Â ÇÔ¼ö
+	//ê²Œì‹œë¬¼ê²€ìƒ‰ê²°ê³¼ë¥¼ ê°€ì ¸ì™€ì£¼ëŠ” í•¨ìˆ˜
 	public ArrayList getBoardList(PlaceVO vo, int situation,PageUtil pInfo) {
-		System.out.println("°Ô½Ã¹°°Ë»ö°á°ú»Ñ¸®±â");
+		System.out.println("ê²Œì‹œë¬¼ê²€ìƒ‰ê²°ê³¼ë¿Œë¦¬ê¸°");
 		
-		//ÆäÀÌÂ¡Ã³¸® Àû¿ë
-		//½ÃÀÛ=(ÇöÀçÆäÀÌÁö-1)*(ÇÑ ÆäÀÌÁö¿¡ º¸¿©ÁÙ °Ô½Ã¹° ¼ö )
+		//í˜ì´ì§•ì²˜ë¦¬ ì ìš©
+		//ì‹œì‘=(í˜„ì¬í˜ì´ì§€-1)*(í•œ í˜ì´ì§€ì— ë³´ì—¬ì¤„ ê²Œì‹œë¬¼ ìˆ˜ )
 		int start=(pInfo.getNowPage()-1)*pInfo.getListCount()+1;
-		//³¡=½ÃÀÛÆäÀÌÁö+±× ÆäÀÌÁö¿¡¼­ º¸¿©ÁÙ °Ô½Ã¹°¼ö-1
+		//ë=ì‹œì‘í˜ì´ì§€+ê·¸ í˜ì´ì§€ì—ì„œ ë³´ì—¬ì¤„ ê²Œì‹œë¬¼ìˆ˜-1
 		int end=start+pInfo.getListCount()-1;
 		vo.setStart(start);
 		vo.setEnd(end);
@@ -85,12 +85,12 @@ public class PlaceServiceImpl implements PlaceService{
 		return null;
 	}
 	
-	//Àå¼Ò°Ë»ö°á°ú °³¼ö¸¦ °¡Á®¿ÍÁÖ´Â ÇÔ¼ö
+	//ì¥ì†Œê²€ìƒ‰ê²°ê³¼ ê°œìˆ˜ë¥¼ ê°€ì ¸ì™€ì£¼ëŠ” í•¨ìˆ˜
 	public int getPlaceListCnt(PlaceVO vo,int situation) {
 		int placecnt_total=pdao.getPlaceListCnt(vo, situation);
 		return placecnt_total;
 	}
-	//°Ô½Ã¹°°Ë»ö°á°ú °³¼ö¸¦ °¡Á®¿ÍÁÖ´Â ÇÔ¼ö
+	//ê²Œì‹œë¬¼ê²€ìƒ‰ê²°ê³¼ ê°œìˆ˜ë¥¼ ê°€ì ¸ì™€ì£¼ëŠ” í•¨ìˆ˜
 	public int getBoardListCnt(PlaceVO vo,int situation) {
 		int reviewcnt_total=pdao.getBoardListCnt(vo, situation);
 		return reviewcnt_total;

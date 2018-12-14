@@ -6,7 +6,7 @@ import com.mapboard.board.vo.FileinfoVO;
 
 public interface FileinfoDao {
 
-	//¿©±â¼­ ÇÔ¼ö¸¦ ÀÛ¼º ÈÄ FileinfoDaoImpl.java¿¡ ±¸ÇöÇØÁÖ¼¼¿ä
+	//ì—¬ê¸°ì„œ í•¨ìˆ˜ë¥¼ ì‘ì„± í›„ FileinfoDaoImpl.javaì— êµ¬í˜„í•´ì£¼ì„¸ìš”
 	public void insertBoard()  throws Exception;
 	public ArrayList getFileInfo() throws Exception;
 	public FileinfoVO getDownload() throws Exception;

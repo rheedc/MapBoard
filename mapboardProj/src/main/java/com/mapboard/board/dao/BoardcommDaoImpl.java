@@ -12,10 +12,10 @@ public class BoardcommDaoImpl implements BoardcommDao{
 	
 	@Override
 	public void example() throws Exception {
-		// 예시
-		System.out.println("example 시작");
+		
+		System.out.println("example test");
 		//sqlSession.selectOne(""); 
-		System.out.println("example 끝");
+		System.out.println("example test");
 	}
 
 }

@@ -1,17 +1,11 @@
 /*package com.mapboard.board.dao;
-
 import java.util.ArrayList;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.mapboard.board.vo.BoardVO;
-
-
 @Service("boardDao")
 public class BoardDaoImpl implements BoardDao{
-
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
 	
@@ -20,28 +14,28 @@ public class BoardDaoImpl implements BoardDao{
 	}
 	
 	public int getTotalCount(){
-		//ÁúÀÇ¸¦ ½ÇÇàÇÒ ½ºÅ×ÀÌÆ®¸ÕÆ® ±¸ÇÏ±â
-		//ÁúÀÇ¹® ½ÇÇà
+		//ì§ˆì˜ë¥¼ ì‹¤í–‰í•  ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ êµ¬í•˜ê¸°
+		//ì§ˆì˜ë¬¸ ì‹¤í–‰
 		int result = sqlSession.selectOne("fileBoardName.totalCount");
-		//°á°ú¸¦ ¹İÈ¯
+		//ê²°ê³¼ë¥¼ ë°˜í™˜
 		return result;
 	}
 	
-	//ÇØ´ç ÆäÀÌÁö¿¡ º¸¿©ÁÙ °Ô½Ã¹° Á¤º¸ ±¸ÇÏ±â ÁúÀÇ ½ÇÇà
+	//í•´ë‹¹ í˜ì´ì§€ì— ë³´ì—¬ì¤„ ê²Œì‹œë¬¼ ì •ë³´ êµ¬í•˜ê¸° ì§ˆì˜ ì‹¤í–‰
 	public ArrayList getBoardList(BoardVO vo){
-		//½ºÅ×ÀÌÆ®¸ÕÆ® ±¸ÇÏ±â -> ÁúÀÇ½ÇÇà
+		//ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ êµ¬í•˜ê¸° -> ì§ˆì˜ì‹¤í–‰
 		return (ArrayList)sqlSession.selectList("fileBoardName.boardList", vo);		
 	}
 	
-	//»ó¼¼º¸±â ÁúÀÇ¸í·É ½ÇÇà ÇÔ¼ö
+	//ìƒì„¸ë³´ê¸° ì§ˆì˜ëª…ë ¹ ì‹¤í–‰ í•¨ìˆ˜
 	public BoardVO getBoardView(int no) {//sql id
-		//½ºÅ×ÀÌÆ®¸ÕÆ® ±¸ÇÏ±â -> ÁúÀÇ½ÇÇà
+		//ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ êµ¬í•˜ê¸° -> ì§ˆì˜ì‹¤í–‰
 		return (BoardVO)sqlSession.selectOne("fileBoardName.boardView", no);
 	}
 	
-	//Á¶È¸¼ö Áõ°¡ÁúÀÇ ½ÇÇà ÇÔ¼ö(»ó¼¼º¸±â È­¸é »Ñ·ÁÁö±â À§ÇÔ)
+	//ì¡°íšŒìˆ˜ ì¦ê°€ì§ˆì˜ ì‹¤í–‰ í•¨ìˆ˜(ìƒì„¸ë³´ê¸° í™”ë©´ ë¿Œë ¤ì§€ê¸° ìœ„í•¨)
 	public void updateHit(int no) {
-		//½ºÅ×ÀÌÆ®¸ÕÆ® ±¸ÇÏ±â -> ÁúÀÇ ½ÇÇà
+		//ìŠ¤í…Œì´íŠ¸ë¨¼íŠ¸ êµ¬í•˜ê¸° -> ì§ˆì˜ ì‹¤í–‰
 		sqlSession.update("fileBoardName.updateHit", no);
 	}
 	

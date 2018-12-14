@@ -4,14 +4,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.mapboard.member.service.MemberService;
 import com.mapboard.member.vo.MemberVO;
-import com.mapboard.util.LoginCheck;
+
 
 /*클래스 목적: 메인화면에서 로그인 폼을 보여주고 로그인을 처리하는 클래스
  * 작성자: 이덕천

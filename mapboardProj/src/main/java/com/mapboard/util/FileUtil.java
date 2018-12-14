@@ -4,43 +4,43 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-//ÀÌ Å¬·¡½º´Â ÆÄÀÏ ¾÷·Îµå¸¦ ÇÒ¶§ ¹ß»ýÇÒ ¼ö ÀÖ´Â ¹®Á¦Á¡À» ÇØ°áÇÏ±â À§ÇÑ
-//°¢Á¾ ±â´ÉÀ» ¸¸µé¾î ³õÀº Å¬·¡½º
+//ì´ í´ëž˜ìŠ¤ëŠ” íŒŒì¼ ì—…ë¡œë“œë¥¼ í• ë•Œ ë°œìƒí•  ìˆ˜ ìžˆëŠ” ë¬¸ì œì ì„ í•´ê²°í•˜ê¸° ìœ„í•œ
+//ê°ì¢… ê¸°ëŠ¥ì„ ë§Œë“¤ì–´ ë†“ì€ í´ëž˜ìŠ¤
 public class FileUtil {
 	
-	static int count = 0;	//º¯°æµÇ´Â ÆÄÀÏ¸í¿¡ ºÙÀÏ ¹øÈ£¸¦ ±â¾ïÇÒ º¯¼ö 
-	//¾÷·ÎµåÇÒ Æú´õ°¡ ¾øÀ¸¸é?
-	//ÀÚµ¿À¸·Î ¸¸µé¸é µÈ´Ù.
+	static int count = 0;	//ë³€ê²½ë˜ëŠ” íŒŒì¼ëª…ì— ë¶™ì¼ ë²ˆí˜¸ë¥¼ ê¸°ì–µí•  ë³€ìˆ˜ 
+	//ì—…ë¡œë“œí•  í´ë”ê°€ ì—†ìœ¼ë©´?
+	//ìžë™ìœ¼ë¡œ ë§Œë“¤ë©´ ëœë‹¤.
 	public static void makeFolder(String path) {
-		//¹ÞÀº °æ·Î¸¦ ÀÌ¿ëÇØ¼­ FileÅ¬·¡½º¸¦ ¸¸µç´Ù.
+		//ë°›ì€ ê²½ë¡œë¥¼ ì´ìš©í•´ì„œ Fileí´ëž˜ìŠ¤ë¥¼ ë§Œë“ ë‹¤.
 		File file = new File(path);
 		
-		//mkdirsÇÔ¼ö¸¦ ÀÌ¿ëÇØ¼­ °­Á¦·Î Æú´õ¸¦ ¸¸µç´Ù.
+		//mkdirsí•¨ìˆ˜ë¥¼ ì´ìš©í•´ì„œ ê°•ì œë¡œ í´ë”ë¥¼ ë§Œë“ ë‹¤.
 		file.mkdirs();
 	}
 	
-	//°°Àº ÀÌ¸§ÀÇ ÆÄÀÏÀÌ Á¸ÀçÇÑ´Ù¸é?
-	//ÇöÀç ÆÄÀÏÀÇ ÀÌ¸§À» ¹Ù²ãÁÜÀ¸·Î½á µ¤¾î¾²±â°¡ µÇÁö ¾Êµµ·Ï ¹æÁöÇÑ´Ù.
+	//ê°™ì€ ì´ë¦„ì˜ íŒŒì¼ì´ ì¡´ìž¬í•œë‹¤ë©´?
+	//í˜„ìž¬ íŒŒì¼ì˜ ì´ë¦„ì„ ë°”ê¿”ì¤Œìœ¼ë¡œì¨ ë®ì–´ì“°ê¸°ê°€ ë˜ì§€ ì•Šë„ë¡ ë°©ì§€í•œë‹¤.
 	public static String renameTo(String path, String name) {
 		
-		//ÀÌ¸§À» ¹Ù²Ù±â Àü¿¡ È¤½Ã ÀúÀåÇÒ Æú´õ°¡ ¾øÀ¸¸é ¸¸µé°í ½ÃÀÛÇÏÀÚ.
+		//ì´ë¦„ì„ ë°”ê¾¸ê¸° ì „ì— í˜¹ì‹œ ì €ìž¥í•  í´ë”ê°€ ì—†ìœ¼ë©´ ë§Œë“¤ê³  ì‹œìž‘í•˜ìž.
 		makeFolder(path);
 		
-		//¸Å°³º¯¼ö ¼³¸í
-		//¾îµð¿¡(path) ¹«½¼ ÀÌ¸§(name)À¸·Î ÀúÀåÇÒ ¿¹Á¤ÀÎµ¥, ÀÌ¸§ ¹Ù²ãÁà~
+		//ë§¤ê°œë³€ìˆ˜ ì„¤ëª…
+		//ì–´ë””ì—(path) ë¬´ìŠ¨ ì´ë¦„(name)ìœ¼ë¡œ ì €ìž¥í•  ì˜ˆì •ì¸ë°, ì´ë¦„ ë°”ê¿”ì¤˜~
 		
-		//ÀÌ¸§ ¹Ù²Ü¶§ÀÇ ¾à¼Ó
-		/*¸¸¾à °°Àº ÀÌ¸§ÀÇ ÆÄÀÏÀÌ Á¸ÀçÇÏ¸é
-		 * ÇöÀç ÆÄÀÏÀÌ¸§ ´ÙÀ½¿¡ _¹øÈ£¸¦ ºÙ¿©¼­ ÀÌ¸§À» ¹Ù²Ùµµ·Ï ÇÑ´Ù.
-		 * ¿¹) a.txt ÆÄÀÏ
-		 * 	  a_1.txt  ¹Ù²Ü ¿¹Á¤
-		 * 	  a_2.txt	¹Ù²Ü ¿¹Á¤*/
+		//ì´ë¦„ ë°”ê¿€ë•Œì˜ ì•½ì†
+		/*ë§Œì•½ ê°™ì€ ì´ë¦„ì˜ íŒŒì¼ì´ ì¡´ìž¬í•˜ë©´
+		 * í˜„ìž¬ íŒŒì¼ì´ë¦„ ë‹¤ìŒì— _ë²ˆí˜¸ë¥¼ ë¶™ì—¬ì„œ ì´ë¦„ì„ ë°”ê¾¸ë„ë¡ í•œë‹¤.
+		 * ì˜ˆ) a.txt íŒŒì¼
+		 * 	  a_1.txt  ë°”ê¿€ ì˜ˆì •
+		 * 	  a_2.txt	ë°”ê¿€ ì˜ˆì •*/
 		
-		String TempName = name;	//ÇöÀç ÀÌ¸§À» ±â¾ïÇØ ³õ´Â´Ù.
-		//ÀÌ¸§°ú È®ÀåÀÚ¸¦ ºÐ¸®ÇÑ ÈÄ ÀÌ¸§À» º¯°æÇØ¼­ È®ÀåÀÚ¿Í ÇÕÄ£´Ù.
+		String TempName = name;	//í˜„ìž¬ ì´ë¦„ì„ ê¸°ì–µí•´ ë†“ëŠ”ë‹¤.
+		//ì´ë¦„ê³¼ í™•ìž¥ìžë¥¼ ë¶„ë¦¬í•œ í›„ ì´ë¦„ì„ ë³€ê²½í•´ì„œ í™•ìž¥ìžì™€ í•©ì¹œë‹¤.
 		
 		
-		int index = name.lastIndexOf(".");	//.À» ±âÁØÀ¸·Î ³ª´©±â
+		int index = name.lastIndexOf(".");	//.ì„ ê¸°ì¤€ìœ¼ë¡œ ë‚˜ëˆ„ê¸°
 		String fileName = name.substring(0,	 index);	//a
 		String extName = name.substring(index+1); 	//txt
 			
@@ -50,10 +50,10 @@ public class FileUtil {
 			    
 		String time = dateFormat.format(cal.getTime());
 				
-		//ÆÄÀÏ¸íµÚ¿¡ (À§ÀÇ) ½Ã°£À» ºÙÀÎ´Ù
+		//íŒŒì¼ëª…ë’¤ì— (ìœ„ì˜) ì‹œê°„ì„ ë¶™ì¸ë‹¤
 		fileName = fileName+"_"+time;		//a_time~~~
 		
-		//À§ÀÇ °á°ú¿¡ È®ÀåÀÚ¸¦ ºÙ¿©¼­ ¿ÂÀüÇÑ ÆÄÀÏÀÌ¸§À¸·Î ´Ù½Ã ¸¸µç´Ù.
+		//ìœ„ì˜ ê²°ê³¼ì— í™•ìž¥ìžë¥¼ ë¶™ì—¬ì„œ ì˜¨ì „í•œ íŒŒì¼ì´ë¦„ìœ¼ë¡œ ë‹¤ì‹œ ë§Œë“ ë‹¤.
 		TempName = fileName+"."+extName;	//a_time~~~.txt	
 
 		return TempName;

@@ -22,7 +22,7 @@ public class PlaceController {
 	
 	//PlaceListService plistService;
 	
-	// Áöµµ¿¡´Ù°¡ »ó°¡ÁÂÇ¥¸¦ »Ñ·ÁÁÙ ÇÔ¼öÀÔ´Ï´Ù.
+	// ì§€ë„ì—ë‹¤ê°€ ìƒê°€ì¢Œí‘œë¥¼ ë¿Œë ¤ì¤„ í•¨ìˆ˜ì…ë‹ˆë‹¤.
 		@RequestMapping("/place/placeList")
 		public ModelAndView placeList(
 				ModelAndView mv, 
@@ -30,103 +30,103 @@ public class PlaceController {
 				ArrayList<PlaceVO> placeList,
 				HttpSession session,HttpServletRequest req) {
 		
-			//	ÇÒÀÏ
-			//	Áöµµ¸¦ º¸¿©ÁÙ°Å¾ß		
-			System.out.println("placeList½ÃÀÛ");
+			//	í• ì¼
+			//	ì§€ë„ë¥¼ ë³´ì—¬ì¤„ê±°ì•¼		
+			System.out.println("placeListì‹œì‘");
 			
 			placeList	=	pservice.getPlaceService(vo);
 			mv.addObject("PLACELIST",placeList);
 			
-			/**********ÀººñÄÚµå¾Æ·¡Ãß°¡**********/
+			/**********ì€ë¹„ì½”ë“œì•„ë˜ì¶”ê°€**********/
 			
-			//ÇÒÀÏ
-			//1.ÆÄ¶ó¹ÌÅÍ ¹Ş°í
-			//PlaceVO¸¦ ÀÌ¿ëÇØ¼­ ¹Ş±â
+			//í• ì¼
+			//1.íŒŒë¼ë¯¸í„° ë°›ê³ 
+			//PlaceVOë¥¼ ì´ìš©í•´ì„œ ë°›ê¸°
 			String sigungu_name=vo.getSigungu_name();
 			String place_name=vo.getPlace_name();
 			int category_no=vo.getCategory_no();
-			String strPage=req.getParameter("nowPage");				//¸±·¹ÀÌ¿ëº¯¼ö
+			String strPage=req.getParameter("nowPage");				//ë¦´ë ˆì´ìš©ë³€ìˆ˜
 			int nowPage=0;
 			if(strPage==null || strPage.length()==0) {	
 				nowPage=1;
 			}else {
 				nowPage=Integer.parseInt(strPage);
 			}
-			String searchType=req.getParameter("searchType");	//Àå¼Ò°Ë»öÀ» ¿øÇÏ´ÂÁö °Ô½Ã¹°°Ë»öÀ» ¿øÇÏ´ÂÁö
+			String searchType=req.getParameter("searchType");	//ì¥ì†Œê²€ìƒ‰ì„ ì›í•˜ëŠ”ì§€ ê²Œì‹œë¬¼ê²€ìƒ‰ì„ ì›í•˜ëŠ”ì§€
 			if(searchType==null||searchType.length()==0) {
-				searchType="placeSearch";											//°ªÀÌ ¾øÀ¸¸é placeSearch·Î ÁöÁ¤
+				searchType="placeSearch";											//ê°’ì´ ì—†ìœ¼ë©´ placeSearchë¡œ ì§€ì •
 			}
-			int situation=0;																	//ÄÉÀÌ½º ºĞ·ù¸¦ À§ÇÑ º¯¼ö
+			int situation=0;																	//ì¼€ì´ìŠ¤ ë¶„ë¥˜ë¥¼ ìœ„í•œ ë³€ìˆ˜
 		
-			//½Ã±º±¸ ÀÌ¸§ÀÌ Á¸ÀçÇÏÁö ¾ÊÀ»¶§ => ¾Æ¹«°Íµµ ¾ÈÇÔ
-			//½Ã±º±¸ ÀÌ¸§ÀÌ Á¸ÀçÇÒ¶§
+			//ì‹œêµ°êµ¬ ì´ë¦„ì´ ì¡´ì¬í•˜ì§€ ì•Šì„ë•Œ => ì•„ë¬´ê²ƒë„ ì•ˆí•¨
+			//ì‹œêµ°êµ¬ ì´ë¦„ì´ ì¡´ì¬í• ë•Œ
 			if(sigungu_name!=null && sigungu_name.length()>0) {
-				//Àå¼ÒÀÌ¸§X, Ä«Å×°í¸® ¹øÈ£X
+				//ì¥ì†Œì´ë¦„X, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸X
 				if((place_name==null || place_name.length()==0)&&(category_no==0)) {
 					situation=1;
 				}
-				//Àå¼ÒÀÌ¸§X, Ä«Å×°í¸® ¹øÈ£O
+				//ì¥ì†Œì´ë¦„X, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸O
 				if((place_name==null || place_name.length()==0)&&(category_no>0)) {
-					//Ä«Å×°í¸® ÀüÃ¼¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì¹´í…Œê³ ë¦¬ ì „ì²´ë¥¼ ì„ íƒí•œ ê²½ìš°
 					if(category_no==10) {
 						situation=2;
 					}
-					//¼¼ºÎÄ«Å×°í¸®¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì„¸ë¶€ì¹´í…Œê³ ë¦¬ë¥¼ ì„ íƒí•œ ê²½ìš°
 					else {
 						situation=3;
 					}
 				}
-				//Àå¼ÒÀÌ¸§O, Ä«Å×°í¸® ¹øÈ£X
+				//ì¥ì†Œì´ë¦„O, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸X
 				if((place_name!=null && place_name.length()>0)&&(category_no==0)) {
 					situation=4;
 				}
-				//Àå¼ÒÀÌ¸§O, Ä«Å×°í¸® ¹øÈ£O
+				//ì¥ì†Œì´ë¦„O, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸O
 				if((place_name!=null && place_name.length()>0)&&(category_no>0)) {
-					//Ä«Å×°í¸® ÀüÃ¼¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì¹´í…Œê³ ë¦¬ ì „ì²´ë¥¼ ì„ íƒí•œ ê²½ìš°
 					if(category_no==10) {
 						situation=5;
 					}
-					//¼¼ºÎÄ«Å×°í¸®¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì„¸ë¶€ì¹´í…Œê³ ë¦¬ë¥¼ ì„ íƒí•œ ê²½ìš°
 					else {
 						situation=6;
 					}
 				}
 			}
 			
-			//ºñÁö´Ï½º·ÎÁ÷¼öÇà
-			//2.¼­ºñ½ºÀ§ÀÓ
-			//½Ã±º±¸ÀÌ¸§/Àå¼ÒÀÌ¸§ °ªÀÇ ±æÀÌ°¡ 0µÇ´Â °æ¿ì¸¦ °í·ÁÇØ¾ßÇÔ
-			//Ä«Å×°í¸®ÀÇ °ªÀÌ 0µÇ´Â °æ¿ì¸¦ °í·ÁÇØ¾ßÇÔ
+			//ë¹„ì§€ë‹ˆìŠ¤ë¡œì§ìˆ˜í–‰
+			//2.ì„œë¹„ìŠ¤ìœ„ì„
+			//ì‹œêµ°êµ¬ì´ë¦„/ì¥ì†Œì´ë¦„ ê°’ì˜ ê¸¸ì´ê°€ 0ë˜ëŠ” ê²½ìš°ë¥¼ ê³ ë ¤í•´ì•¼í•¨
+			//ì¹´í…Œê³ ë¦¬ì˜ ê°’ì´ 0ë˜ëŠ” ê²½ìš°ë¥¼ ê³ ë ¤í•´ì•¼í•¨
 			
-			//ÆäÀÌÁö ÀÌµ¿±â´É
+			//í˜ì´ì§€ ì´ë™ê¸°ëŠ¥
 			PageUtil pInfo=pservice.getPageInfo(vo,nowPage,situation,searchType); 
 			
 			if(searchType=="placeSearch") {				
-				//Àå¼Ò°Ë»ö°á°ú °³¼ö ºÒ·¯¿À±â
+				//ì¥ì†Œê²€ìƒ‰ê²°ê³¼ ê°œìˆ˜ ë¶ˆëŸ¬ì˜¤ê¸°
 				int placecnt_total=pservice.getPlaceListCnt(vo,situation);
-				//Àå¼Ò°Ë»ö°á°ú ¸ñ·ÏºÒ·¯¿À±â
+				//ì¥ì†Œê²€ìƒ‰ê²°ê³¼ ëª©ë¡ë¶ˆëŸ¬ì˜¤ê¸°
 				ArrayList plist=pservice.getPlaceList(vo,situation,pInfo);
 				mv.addObject("PLIST", plist);
 				mv.addObject("placecnt_total", placecnt_total);
 			}
 			if(searchType=="boardSearch") {				
-				//°Ô½Ã¹°°Ë»ö°á°ú °³¼ö ºÒ·¯¿À±â
+				//ê²Œì‹œë¬¼ê²€ìƒ‰ê²°ê³¼ ê°œìˆ˜ ë¶ˆëŸ¬ì˜¤ê¸°
 				int reviewcnt_total=pservice.getBoardListCnt(vo,situation);
-				//°Ô½Ã¹°°Ë»ö°á°ú ¸ñ·ÏºÒ·¯¿À±â
+				//ê²Œì‹œë¬¼ê²€ìƒ‰ê²°ê³¼ ëª©ë¡ë¶ˆëŸ¬ì˜¤ê¸°
 				ArrayList blist=pservice.getBoardList(vo,situation,pInfo);
 				mv.addObject("BLIST", blist);
 				mv.addObject("reviewcnt_total", reviewcnt_total);			
 			}
 
-			//3.¸ğµ¨
+			//3.ëª¨ë¸
 			mv.addObject("DATA", vo);
 			mv.addObject("PINFO", pInfo);
 			mv.addObject("situation", situation);
 			mv.addObject("searchType", searchType);
 			
-			System.out.println("»õ·Î");
+			System.out.println("ìƒˆë¡œ");
 			
-			//4.ºäÈ£Ãâ
+			//4.ë·°í˜¸ì¶œ
 			return mv;	
 		}
 		
@@ -137,9 +137,9 @@ public class PlaceController {
 				ArrayList<PlaceVO> placeList,
 				HttpSession session) {
 		
-			//	ÇÒÀÏ
-			//	Áöµµ¸¦ º¸¿©ÁÙ°Å¾ß		
-			System.out.println("placeList½ÃÀÛ");
+			//	í• ì¼
+			//	ì§€ë„ë¥¼ ë³´ì—¬ì¤„ê±°ì•¼		
+			System.out.println("placeListì‹œì‘");
 			
 			placeList	=	pservice.getPlaceService(vo);
 			mv.addObject("PLACELIST",placeList);
@@ -149,7 +149,7 @@ public class PlaceController {
 			double latitude	=	placeList.get(2026).getLatitude();
 			double longitude	=	placeList.get(2026).getLongitude();
 			
-			System.out.println(doroJuso+latitude+juso+"placeList³¡"+longitude);
+			System.out.println(doroJuso+latitude+juso+"placeListë"+longitude);
 			
 			//plist = plistService.getPList(vo);
 			//mv.addObject("?",plist);
@@ -157,18 +157,18 @@ public class PlaceController {
 			return mv;			
 		}
 		
-		/*-----------------------------------ÀÛ¼ºÀÚ : Á¶Àººñ-----------------------------------	 */
+		/*-----------------------------------ì‘ì„±ì : ì¡°ì€ë¹„-----------------------------------	 */
 		
-		// ½Å±ÔÀå¼Ò µî·ÏÆû ÆäÀÌÁö º¸¿©ÁÖ±â
+		// ì‹ ê·œì¥ì†Œ ë“±ë¡í¼ í˜ì´ì§€ ë³´ì—¬ì£¼ê¸°
 		@RequestMapping("place/newPlaceForm")
 		public void newPlaceForm() {
-			System.out.println("½Å±ÔÀå¼Ò µî·ÏÆû ÆäÀÌÁö È£Ãâ");
+			System.out.println("ì‹ ê·œì¥ì†Œ ë“±ë¡í¼ í˜ì´ì§€ í˜¸ì¶œ");
 		}
 		
-		// myÀå¼Ò µî·ÏÆû ÆäÀÌÁö º¸¿©ÁÖ±â
+		// myì¥ì†Œ ë“±ë¡í¼ í˜ì´ì§€ ë³´ì—¬ì£¼ê¸°
 		@RequestMapping("place/myPlaceForm")
 		public void myPlaceForm() {
-			System.out.println("myÀå¼Ò µî·ÏÆû ÆäÀÌÁö È£Ãâ");
+			System.out.println("myì¥ì†Œ ë“±ë¡í¼ í˜ì´ì§€ í˜¸ì¶œ");
 		}
 		
 		
@@ -179,94 +179,94 @@ public class PlaceController {
 				ArrayList<PlaceVO> placeList,
 				HttpSession session,HttpServletRequest req) {
 			
-			//ÇÒÀÏ
-			//1.ÆÄ¶ó¹ÌÅÍ ¹Ş°í
-			//PlaceVO¸¦ ÀÌ¿ëÇØ¼­ ¹Ş±â
+			//í• ì¼
+			//1.íŒŒë¼ë¯¸í„° ë°›ê³ 
+			//PlaceVOë¥¼ ì´ìš©í•´ì„œ ë°›ê¸°
 			String sigungu_name=vo.getSigungu_name();
 			String place_name=vo.getPlace_name();
 			int category_no=vo.getCategory_no();
-			String strPage=req.getParameter("nowPage");				//¸±·¹ÀÌ¿ëº¯¼ö
+			String strPage=req.getParameter("nowPage");				//ë¦´ë ˆì´ìš©ë³€ìˆ˜
 			int nowPage=0;
 			if(strPage==null || strPage.length()==0) {	
 				nowPage=1;
 			}else {
 				nowPage=Integer.parseInt(strPage);
 			}
-			String searchType=req.getParameter("searchType");	//Àå¼Ò°Ë»öÀ» ¿øÇÏ´ÂÁö °Ô½Ã¹°°Ë»öÀ» ¿øÇÏ´ÂÁö
+			String searchType=req.getParameter("searchType");	//ì¥ì†Œê²€ìƒ‰ì„ ì›í•˜ëŠ”ì§€ ê²Œì‹œë¬¼ê²€ìƒ‰ì„ ì›í•˜ëŠ”ì§€
 			if(searchType==null||searchType.length()==0) {
-				searchType="placeSearch";											//°ªÀÌ ¾øÀ¸¸é placeSearch·Î ÁöÁ¤
+				searchType="placeSearch";											//ê°’ì´ ì—†ìœ¼ë©´ placeSearchë¡œ ì§€ì •
 			}
-			int situation=0;																	//ÄÉÀÌ½º ºĞ·ù¸¦ À§ÇÑ º¯¼ö
+			int situation=0;																	//ì¼€ì´ìŠ¤ ë¶„ë¥˜ë¥¼ ìœ„í•œ ë³€ìˆ˜
 		
-			//½Ã±º±¸ ÀÌ¸§ÀÌ Á¸ÀçÇÏÁö ¾ÊÀ»¶§ => ¾Æ¹«°Íµµ ¾ÈÇÔ
-			//½Ã±º±¸ ÀÌ¸§ÀÌ Á¸ÀçÇÒ¶§
+			//ì‹œêµ°êµ¬ ì´ë¦„ì´ ì¡´ì¬í•˜ì§€ ì•Šì„ë•Œ => ì•„ë¬´ê²ƒë„ ì•ˆí•¨
+			//ì‹œêµ°êµ¬ ì´ë¦„ì´ ì¡´ì¬í• ë•Œ
 			if(sigungu_name!=null && sigungu_name.length()>0) {
-				//Àå¼ÒÀÌ¸§X, Ä«Å×°í¸® ¹øÈ£X
+				//ì¥ì†Œì´ë¦„X, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸X
 				if((place_name==null || place_name.length()==0)&&(category_no==0)) {
 					situation=1;
 				}
-				//Àå¼ÒÀÌ¸§X, Ä«Å×°í¸® ¹øÈ£O
+				//ì¥ì†Œì´ë¦„X, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸O
 				if((place_name==null || place_name.length()==0)&&(category_no>0)) {
-					//Ä«Å×°í¸® ÀüÃ¼¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì¹´í…Œê³ ë¦¬ ì „ì²´ë¥¼ ì„ íƒí•œ ê²½ìš°
 					if(category_no==10) {
 						situation=2;
 					}
-					//¼¼ºÎÄ«Å×°í¸®¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì„¸ë¶€ì¹´í…Œê³ ë¦¬ë¥¼ ì„ íƒí•œ ê²½ìš°
 					else {
 						situation=3;
 					}
 				}
-				//Àå¼ÒÀÌ¸§O, Ä«Å×°í¸® ¹øÈ£X
+				//ì¥ì†Œì´ë¦„O, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸X
 				if((place_name!=null && place_name.length()>0)&&(category_no==0)) {
 					situation=4;
 				}
-				//Àå¼ÒÀÌ¸§O, Ä«Å×°í¸® ¹øÈ£O
+				//ì¥ì†Œì´ë¦„O, ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸O
 				if((place_name!=null && place_name.length()>0)&&(category_no>0)) {
-					//Ä«Å×°í¸® ÀüÃ¼¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì¹´í…Œê³ ë¦¬ ì „ì²´ë¥¼ ì„ íƒí•œ ê²½ìš°
 					if(category_no==10) {
 						situation=5;
 					}
-					//¼¼ºÎÄ«Å×°í¸®¸¦ ¼±ÅÃÇÑ °æ¿ì
+					//ì„¸ë¶€ì¹´í…Œê³ ë¦¬ë¥¼ ì„ íƒí•œ ê²½ìš°
 					else {
 						situation=6;
 					}
 				}
 			}
 			
-			//ºñÁö´Ï½º·ÎÁ÷¼öÇà
-			//2.¼­ºñ½ºÀ§ÀÓ
-			//½Ã±º±¸ÀÌ¸§/Àå¼ÒÀÌ¸§ °ªÀÇ ±æÀÌ°¡ 0µÇ´Â °æ¿ì¸¦ °í·ÁÇØ¾ßÇÔ
-			//Ä«Å×°í¸®ÀÇ °ªÀÌ 0µÇ´Â °æ¿ì¸¦ °í·ÁÇØ¾ßÇÔ
+			//ë¹„ì§€ë‹ˆìŠ¤ë¡œì§ìˆ˜í–‰
+			//2.ì„œë¹„ìŠ¤ìœ„ì„
+			//ì‹œêµ°êµ¬ì´ë¦„/ì¥ì†Œì´ë¦„ ê°’ì˜ ê¸¸ì´ê°€ 0ë˜ëŠ” ê²½ìš°ë¥¼ ê³ ë ¤í•´ì•¼í•¨
+			//ì¹´í…Œê³ ë¦¬ì˜ ê°’ì´ 0ë˜ëŠ” ê²½ìš°ë¥¼ ê³ ë ¤í•´ì•¼í•¨
 			
-			//ÆäÀÌÁö ÀÌµ¿±â´É
+			//í˜ì´ì§€ ì´ë™ê¸°ëŠ¥
 			PageUtil pInfo=pservice.getPageInfo(vo,nowPage,situation,searchType); 
 			
 			if(searchType=="placeSearch") {				
-				//Àå¼Ò°Ë»ö°á°ú °³¼ö ºÒ·¯¿À±â
+				//ì¥ì†Œê²€ìƒ‰ê²°ê³¼ ê°œìˆ˜ ë¶ˆëŸ¬ì˜¤ê¸°
 				int placecnt_total=pservice.getPlaceListCnt(vo,situation);
-				//Àå¼Ò°Ë»ö°á°ú ¸ñ·ÏºÒ·¯¿À±â
+				//ì¥ì†Œê²€ìƒ‰ê²°ê³¼ ëª©ë¡ë¶ˆëŸ¬ì˜¤ê¸°
 				ArrayList plist=pservice.getPlaceList(vo,situation,pInfo);
 				mv.addObject("PLIST", plist);
 				mv.addObject("placecnt_total", placecnt_total);
 			}
 			if(searchType=="boardSearch") {				
-				//°Ô½Ã¹°°Ë»ö°á°ú °³¼ö ºÒ·¯¿À±â
+				//ê²Œì‹œë¬¼ê²€ìƒ‰ê²°ê³¼ ê°œìˆ˜ ë¶ˆëŸ¬ì˜¤ê¸°
 				int reviewcnt_total=pservice.getBoardListCnt(vo,situation);
-				//°Ô½Ã¹°°Ë»ö°á°ú ¸ñ·ÏºÒ·¯¿À±â
+				//ê²Œì‹œë¬¼ê²€ìƒ‰ê²°ê³¼ ëª©ë¡ë¶ˆëŸ¬ì˜¤ê¸°
 				ArrayList blist=pservice.getBoardList(vo,situation,pInfo);
 				mv.addObject("BLIST", blist);
 				mv.addObject("reviewcnt_total", reviewcnt_total);			
 			}
 
-			//3.¸ğµ¨
+			//3.ëª¨ë¸
 			mv.addObject("DATA", vo);
 			mv.addObject("PINFO", pInfo);
 			mv.addObject("situation", situation);
 			mv.addObject("searchType", searchType);
 			
-			System.out.println("»õ·Î");
+			System.out.println("ìƒˆë¡œ");
 			
-			//4.ºäÈ£Ãâ
+			//4.ë·°í˜¸ì¶œ
 			return mv;
 		}
 		
