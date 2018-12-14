@@ -44,6 +44,7 @@
 	border-bottom: 1px solid #444444;
 	padding:10px;
 	}
+
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
@@ -78,17 +79,21 @@
 			$("#place_name").val(place_name)
 		}
 		
-		//searchType 정보가 없거나 placeSearch인 경우
+		//searchType 정보가  placeSearch인 경우
 		//=>장소검색결과 보여주기,form에 hidden으로 placeSearch넣기
-		if(searchType==null || searchType.length==0 ||searchType=="placeSearch"){
+		if(searchType=="placeSearch"){
 			$("#boardSearch").hide();
 			$("#searchType").val("placeSearch");
+			$("#placeSearchBtn").css("background-color","#AEDAE8");
+			$("#boardSearchBtn").css("background-color","#ededed");
 		}
 		//searchType 정보가 boardSearch인 경우
 		//=>게시물검색결과 보여주기,form에 hidden으로 boardSearch넣기
 		if(searchType=="boardSearch"){
 			$("#placeSearch").hide();
 			$("#searchType").val("boardSearch");
+			$("#boardSearchBtn").css("background-color","#AEDAE8");
+			$("#placeSearchBtn").css("background-color","#ededed");
 		}
 		
 		/**********************************이벤트적용부분*************************************/
@@ -103,12 +108,16 @@
 		
 		//장소검색결과 버튼 클릭시
 		$("#placeSearchBtn").click(function(){
+			$("#placeSearchBtn").css("background-color","#AEDAE8")
+			$("#boardSearchBtn").css("background-color","#ededed");
 			$("#boardSearch").hide();
 			$("#placeSearch").show();
 			$("#searchType").val("placeSearch")
 		})
 		//게시물검색결과 버튼 클릭시
 		$("#boardSearchBtn").click(function(){
+			$("#boardSearchBtn").css("background-color","#AEDAE8")
+			$("#placeSearchBtn").css("background-color","#ededed");
 			$("#placeSearch").hide();
 			$("#boardSearch").show();
 			$("#searchType").val("boardSearch")
@@ -147,8 +156,8 @@
 	
 		<table border="1px" width="500px" height="70px">
 			<tr>
-				<td id="placeSearchBtn" align="center" value="placeSearch">장소검색결과</td>
-				<td id="boardSearchBtn" align="center" value="boardSearch">게시글검색결과</td>
+				<td width="250px" id="placeSearchBtn" align="center" value="placeSearch">장소검색결과</td>
+				<td width="250px" id="boardSearchBtn" align="center" value="boardSearch">게시글검색결과</td>
 			</tr>
 		</table>
 	
