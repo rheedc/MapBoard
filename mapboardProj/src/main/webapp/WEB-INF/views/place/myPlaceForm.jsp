@@ -7,9 +7,52 @@
 	<title>myPlaceForm</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style type="text/css">
-	/* style 작성부분 */
-	</style>
+	<style>
+	h3 {
+		color:#7C5D44;
+	}
+	th {
+		width:20%;
+		text-align:center;
+		font-weight:bold;
+		background-color:#ede4de;
+	}
+	tr {
+		height:30px;
+	}
+	input{
+		width:80%;
+	}
+	textarea {
+		height:30px;
+		width:80%
+	}
+	select {
+		width:30%;
+	}
+	.brdImage {
+		height:500px;
+		padding:10px; 
+	}
+	.btn2 {
+	    width:50px;
+	    background-color: #d2bdad;
+	    border: none;
+	    color:black;
+	    text-align: center;
+	    text-decoration: none;
+	    display: inline-block;
+	    font-size: 13px;
+	    margin: 4px;
+	    cursor: pointer;
+	    border-radius:5px;
+	 }
+	.btn2:hover {
+		background-color: #f6f2ef;
+		font-weight:bold;
+	    color:black;
+	} 
+</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
@@ -97,41 +140,52 @@
 <body>
 <h1>myPlaceForm</h1>
 	<%-- action부분에 insert부분으로 넘기기 --%>
-  <form id="myPlaceForm" action="#" method="get">
-  	<table width="50%" align="center">
-  		<tr>
-  			<td align="center" width="20%">장소명</td>
-  			<td  width="30%">
+<table align="center" width="70%">
+	<tr>
+		<td>
+			<h3 align="left">게시판 등록하기</h3>
+		</td>
+	</tr>
+</table>
+<form id="myPlaceForm" action="#" method="get" enctype="multipart/form-data">
+	<table border="1px" align="center" width="70%">
+		<tr>
+			<th>장소명</th>
+  			<td>
   				<input type="text" id="myPlaceName" name="myPlaceName" placeholder="장소를 한 글자 이상 입력해주세요" />
   			</td>
-  		</tr>
-  		<tr>
-  			<td>좌표정보</td>
+		</tr>
+		<tr>
+  			<th>좌표정보</th>
   			<td>
-  				위도:<input type="text" id="myPlaceLocationX" name="myPlaceLocationX"readonly/>
-  				경도:<input type="text" id="myPlaceLocationY" name="myPlaceLocationY" readonly/>
+  				위도:<input type="text" id="myPlaceLocationX" name="myPlaceLocationX"readonly style="width:35%;"/>
+  				경도:<input type="text" id="myPlaceLocationY" name="myPlaceLocationY" readonly style="width:35%;"/>
+  			</td>
+  		</tr>
+		<tr>
+  			<th>주소</th>
+  			<td>
+  				<textarea id="myPlaceAddress1" readonly></textarea>
   			</td>
   		</tr>
   		<tr>
-  			<td>주소</td>
-  			<td>
-  				<textarea rows="2" cols="80" id="myPlaceAddress1" readonly></textarea>
-  			</td>
-  		</tr>
-  		<tr>
-  			<td >상세주소</td>
+  			<th >상세주소</th>
   			<td>
   				<input type="text" id="myPlaceDetailAddress" name="myPlaceDetailAddress" placeholder="상세주소를 한 글자 이상 입력해주세요"/ >
   			</td>
   		</tr>
-  		<tr>
-	  		<td colspan="2" align="center">
-	  			<input type="button" id=seoul  name="seoul" value="서울시전체보기"/>
-	  			<input type="button" id=myWBtn  name="myWBtn" value="등록"/>
-	  			<input type="button" id=resetBtn  name="resetBtn" value="입력취소"/>
+	</table>
+	<table align="center" width="70%">
+		<tr>
+			<td colspan="2" align="center">
+				<input type="button" class="btn2" id=seoul  name="seoul" value="서울시전체보기" style="width:100px;"/>
+	  			<input type="button" class="btn2" id=myWBtn  name="myWBtn" value="등록" style="width:100px;"/>
+	  			<input type="button" class="btn2" id=resetBtn  name="resetBtn" value="입력취소" style="width:100px;"/>
 			</td>
-  		</tr>
-  	</table>
-  </form>
+		</tr>
+	</table>
+</form>
+
+
 </body>
 </html>

@@ -345,11 +345,11 @@
 		      
 			// 마커를 표시할 위치와 title 객체 배열입니다
 			//주소출력 정상임~~~
-			<c:forEach var="m" items="${PLIST}" varStatus="status">
+			<c:forEach var="m" items="${TLIST}" varStatus="status">
 			console.log('m의 주소는 ? ${m.juso}');
 			</c:forEach>
 			var positions = [
-				<c:forEach var="m" items="${PLIST}" varStatus="status">
+				<c:forEach var="m" items="${TLIST}" varStatus="status">
 			    {
 			        title: "${m.place_name}",
 			        content: "<div style='width:250px;'><div>${m.place_name}</div><div>${m.juso}</div><div>${m.doro_juso}</div><div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div></div>",
@@ -359,7 +359,7 @@
 			        bad:"<div>bad:${m.badcnt}</div>",
 			        latlng: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
 			    }
-			    <c:if test="${status.count < fn:length(PLIST)}">,</c:if>
+			    <c:if test="${status.count < fn:length(TLIST)}">,</c:if>
 			    </c:forEach>
 			    
 			];
