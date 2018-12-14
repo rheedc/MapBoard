@@ -117,6 +117,7 @@
 	        center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
 	        level: 9 // 지도의 확대 레벨
 	    };
+
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new daum.maps.Map(mapContainer, mapOption),
 	    customOverlay = new daum.maps.CustomOverlay({}),
@@ -139,7 +140,8 @@
 		        console.log('guname='+guname);
 		        if(guname==null){
 		        	displayArea(coordinates, name);	
-		        }else{
+		        }else if(guname==name){
+		        	displayArea(coordinates, name);	
 		        	
 		        }
 		        
@@ -237,10 +239,9 @@
 		        customOverlay.setContent('<div class="area"></div>');
 		     	
 		        // 해당 구의 path를 기억한다
-		        if(gupath==""){
-		        	gupath = path;
-		        	guname = name;
-		        }
+		        
+		        gupath = path;
+		        guname = name;
 	        	$("#sigungu_name").val(guname);
 	        	
 	        	
@@ -311,18 +312,22 @@
 			    // 중심좌표 표시
 			    getInfo()
 			});
+
 			function searchAddrFromCoords(coords, callback) {
 			    // 좌표로 행정동 주소 정보를 요청합니다
 			    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
 			}
+
 			function searchDetailAddrFromCoords(coords, callback) {
 			    // 좌표로 법정동 상세 주소 정보를 요청합니다
 			    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 			}
+
 			// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
 			function displayCenterInfo(result, status) {
 			    if (status === daum.maps.services.Status.OK) {
 			        var infoDiv = document.getElementById('centerAddr');
+
 			        for(var i = 0; i < result.length; i++) {
 			            // 행정동의 region_type 값은 'H' 이므로
 			            if (result[i].region_type === 'H') {
@@ -383,6 +388,7 @@
 		
 		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 		var mapTypeControl = new daum.maps.MapTypeControl();
+
 		// 지도 타입 컨트롤을 지도에 표시합니다
 		map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
 		
@@ -443,7 +449,6 @@
 		
 		
 		
-		
 		// 은비 스크립트  s----------------------------------------------------------------------
 		category_no="${DATA.category_no}";
 		sigungu_name="${DATA.sigungu_name}";
@@ -468,10 +473,12 @@
 		
 		//카테고리에서 클릭이벤트 발생할 때
 		$(".category_no").click(function(){
+			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
 		//검색버튼 클릭이벤트 발생했을 때
 		$("#sBtn_j").click(function(){
+			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
 		// 은비 스크립트  e----------------------------------------------------------------------

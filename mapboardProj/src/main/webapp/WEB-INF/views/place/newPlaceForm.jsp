@@ -13,33 +13,64 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
+	
+		// 쿠키 얻기 함수
+		var getCookie = function(name) {
+			var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+			return value? value[2] : null;
+		};
+		
+		// 쿠키 설정 함수
+		var setCookie = function(name, value, exp) {
+			var date = new Date();
+			date.setTime(date.getTime() + exp*24*60*60*1000);
+			document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+		};
+		
+		// 쿠키 삭제 함수
+		var deleteCookie = function(name) {
+			setCookie(name,'',-1);
+		};
+		
+		var mouseLat="";
+		var mouseLng="";
+		var detailAddr="";
+	
 		$(function(){
 			
-			// newWBtn 클릭시
+			
+			// newWBtn 클릭시-------------------------------------------------------
 			$('#newWBtn').click(function(){
-				// 장소명을 무결성검사하고...
+				// 장소명을 무결성검사하고...-----------
 				var newPlaceName = $('#newPlaceName').val();
 				if(newPlaceName.length<1){
 					alert("장소명을 한글자 이상 작성해주세요.");
 					return;
 				}
-				
-				// 상세주소명을 무결성검사하고...
+				// 분류 무결성 검사-----------
+				if(!$(':input:radio[name=category_no]:checked').val()) {
+				    alert("분류를 선택해 주세요");
+				    return;
+				}
+				// 상세주소명을 무결성검사하고...-----------
 				var newPlaceDetailAddress = $('#newPlaceDetailAddress').val();
 				if(newPlaceDetailAddress.length<1){
 					alert("상세주소명을 한글자 이상 작성해주세요.");
 					return;
 				}
-			
-				// newPlaceForm에 보내기
+				// newPlaceForm에 보내기-----------
 				$("#newPlaceForm").submit();
-				
-			});	// newWBtn 끝
+			});	// newWBtn 끝-------------------------------------------------------
 			
-			// SeoulBtn 클릭시 place/placeList.yo로 이동
-			$('#SeoulBtn').click(function(){
-				location.href = "/place/placeList.yo";
-			});	// SeoulBtn 끝
+			// seoul 클릭시 place/placeList.yo로 이동
+			$('#seoul').click(function(){			
+				deleteCookie('gupath');
+				deleteCookie('guname');
+				deleteCookie('mouseLat');
+				deleteCookie('mouseLng');
+				console.log(getCookie('guname'));
+				$(location).attr('href', '../place/placeList.yo')
+			});
 			
 			// resetBtn 클릭시 위도경도와 주소는 사라지지 않고 장소명과, 상세주소만 리셋
 			$('#resetBtn').click(function(){
@@ -47,12 +78,27 @@
 				$('#newPlaceDetailAddress').val('');
 			});	// resetBtn 끝
 			
+			mouseLat	=	getCookie('mouseLat'); 
+			mouseLng	=	getCookie('mouseLng');
+			detailAddr5	=	getCookie('detailAddr');
+			detailAddr4 = detailAddr5.replace('지번','  지번')
+			detailAddr3 = detailAddr4.replace('<div>','')
+			detailAddr2 = detailAddr3.replace('<div>','')
+			detailAddr1 = detailAddr2.replace('</div>','')
+			detailAddr = detailAddr1.replace('</div>','')
+			
+			console.log('x'+mouseLat);
+			console.log('y'+mouseLng);
+			
+			$("#newPlaceLocationX").val(mouseLat);
+			$("#newPlaceLocationY").val(mouseLng);
+			$("#newPlaceAddress1").val(detailAddr);
 			
 		});
 	</script>
 </head>
 <body>
-<h1>신규장소등록</h1>
+<h1>newPlaceForm</h1>
 	<%-- action부분에 insert부분으로 넘기기 --%>
   <form id="newPlaceForm" action="#" method="get">
   	<table width="50%" align="center">
@@ -65,21 +111,25 @@
   		<tr>
   			<td align="center" width="20%">분류명</td>
   			<td>
-  				~~~~
-  			</td>
+					<input type="radio" name="category_no" value=1 class="category_no"> 관광/여가/오락
+					<input type="radio" name="category_no" value=2 class="category_no"> 숙박
+					<input type="radio" name="category_no" value=3 class="category_no"> 의료<br/>
+					<input type="radio" name="category_no" value=4 class="category_no"> 한식/중식/양식
+					<input type="radio" name="category_no" value=5 class="category_no"> 커피점/카페
+					<input type="radio" name="category_no" value=6 class="category_no"> 기타
+				</td>
   		</tr>
   		<tr>
   			<td align="center" width="20%">좌표정보</td>
   			<td>
-  				<input type="text" id="newPlaceLocation" name="newPlaceLocation" value="위도=,경도="  readonly/>
-  				<input type="hidden" id="newPlaceLocationX" name="newPlaceLocationX"/>
-  				<input type="hidden" id="newPlaceLocationY" name="newPlaceLocationY"/>
+  				위도:<input type="text" id="newPlaceLocationX" name="myPlaceLocationX"readonly/>
+  				경도:<input type="text" id="newPlaceLocationY" name="myPlaceLocationY" readonly/>
   			</td>
   		</tr>
   		<tr>
   			<td align="center" width="20%">주소</td>
   			<td>
-  				<input type="text" id="newPlaceAddress" name="newPlaceAddress"  readonly/>
+  				<textarea rows="2" cols="80" id="newPlaceAddress1" readonly></textarea>
   			</td>
   		</tr>
   		<tr>
@@ -90,7 +140,7 @@
   		</tr>
   		<tr>
   		<td colspan="2" align="center">
-	  		<input type="button" id=SeoulBtn  name="SeoulBtn" value="서울시전체보기"/>
+	  		<input type="button" id=seoul  name="seoul" value="서울시전체보기"/>
 	  		<input type="button" id=newWBtn  name="newWBtn" value="등록"/>
 	  		<input type="button" id=resetBtn  name="resetBtn" value="입력취소"/>
   		</td>

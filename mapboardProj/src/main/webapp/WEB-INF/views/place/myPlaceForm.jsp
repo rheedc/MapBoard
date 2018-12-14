@@ -20,6 +20,18 @@
 			return value? value[2] : null;
 		};
 		
+		// 쿠키 설정 함수
+		var setCookie = function(name, value, exp) {
+			var date = new Date();
+			date.setTime(date.getTime() + exp*24*60*60*1000);
+			document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+		};
+		
+		// 쿠키 삭제 함수
+		var deleteCookie = function(name) {
+			setCookie(name,'',-1);
+		};
+		
 		var mouseLat="";
 		var mouseLng="";
 		
@@ -46,10 +58,16 @@
 				
 			});	// myWBtn 끝
 			
-			// SeoulBtn 클릭시 place/placeList.yo로 이동
-			$('#SeoulBtn').click(function(){
-				location.href = "/place/placeList.yo";
-			});	// SeoulBtn 끝
+			// seoul 클릭시 place/placeList.yo로 이동
+			$('#seoul').click(function(){			
+				deleteCookie('gupath');
+				deleteCookie('guname');
+				deleteCookie('mouseLat');
+				deleteCookie('mouseLng');
+				console.log(getCookie('guname'));
+				$(location).attr('href', '../place/placeList.yo')
+			});
+			
 			
 			// resetBtn 클릭시 위도경도와 주소는 사라지지 않고 장소명과, 상세주소만 리셋
 			$('#resetBtn').click(function(){
@@ -60,7 +78,12 @@
 			
 			mouseLat	=	getCookie('mouseLat'); 
 			mouseLng	=	getCookie('mouseLng');
-			detailAddr	=	getCookie('detailAddr');
+			detailAddr5	=	getCookie('detailAddr');
+			detailAddr4 = detailAddr5.replace('지번',' 지번')
+			detailAddr3 = detailAddr4.replace('<div>','')
+			detailAddr2 = detailAddr3.replace('<div>','')
+			detailAddr1 = detailAddr2.replace('</div>','')
+			detailAddr = detailAddr1.replace('</div>','')
 			console.log('x'+mouseLat);
 			console.log('y'+mouseLng);
 			
@@ -75,10 +98,10 @@
 <h1>myPlaceForm</h1>
 	<%-- action부분에 insert부분으로 넘기기 --%>
   <form id="myPlaceForm" action="#" method="get">
-  	<table>
+  	<table width="50%" align="center">
   		<tr>
-  			<td>장소명</td>
-  			<td>
+  			<td align="center" width="20%">장소명</td>
+  			<td  width="30%">
   				<input type="text" id="myPlaceName" name="myPlaceName" placeholder="장소를 한 글자 이상 입력해주세요" />
   			</td>
   		</tr>
@@ -102,9 +125,11 @@
   			</td>
   		</tr>
   		<tr>
-  		<td><input type="button" id=SeoulBtn  name="SeoulBtn" value="서울시전체보기"/></td>
-  		<td><input type="button" id=myWBtn  name="myWBtn" value="등록"/></td>
-  		<td><input type="button" id=resetBtn  name="resetBtn" value="입력취소"/></td>
+	  		<td colspan="2" align="center">
+	  			<input type="button" id=seoul  name="seoul" value="서울시전체보기"/>
+	  			<input type="button" id=myWBtn  name="myWBtn" value="등록"/>
+	  			<input type="button" id=resetBtn  name="resetBtn" value="입력취소"/>
+			</td>
   		</tr>
   	</table>
   </form>

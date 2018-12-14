@@ -64,6 +64,7 @@
 		date.setTime(date.getTime() + exp*24*60*60*1000);
 		document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
 	};
+
 	
 	// 쿠키 얻기 함수
 	var getCookie = function(name) {
@@ -107,6 +108,7 @@
 	        center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
 	        level: 9 // 지도의 확대 레벨
 	    };
+
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new daum.maps.Map(mapContainer, mapOption),
 	    customOverlay = new daum.maps.CustomOverlay({}),
@@ -208,6 +210,7 @@
 		    
 		    if(guname==name){
 		    	daum.maps.event.addListener(polygon, 'mouseover', function() {
+
 		    		var level = map.getLevel()-3;
 			        
 			        // 지도를 클릭된 폴리곤의 중앙 위치를 기준으로 확대합니다
@@ -278,18 +281,22 @@
 					    // 중심좌표 표시
 					    getInfo()
 					});
+
 					function searchAddrFromCoords(coords, callback) {
 					    // 좌표로 행정동 주소 정보를 요청합니다
 					    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
 					}
+
 					function searchDetailAddrFromCoords(coords, callback) {
 					    // 좌표로 법정동 상세 주소 정보를 요청합니다
 					    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 					}
+
 					// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
 					function displayCenterInfo(result, status) {
 					    if (status === daum.maps.services.Status.OK) {
 					        var infoDiv = document.getElementById('centerAddr');
+
 					        for(var i = 0; i < result.length; i++) {
 					            // 행정동의 region_type 값은 'H' 이므로
 					            if (result[i].region_type === 'H') {
@@ -432,18 +439,22 @@
 			    // 중심좌표 표시
 			    getInfo()
 			});
+
 			function searchAddrFromCoords(coords, callback) {
 			    // 좌표로 행정동 주소 정보를 요청합니다
 			    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
 			}
+
 			function searchDetailAddrFromCoords(coords, callback) {
 			    // 좌표로 법정동 상세 주소 정보를 요청합니다
 			    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 			}
+
 			// 지도 좌측상단에 지도 중심좌표에 대한 주소정보를 표출하는 함수입니다
 			function displayCenterInfo(result, status) {
 			    if (status === daum.maps.services.Status.OK) {
 			        var infoDiv = document.getElementById('centerAddr');
+
 			        for(var i = 0; i < result.length; i++) {
 			            // 행정동의 region_type 값은 'H' 이므로
 			            if (result[i].region_type === 'H') {
@@ -512,6 +523,7 @@
 		
 		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 		var mapTypeControl = new daum.maps.MapTypeControl();
+
 		// 지도 타입 컨트롤을 지도에 표시합니다
 		map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
 		
