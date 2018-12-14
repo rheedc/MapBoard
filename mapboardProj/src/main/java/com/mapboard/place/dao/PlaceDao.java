@@ -13,4 +13,6 @@ public interface PlaceDao {
 	public int getPlaceListCnt(PlaceVO vo, int situation);
 	
 	public int getBoardListCnt(PlaceVO vo, int situation);
+
+	public ArrayList getTotalPlaceList(PlaceVO vo, int situation);
 }

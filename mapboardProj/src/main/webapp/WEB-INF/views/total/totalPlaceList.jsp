@@ -50,10 +50,13 @@
 	<script>
 	$(document).ready(function(){
 		
+		//파라미터 정보 확인하기
 		category_no="${DATA.category_no}";
 		sigungu_name="${DATA.sigungu_name}";
 		place_name="${DATA.place_name}";
-		
+		searchType="${searchType}";
+
+		/*  */
 		//구이름,장소이름,카테고리 정보가 넘어온게 있다면 
 		//그 값을 화면에 세팅해놓기
 		if(category_no!=0){
@@ -71,6 +74,12 @@
 			$("#place_name").val(place_name)
 		}
 		
+		//searchType 정보가 없거나 placeSearch인 경우=>장소검색결과 보여주기
+		if(searchType==null || searchType.length==0){
+			$("#boardSearch").show();
+		}
+		//searchType 정보가 boardSearch인 경우=>게시물검색결과 보여주기
+		
 		//카테고리에서 클릭이벤트 발생할 때
 		$(".category_no").click(function(){
 			$("#searchFrm_j").submit()
@@ -78,6 +87,17 @@
 		//검색버튼 클릭이벤트 발생했을 때
 		$("#sBtn_j").click(function(){
 			$("#searchFrm_j").submit()
+		})
+		
+		//장소검색결과 버튼 클릭시
+		$("#placeSearchBtn").click(function(){
+			$("#boardSearch").hide();
+			$("#placeSearch").show();
+		})
+		//게시물검색결과 버튼 클릭시
+		$("#boardSearchBtn").click(function(){
+			$("#placeSearch").hide();
+			$("#boardSearch").show();
 		})
 	})
 	</script>
@@ -110,11 +130,12 @@
 	<div id="left_content">
 	<table border="1px" width="500px" height="70px">
 		<tr>
-			<td align="center">장소검색결과</td>
-			<td align="center">게시글검색결과</td>
+			<td id="placeSearchBtn" align="center">장소검색결과</td>
+			<td id="boardSearchBtn" align="center">게시글검색결과</td>
 		</tr>
 	</table>
 	
+	<div id="placeSearch" >
 	<table border="1px" width="500px" height="30px">
 		<tr>
 			<td colspan="2" style="padding:10px;">검색결과(${placecnt_total}건)</td>
@@ -153,34 +174,36 @@
 	  		<%-- 완성예시 : [<][1][2][3][4][5][>] --%>
 	  		<%-- 이전페이지 --%>
 	  		<%-- 현재 보고있는 페이지가 첫번째 페이지라면 --%>
-	  		<c:if test="${PINFO.nowPage eq 1}">
+	  		<c:if test="${PINFO_P.nowPage eq 1}">
 	  			이전
 	  		</c:if>
-	  		<c:if test="${PINFO.nowPage ne 1}">
-	  			<a href="../total/totalPlaceList.yo?nowPage=${PINFO.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">이전</a>
+	  		<c:if test="${PINFO_P.nowPage ne 1}">
+	  			<a href="../total/totalPlaceList.yo?nowPage=${PINFO_P.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">이전</a>
 	  		</c:if>
 	  		
 	  		<%-- [1][2][3][4][5] --%>
-	  		<c:forEach var="page" begin="${PINFO.startPage }" end="${PINFO.endPage}">
-	  			<c:if test="${PINFO.nowPage eq page }">
+	  		<c:forEach var="page" begin="${PINFO_P.startPage }" end="${PINFO_P.endPage}">
+	  			<c:if test="${PINFO_P.nowPage eq page }">
 	  			<a href="../total/totalPlaceList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}"><font color="blue">[${page}]</font></a>
 	  			</c:if>
-	  			<c:if test="${PINFO.nowPage ne page }">
+	  			<c:if test="${PINFO_P.nowPage ne page }">
 	  			<a href="../total/totalPlaceList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">${page}</a>
 	  			</c:if>
 	  		</c:forEach>
 	  		
 	  		<%-- 다음페이지 --%>
 	  		<%-- 현재 보고있는 페이지가 마지막 페이지까지 갔으면 --%>
-	  		<c:if test="${PINFO.nowPage eq PINFO.totalPage}">
+	  		<c:if test="${PINFO_P.nowPage eq PINFO_P.totalPage}">
 	  			다음
 	  		</c:if>
-	  		<c:if test="${PINFO.nowPage ne PINFO.totalPage}">
-	  			<a href="../total/totalPlaceList.yo?nowPage=${PINFO.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">다음</a>
+	  		<c:if test="${PINFO_P.nowPage ne PINFO_P.totalPage}">
+	  			<a href="../total/totalPlaceList.yo?nowPage=${PINFO_P.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">다음</a>
 	  		</c:if>
 	  		</td>
 		</tr>
 	</table>
+	</div>
+	
 	</div>
 	<div id="right_content">지도 부분 오른쪽내용</div>
 	</div>

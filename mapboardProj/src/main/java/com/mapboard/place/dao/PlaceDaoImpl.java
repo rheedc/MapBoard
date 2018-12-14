@@ -61,7 +61,23 @@ public class PlaceDaoImpl implements PlaceDao{
 		//결과를 반환
 		return placecnt_total;
 	}
-	
+	//장소검색결과 목록 불러오는 함수
+	public ArrayList getTotalPlaceList(PlaceVO vo, int situation) {
+		ArrayList tlist=new ArrayList();
+		if(situation==2) {
+			tlist=(ArrayList) sqlSession.selectList("placeSql.all_placeList_ct", vo);
+		}
+		if(situation==3) {
+			tlist=(ArrayList) sqlSession.selectList("placeSql.all_placeList_cd", vo);
+		}
+		if(situation==4||situation==5) {
+			tlist=(ArrayList) sqlSession.selectList("placeSql.all_placeList_p_ct", vo);
+		}
+		if(situation==6) {
+			tlist=(ArrayList) sqlSession.selectList("placeSql.all_placeList_p_cd", vo);
+		}
+		return tlist;
+	}
 	//장소검색결과 목록 불러오는 함수
 	public ArrayList getPlaceList(PlaceVO vo,int situation) {
 		ArrayList plist=new ArrayList();
@@ -84,4 +100,6 @@ public class PlaceDaoImpl implements PlaceDao{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 }

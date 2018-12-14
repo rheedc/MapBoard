@@ -88,6 +88,46 @@
 	</sql>
 	
 	<!-- 장소검색결과 뿌려주는 select문 -->
+	<!-- 지도에 뿌리기 위한 데이터 -->
+	<select id="all_placeList_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	</select>
+	<select id="all_placeList_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.category_no=#{category_no}
+	</select>
+	<select id="all_placeList_p_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	</select>
+	<select id="all_placeList_p_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select 
+	    <include refid="place_jo" />
+	<include refid="join_jo" />
+	where 
+	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	    and p.category_no=#{category_no}
+	</select>
+	
+	<!-- 장소검색결과 뿌려주는 select문 -->
+	<!-- 페이징 처리를 위한 데이터 -->
 	<select id="placeList_ct" resultType="PlaceVO" parameterType="PlaceVO">
 	select * from (
 	select 
@@ -136,6 +176,7 @@
 	     )
 		where rno BETWEEN #{start} AND #{end}
 	</select>
+	
 	
 	<!-- 장소검색결과 개수 구하기 -->
 	<select id="cnt_placeList_ct" resultType="int" parameterType="PlaceVO">

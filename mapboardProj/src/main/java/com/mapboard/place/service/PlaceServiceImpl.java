@@ -52,7 +52,24 @@ public class PlaceServiceImpl implements PlaceService{
 		System.out.println(pInfo.getStartPage());
 		System.out.println(pInfo.getEndPage());
 		return pInfo;
-		}
+	}
+	
+	//장소검색결과 개수를 가져와주는 함수
+	public int getPlaceListCnt(PlaceVO vo,int situation) {
+		int placecnt_total=pdao.getPlaceListCnt(vo, situation);
+		return placecnt_total;
+	}
+	//게시물검색결과 개수를 가져와주는 함수
+	public int getBoardListCnt(PlaceVO vo,int situation) {
+		int reviewcnt_total=pdao.getBoardListCnt(vo, situation);
+		return reviewcnt_total;
+	}
+	
+	//장소검색결과를 전부 가져와주는 함수
+	public ArrayList getTotalPlaceList(PlaceVO vo, int situation) {
+		ArrayList tlist=pdao.getTotalPlaceList(vo,situation);
+		return tlist;
+	}	
 	
 	//장소검색결과를 가져와주는 함수
 	public ArrayList getPlaceList(PlaceVO vo,int situation,PageUtil pInfo) {
@@ -85,14 +102,7 @@ public class PlaceServiceImpl implements PlaceService{
 		return null;
 	}
 	
-	//장소검색결과 개수를 가져와주는 함수
-	public int getPlaceListCnt(PlaceVO vo,int situation) {
-		int placecnt_total=pdao.getPlaceListCnt(vo, situation);
-		return placecnt_total;
-	}
-	//게시물검색결과 개수를 가져와주는 함수
-	public int getBoardListCnt(PlaceVO vo,int situation) {
-		int reviewcnt_total=pdao.getBoardListCnt(vo, situation);
-		return reviewcnt_total;
-	}	
+	
+
+	
 }
