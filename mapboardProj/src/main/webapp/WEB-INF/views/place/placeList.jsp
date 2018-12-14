@@ -30,8 +30,8 @@
 	    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
 		
 		
-		/* 은비 스타일 s*/
-		#top_content {
+	/*********************** 은비 스타일 start *************************/
+	#top_content {
 	width:1900px;
 	height:50px;
 	text-align:center;
@@ -60,7 +60,7 @@
 	border-bottom: 1px solid #444444;
 	padding:10px;
 	}
-		/* 은비 스타일 e*/
+	/*********************** 은비 스타일 end *************************/
 		
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -489,11 +489,14 @@
 		
 		
 		
-		// 은비 스크립트  s----------------------------------------------------------------------
+		// *********************** 은비 스크립트 start *************************/
+		//파라미터 정보 확인하기
 		category_no="${DATA.category_no}";
 		sigungu_name="${DATA.sigungu_name}";
 		place_name="${DATA.place_name}";
-		
+		searchType="${searchType}";
+
+		/**********************************기본세팅부분*************************************/
 		//구이름,장소이름,카테고리 정보가 넘어온게 있다면 
 		//그 값을 화면에 세팅해놓기
 		if(category_no!=0){
@@ -511,125 +514,215 @@
 			$("#place_name").val(place_name)
 		}
 		
+		//searchType 정보가 없거나 placeSearch인 경우
+		//=>장소검색결과 보여주기,form에 hidden으로 placeSearch넣기
+		if(searchType==null || searchType.length==0 ||searchType=="placeSearch"){
+			$("#boardSearch").hide();
+			$("#searchType").val("placeSearch");
+		}
+		//searchType 정보가 boardSearch인 경우
+		//=>게시물검색결과 보여주기,form에 hidden으로 boardSearch넣기
+		if(searchType=="boardSearch"){
+			$("#placeSearch").hide();
+			$("#searchType").val("boardSearch");
+		}
+		
+		/**********************************이벤트적용부분*************************************/
 		//카테고리에서 클릭이벤트 발생할 때
 		$(".category_no").click(function(){
-			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
 		//검색버튼 클릭이벤트 발생했을 때
 		$("#sBtn_j").click(function(){
-			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
-		// 은비 스크립트  e----------------------------------------------------------------------
 		
+		//장소검색결과 버튼 클릭시
+		$("#placeSearchBtn").click(function(){
+			$("#boardSearch").hide();
+			$("#placeSearch").show();
+			$("#searchType").val("placeSearch")
+		})
+		//게시물검색결과 버튼 클릭시
+		$("#boardSearchBtn").click(function(){
+			$("#placeSearch").hide();
+			$("#boardSearch").show();
+			$("#searchType").val("boardSearch")
+		})
+		// *********************** 은비 스크립트 end *************************/
 	}); // function 끝	
-	
 	</script>
+	
 </head>
 <body>
 
 	<div id="div_root">
 		<div id="top_content">
-	<form id="searchFrm_j" method="get" action="../place/placeList.yo">
-		<table>
-			<tr>
-				<td><input type="text" id="sigungu_name" name="sigungu_name" placeholder="서울특별시" readonly/><div id="guname1"></div></td>
-				<!-- <td><input type="text" id="sigungu_name" name="sigungu_name" placeholder="서울특별시"  value="구로구"></td> -->
-				<td><input type="text" id="place_name" name="place_name" placeholder="장소이름을 입력해주세요"></td>
-				<td><input type="button" id="sBtn_j" name="sBtn_j" value="검색"></td>
-				<td>
-					<input type="radio" name="category_no" value=10 class="category_no"> 전체
-					<input type="radio" name="category_no" value=1 class="category_no"> 관광/여가/오락
-					<input type="radio" name="category_no" value=2 class="category_no"> 숙박
-					<input type="radio" name="category_no" value=3 class="category_no"> 의료
-					<input type="radio" name="category_no" value=4 class="category_no"> 한식/중식/양식
-					<input type="radio" name="category_no" value=5 class="category_no"> 커피점/카페
-					<input type="radio" name="category_no" value=6 class="category_no"> 기타
-				</td>
-			</tr>
-		</table>
-	</form>
-	</div>
-		<div id="left_content">
-		<table border="1px" width="500px" height="70px">
-			<tr>
-				<td align="center">장소검색결과</td>
-				<td align="center">게시글검색결과</td>
-			</tr>
-		</table>
-		
-		<table border="1px" width="500px" height="30px">
-			<tr>
-				<td colspan="2" style="padding:10px;">검색결과(${placecnt_total}건)</td>
-			</tr>
-		</table>
-		
-		<div  class="placeResult_jo">
-			<c:if test="${empty PLIST }">
-			<table width="500px" height="600px">
-				<tr align="center">
-					<td>검색결과가 없습니다</td>
+		<form id="searchFrm_j" method="get" action="../place/placeList.yo">
+		<input type="hidden" name="searchType" id="searchType">
+			<table>
+				<tr>
+					<td><input type="text" id="sigungu_name" name="sigungu_name" placeholder="서울특별시" readonly/><div id="guname1"></div></td>
+					<td><input type="text" id="place_name" name="place_name" placeholder="장소이름을 입력해주세요"></td>
+					<td><input type="button" id="sBtn_j" name="sBtn_j" value="검색"></td>
+					<td>
+						<input type="radio" name="category_no" value=10 class="category_no"> 전체
+						<input type="radio" name="category_no" value=1 class="category_no"> 관광/여가/오락
+						<input type="radio" name="category_no" value=2 class="category_no"> 숙박
+						<input type="radio" name="category_no" value=3 class="category_no"> 의료
+						<input type="radio" name="category_no" value=4 class="category_no"> 한식/중식/양식
+						<input type="radio" name="category_no" value=5 class="category_no"> 커피점/카페
+						<input type="radio" name="category_no" value=6 class="category_no"> 기타
+					</td>
 				</tr>
 			</table>
-			</c:if>
-			<table width="500px" >
-				<c:forEach var="data" items="${PLIST}">
-					<tr height="100px">
-						<td width="350px">
-						${data.place_name}<br/>
-						${data.juso}<br/>
-						관련글:${data.reviewcnt}건
-						</td>
-						<td>
-						good:${data.goodcnt}<br/>
-						soso:${data.sosocnt}<br/>
-						bad:${data.badcnt}
-						</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
+		</form>
+		</div><!-- top_content닫음 -->
 		
-		<table border="1px" width="500px" height="50px">	
-			<tr>
-				<td align="center">
-		  		<%-- 완성예시 : [<][1][2][3][4][5][>] --%>
-		  		<%-- 이전페이지 --%>
-		  		<%-- 현재 보고있는 페이지가 첫번째 페이지라면 --%>
-		  		<c:if test="${PINFO.nowPage eq 1}">
-		  			이전
-		  		</c:if>
-		  		<c:if test="${PINFO.nowPage ne 1}">
-		  			<%-- <a href="../total/totalPlaceList.yo?nowPage=${PINFO.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">이전</a> --%>
-		  			<a href="../place/placeList.yo?nowPage=${PINFO.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">이전</a>
-		  		</c:if>
-		  		
-		  		<%-- [1][2][3][4][5] --%>
-		  		<c:forEach var="page" begin="${PINFO.startPage }" end="${PINFO.endPage}">
-		  			<c:if test="${PINFO.nowPage eq page }">
-		  			<%-- <a href="../total/totalPlaceList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}"><font color="blue">[${page}]</font></a> --%>
-		  			<a href="../place/placeList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}"><font color="blue">[${page}]</font></a>
-		  			</c:if>
-		  			<c:if test="${PINFO.nowPage ne page }">
-		  			<%-- <a href="../total/totalPlaceList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">${page}</a> --%>
-		  			<a href="../place/placeList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">${page}</a>
-		  			</c:if>
-		  		</c:forEach>
-		  		
-		  		<%-- 다음페이지 --%>
-		  		<%-- 현재 보고있는 페이지가 마지막 페이지까지 갔으면 --%>
-		  		<c:if test="${PINFO.nowPage eq PINFO.totalPage}">
-		  			다음
-		  		</c:if>
-		  		<c:if test="${PINFO.nowPage ne PINFO.totalPage}">
-		  			<%-- <a href="../total/totalPlaceList.yo?nowPage=${PINFO.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">다음</a> --%>
-		  			<a href="../place/placeList.yo?nowPage=${PINFO.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}">다음</a>
-		  		</c:if>
-		  		</td>
-			</tr>
-		</table>
-		</div>
+		<div id="left_content">
+		
+			<table border="1px" width="500px" height="70px">
+				<tr>
+					<td id="placeSearchBtn" align="center" value="placeSearch">장소검색결과</td>
+					<td id="boardSearchBtn" align="center" value="boardSearch">게시글검색결과</td>
+				</tr>
+			</table>
+		
+			<div id="placeSearch" >
+				<table border="1px" width="500px" height="30px">
+					<tr>
+						<td colspan="2" style="padding:10px;">검색결과(${placecnt_total}건)</td>
+					</tr>
+				</table>
+				
+				<div  class="placeResult_jo">
+					<c:if test="${empty PLIST }">
+					<table width="500px" height="600px">
+						<tr align="center">
+							<td>검색결과가 없습니다</td>
+						</tr>
+					</table>
+					</c:if>
+					<table width="500px" >
+						<c:forEach var="data" items="${PLIST}">
+							<tr height="100px">
+								<td width="350px">
+								${data.place_name}<br/>
+								${data.juso}<br/>
+								관련글:${data.reviewcnt}건
+								</td>
+								<td>
+								good:${data.goodcnt}<br/>
+								soso:${data.sosocnt}<br/>
+								bad:${data.badcnt}
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+				
+				<table border="1px" width="500px" height="50px">	
+					<tr>
+						<td align="center">
+				  		<%-- 완성예시 : [<][1][2][3][4][5][>] --%>
+				  		<%-- 이전페이지 --%>
+				  		<%-- 현재 보고있는 페이지가 첫번째 페이지라면 --%>
+				  		<c:if test="${PINFO_P.nowPage eq 1}">
+				  			이전
+				  		</c:if>
+				  		<c:if test="${PINFO_P.nowPage ne 1}">
+				  			<a href="../place/placeList.yo?nowPage=${PINFO_P.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=placeSearch">이전</a>
+				  		</c:if>
+				  		
+				  		<%-- [1][2][3][4][5] --%>
+				  		<c:forEach var="page" begin="${PINFO_P.startPage }" end="${PINFO_P.endPage}">
+				  			<c:if test="${PINFO_P.nowPage eq page }">
+				  			<a href="../place/placeList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=placeSearch"><font color="blue">[${page}]</font></a>
+				  			</c:if>
+				  			<c:if test="${PINFO_P.nowPage ne page }">
+				  			<a href="../place/placeList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=placeSearch">${page}</a>
+				  			</c:if>
+				  		</c:forEach>
+				  		
+				  		<%-- 다음페이지 --%>
+				  		<%-- 현재 보고있는 페이지가 마지막 페이지까지 갔으면 --%>
+				  		<c:if test="${PINFO_P.nowPage eq PINFO_P.totalPage}">
+				  			다음
+				  		</c:if>
+				  		<c:if test="${PINFO_P.nowPage ne PINFO_P.totalPage}">
+				  			<a href="../place/placeList.yo?nowPage=${PINFO_P.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=placeSearch">다음</a>
+				  		</c:if>
+				  		</td>
+					</tr>
+				</table>
+			</div><!-- placeSearch닫음 -->
+		
+			<div id="boardSearch">
+				<table border="1px" width="500px" height="30px">
+					<tr>
+						<td colspan="2" style="padding:10px;">검색결과(${reviewcnt_total}건)</td>
+					</tr>
+				</table>
+				
+				<div  class="boardResult_jo">
+					<c:if test="${empty BLIST }">
+					<table width="500px" height="600px">
+						<tr align="center">
+							<td>검색결과가 없습니다</td>
+						</tr>
+					</table>
+					</c:if>
+					<table width="500px" >
+						<c:forEach var="data" items="${BLIST}">
+							<tr height="100px">
+								<td width="350px">
+								${data.subject}<br/>
+								${data.comm}<br/>
+								${data.createdt}
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+				<table border="1px" width="500px" height="50px">	
+					<tr>
+						<td align="center">
+				  		<%-- 완성예시 : [<][1][2][3][4][5][>] --%>
+				  		<%-- 이전페이지 --%>
+				  		<%-- 현재 보고있는 페이지가 첫번째 페이지라면 --%>
+				  		<c:if test="${PINFO_B.nowPage eq 1}">
+				  			이전
+				  		</c:if>
+				  		<c:if test="${PINFO_B.nowPage ne 1}">
+				  			<a href="../place/placeList.yo?nowPage=${PINFO_B.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=boardSearch">이전</a>
+				  		</c:if>
+				  		
+				  		<%-- [1][2][3][4][5] --%>
+				  		<c:forEach var="page" begin="${PINFO_B.startPage }" end="${PINFO_B.endPage}">
+				  			<c:if test="${PINFO_P.nowPage eq page }">
+				  			<a href="../place/placeList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=boardSearch"><font color="blue">[${page}]</font></a>
+				  			</c:if>
+				  			<c:if test="${PINFO_P.nowPage ne page }">
+				  			<a href="../place/placeList.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=boardSearch">${page}</a>
+				  			</c:if>
+				  		</c:forEach>
+				  		
+				  		<%-- 다음페이지 --%>
+				  		<%-- 현재 보고있는 페이지가 마지막 페이지까지 갔으면 --%>
+				  		<c:if test="${PINFO_B.nowPage eq PINFO_B.totalPage}">
+				  			다음
+				  		</c:if>
+				  		<c:if test="${PINFO_B.nowPage ne PINFO_B.totalPage}">
+				  			<a href="../place/placeList.yo?nowPage=${PINFO_B.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=boardSearch">다음</a>
+				  		</c:if>
+				  		</td>
+					</tr>
+				</table>
+					
+			</div><!-- boardSearch닫음 -->
+			
+		</div><!-- left_content닫음 -->
+		
 		<div id="right_content">
 			<table>
 				<tr>

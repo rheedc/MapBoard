@@ -37,8 +37,7 @@ public class PlaceController {
 			placeList	=	pservice.getPlaceService(vo);
 			mv.addObject("PLACELIST",placeList);
 			
-			/**********은비코드아래추가**********/
-			
+			/**********은비코드 시작**********/
 			//할일
 			//1.파라미터 받고
 			//PlaceVO를 이용해서 받기
@@ -99,34 +98,42 @@ public class PlaceController {
 			//카테고리의 값이 0되는 경우를 고려해야함
 			
 			//페이지 이동기능
-			PageUtil pInfo=pservice.getPageInfo(vo,nowPage,situation,searchType); 
-					
-			//장소검색결과 개수 불러오기
-			int placecnt_total=pservice.getPlaceListCnt(vo,situation);
-			//장소검색결과 목록불러오기(페이징)
-			ArrayList plist=pservice.getPlaceList(vo,situation,pInfo);
+			PageUtil pInfo_p=pservice.getPageInfo(vo,nowPage,situation,"placeSearch"); 
+			PageUtil pInfo_b=pservice.getPageInfo(vo,nowPage,situation,"boardSearch");
+			
 			//장소검색결과 목록불러오기(전체목록)
 			ArrayList tlist=pservice.getTotalPlaceList(vo,situation);
-			
+
+			//장소검색결과 개수 불러오기
+			int placecnt_total=pservice.getPlaceListCnt(vo,situation);
+			//장소검색결과 목록불러오기
+			ArrayList plist=pservice.getPlaceList(vo,situation,pInfo_p);
+
+		
 			//게시물검색결과 개수 불러오기
 			int reviewcnt_total=pservice.getBoardListCnt(vo,situation);
-			//게시물검색결과 목록불러오기(페이징)
-			ArrayList blist=pservice.getBoardList(vo,situation,pInfo);
+			//게시물검색결과 목록불러오기
+			ArrayList blist=pservice.getBoardList(vo,situation,pInfo_b);
+
 
 			//3.모델
 			mv.addObject("DATA", vo);
-			mv.addObject("PINFO", pInfo);
+			mv.addObject("PINFO_P", pInfo_p);
+			mv.addObject("PINFO_B", pInfo_b);
+			mv.addObject("TLIST",tlist);
+			mv.addObject("PLIST", plist);
+			mv.addObject("BLIST", blist);
+			mv.addObject("placecnt_total", placecnt_total);
+			mv.addObject("reviewcnt_total", reviewcnt_total);			
 			mv.addObject("situation", situation);
 			mv.addObject("searchType", searchType);
-			mv.addObject("PLIST", plist);
-			mv.addObject("placecnt_total", placecnt_total);			
-			mv.addObject("BLIST", blist);
-			mv.addObject("reviewcnt_total", reviewcnt_total);			
 			
-			System.out.println("새로");
+			System.out.println("모델 다시 넘겨볼게");
 			
 			//4.뷰호출
-			return mv;	
+			return mv;
+			/**********은비코드 끝**********/
+				
 		}
 		
 		@RequestMapping("/place/placeList2")

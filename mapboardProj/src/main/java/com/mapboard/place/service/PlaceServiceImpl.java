@@ -99,7 +99,8 @@ public class PlaceServiceImpl implements PlaceService{
 		vo.setStart(start);
 		vo.setEnd(end);
 		
-		return null;
+		ArrayList blist=pdao.getBoardList(vo,situation);
+		return blist;
 	}
 	
 	

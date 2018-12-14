@@ -23,7 +23,7 @@
 	-->
 	<!-- 자주쓰는건 빼놓자 -->
 	<sql id="place_jo">
-		rownum rno, 
+		ROW_NUMBER() OVER(ORDER BY nvl(b.meanP,0) DESC) AS RNO,
 	    p.PLACE_NO,
 	    p.USERID,
 	    p.PLACE_NAME,
@@ -85,6 +85,27 @@
 		on p.PLACE_NO=f.PLACE_NO
 		join member m
 		on m.userid=p.userid
+	</sql>
+	
+	<sql id="board_jo">
+		ROW_NUMBER() OVER(ORDER BY b.CREATEDT DESC) AS RNO,
+	    b.BIDX,
+	    b.PLACE_NO,
+	    b.SUBJECT,
+	    b.COMM,
+	    b.CREATEDT,
+	    b.STATUS,
+	    p.SIGUNGU_NAME,
+	    p.PLACE_NAME,
+	    p.CATEGORY_NO,
+	    p.LATITUDE,
+	    p.LONGITUDE
+	</sql>
+	<sql id="board_join_jo">
+		from 
+	    	board b
+		join place p
+	    	on b.PLACE_NO=p.PLACE_NO
 	</sql>
 	
 	<!-- 장소검색결과 뿌려주는 select문 -->
@@ -211,6 +232,104 @@
 	<include refid="join_jo" />
 	where 
 	    p.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	    and p.category_no=#{category_no}
+	</select>
+	
+	<!-- 게시판검색결과 뿌려주는 select문 -->
+	<!-- 페이징 처리를 위한 데이터 -->
+	<select id="boardList_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
+	select 
+	    <include refid="board_jo" />
+	<include refid="board_join_jo" />
+	where
+	    b.STATUS='Y'
+	    and p.STATUS='Y'
+	    and p.sigungu_name=#{sigungu_name}
+
+	)
+	where 
+	    rno BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardList_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
+	select 
+	    <include refid="board_jo" />
+	<include refid="board_join_jo" />
+	where
+	    b.STATUS='Y'
+	    and p.STATUS='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.category_no=#{category_no}
+	)
+	where 
+	    rno BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardList_p_ct" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
+	select 
+	    <include refid="board_jo" />
+	<include refid="board_join_jo" />
+	where
+	    b.STATUS='Y'
+	    and p.STATUS='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	)
+	where 
+	    rno BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardList_p_cd" resultType="PlaceVO" parameterType="PlaceVO">
+	select * from (
+	select 
+	    <include refid="board_jo" />
+	<include refid="board_join_jo" />
+	where
+	    b.STATUS='Y'
+	    and p.STATUS='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	    and p.category_no=#{category_no}
+	)
+	where 
+	    rno BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 게시판검색결과 개수 구하기 -->
+	<select id="cnt_boardList_ct" resultType="int" parameterType="PlaceVO">
+	select 
+		count(*) reviewcnt_total
+	<include refid="board_join_jo" />
+	where 
+	    b.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	</select>
+	<select id="cnt_boardList_cd" resultType="int" parameterType="PlaceVO">
+	select 
+		count(*) reviewcnt_total
+	<include refid="board_join_jo" />
+	where 
+	    b.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.category_no=#{category_no}
+	</select>
+	<select id="cnt_boardList_p_ct" resultType="int" parameterType="PlaceVO">
+	select 
+		count(*) reviewcnt_total
+	<include refid="board_join_jo" />
+	where 
+	    b.status='Y'
+	    and p.sigungu_name=#{sigungu_name}
+	    and p.place_name like '%' || #{place_name} || '%'
+	</select>
+	<select id="cnt_boardList_p_cd" resultType="int" parameterType="PlaceVO">
+	select 
+		count(*) reviewcnt_total
+	<include refid="board_join_jo" />
+	where 
+	    b.status='Y'
 	    and p.sigungu_name=#{sigungu_name}
 	    and p.place_name like '%' || #{place_name} || '%'
 	    and p.category_no=#{category_no}

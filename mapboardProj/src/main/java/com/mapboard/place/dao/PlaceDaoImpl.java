@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mapboard.place.vo.PlaceVO;
-import com.mapboard.util.PageUtil;
 
 @Service("placeDao")
 public class PlaceDaoImpl implements PlaceDao{
@@ -27,7 +26,7 @@ public class PlaceDaoImpl implements PlaceDao{
 		
 		// 값을 받아 set해준다 밑에건 임시로 넣었다
 		vo.setSigungu_code(11680);
-		vo.setCategory_no(3);
+		
 		//	질의 실행
 		arrayList	=	(ArrayList)sqlSession.selectList("placeSql.placeList", vo);
 		System.out.println("PlaceDao끝");
@@ -41,10 +40,9 @@ public class PlaceDaoImpl implements PlaceDao{
 	 * 작성자 : 조은비 
 	 * 작성일 : 2018-12-12
 	 */
-	//게시물 총개수 구하기 질의실행 함수
+	//장소검색결과 총개수 구하기 질의실행 함수
 	public int getPlaceListCnt(PlaceVO vo, int situation) {
 		//질의를 실행할 스테이트먼트 구하기
-		/*int result=sqlSession.selectOne("fileBoardName.totalCount");*/
 		int placecnt_total=0;
 		if(situation==2) {
 			placecnt_total=sqlSession.selectOne("placeSql.cnt_placeList_ct",vo);
@@ -62,6 +60,7 @@ public class PlaceDaoImpl implements PlaceDao{
 		return placecnt_total;
 	}
 	//장소검색결과 목록 불러오는 함수
+	//전체장소정보용
 	public ArrayList getTotalPlaceList(PlaceVO vo, int situation) {
 		ArrayList tlist=new ArrayList();
 		if(situation==2) {
@@ -79,6 +78,7 @@ public class PlaceDaoImpl implements PlaceDao{
 		return tlist;
 	}
 	//장소검색결과 목록 불러오는 함수
+	//페이징용
 	public ArrayList getPlaceList(PlaceVO vo,int situation) {
 		ArrayList plist=new ArrayList();
 		if(situation==2) {
@@ -96,10 +96,42 @@ public class PlaceDaoImpl implements PlaceDao{
 		return plist;
 	}
 
+	//게시물검색결과 총개수 구하기 질의실행 함수
 	public int getBoardListCnt(PlaceVO vo, int situation) {
-		// TODO Auto-generated method stub
-		return 0;
+		//질의를 실행할 스테이트먼트 구하기
+		int reviewcnt_total=0;
+		if(situation==2) {
+			reviewcnt_total=sqlSession.selectOne("placeSql.cnt_boardList_ct",vo);
+		}
+		if(situation==3) {
+			reviewcnt_total=sqlSession.selectOne("placeSql.cnt_boardList_cd",vo);
+		}
+		if(situation==4||situation==5) {
+			reviewcnt_total=sqlSession.selectOne("placeSql.cnt_boardList_p_ct",vo);
+		}
+		if(situation==6) {
+			reviewcnt_total=sqlSession.selectOne("placeSql.cnt_boardList_p_cd",vo);
+		}
+		//결과를 반환
+		return reviewcnt_total;
 	}
 
-	
+	//게시물검색결과 목록 불러오는 함수
+	//페이징용
+	public ArrayList getBoardList(PlaceVO vo, int situation) {
+		ArrayList blist=new ArrayList();
+		if(situation==2) {
+			blist=(ArrayList) sqlSession.selectList("placeSql.boardList_ct", vo);
+		}
+		if(situation==3) {
+			blist=(ArrayList) sqlSession.selectList("placeSql.boardList_cd", vo);
+		}
+		if(situation==4||situation==5) {
+			blist=(ArrayList) sqlSession.selectList("placeSql.boardList_p_ct", vo);
+		}
+		if(situation==6) {
+			blist=(ArrayList) sqlSession.selectList("placeSql.boardList_p_cd", vo);
+		}
+		return blist;	
+	}
 }

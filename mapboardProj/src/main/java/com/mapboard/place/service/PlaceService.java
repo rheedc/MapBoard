@@ -12,6 +12,7 @@ public interface PlaceService {
 	public PageUtil getPageInfo(PlaceVO vo,int nowPage,int situation,String searchType);
 	
 	public ArrayList getPlaceList(PlaceVO vo, int situation, PageUtil pInfo);
+	
 	public ArrayList getBoardList(PlaceVO vo, int situation,PageUtil pInfo);
 
 	public int getPlaceListCnt(PlaceVO vo, int situation);
