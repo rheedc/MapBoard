@@ -7,7 +7,7 @@
 <mapper namespace="board">
 	<!-- ex)<select id="loginChk" parameterType="hmap" resultType="hmap"> -->
 
-	<!-- 자주 사용되는 명령은 한번만 만들어 놓는다. -->
+	<!-- 자주 사용되는 명령은 한번만 만들어 놓 는다. -->
 	<sql id="isShow">
 		UPPER(fb_IsShow)='Y'
 	</sql>
