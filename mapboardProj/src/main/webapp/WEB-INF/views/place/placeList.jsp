@@ -269,14 +269,17 @@
 			// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
 			searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 			
+		    // 처음 클릭시 정보창이 
+			    
+			    
 			// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
-			daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+			daum.maps.event.addListener(map, 'rightclick', function(mouseEvent) {
 			    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 			        if (status === daum.maps.services.Status.OK) {
 			            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 			            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 			            
-			            var content = '<div class="bAddr">' +
+			            var content = '<div class="bAddr" style="width:250px;">' +
 			                            '<span class="title">법정동 주소정보</span>' + 
 			                            detailAddr + 
 			                            '<span class="new">'+'<input type="button" id="newBtn"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
@@ -340,15 +343,25 @@
 		     
 		     // -----------------------------------------------
 		      
-			// 마커를 표시할 위치와 title 객체 배열입니다 
+			// 마커를 표시할 위치와 title 객체 배열입니다
+			//주소출력 정상임~~~
+			<c:forEach var="m" items="${PLIST}" varStatus="status">
+			console.log('m의 주소는 ? ${m.juso}');
+			</c:forEach>
 			var positions = [
 				<c:forEach var="m" items="${PLIST}" varStatus="status">
 			    {
 			        title: "${m.place_name}",
+			        content: "<div style='width:250px;'><div>${m.place_name}</div><div>${m.juso}</div><div>${m.doro_juso}</div><div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div></div>",
+			        juso: "<div>${m.juso}</div>",
+			        good:"<div>good:${m.goodcnt}</div>",
+			        soso:"<div>soso:${m.sosocnt}</div>",
+			        bad:"<div>bad:${m.badcnt}</div>",
 			        latlng: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
 			    }
 			    <c:if test="${status.count < fn:length(PLIST)}">,</c:if>
 			    </c:forEach>
+			    
 			];
 		     
 			// 마커 이미지의 이미지 주소입니다
@@ -369,7 +382,34 @@
 			        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 			        image : markerImage // 마커 이미지 
 			    });
+			    
+			 	// 마커에 표시할 인포윈도우를 생성합니다 
+			    var infowindow_s = new daum.maps.InfoWindow({
+			        content: positions[i].content, // 인포윈도우에 표시할 내용
+			    });
+			    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+			    daum.maps.event.addListener(marker5, 'click', makeOverListener(map, marker5, infowindow_s));
+			    daum.maps.event.addListener(map, 'rightclick', makeOutListener(infowindow_s));
+			    
+			    
 			}
+			
+			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+			function makeOverListener(map, marker5, infowindow_s) {
+			    return function() {
+			    	infowindow_s.open(map, marker5);
+			    };
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow_s) {
+			    return function() {
+			    	infowindow_s.close();
+			    };
+			}
+			
 		        
 	    	});// 구 클릭 끝
 	    	//-------함수로 만들자-----------------------------------------------------끝

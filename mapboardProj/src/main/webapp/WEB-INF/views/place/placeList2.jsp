@@ -314,14 +314,15 @@
 						<c:forEach var="m" items="${PLACELIST}" varStatus="status">
 					    {
 					        title: "${m.place_name}",
+					        content: "<div>${m.place_name}</div>",
 					        latlng: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
 					    }
 					    <c:if test="${status.count < fn:length(PLACELIST)}">,</c:if>
 					    </c:forEach>
 					];
 				     
-					// 마커 이미지의 이미지 주소입니다
-					var imageSrc = "../resources/img/dot_good.png"; 
+						// 마커 이미지의 이미지 주소입니다
+						var imageSrc = "../resources/img/dot_good.png"; 
 					    
 					for (var i = 0; i < positions.length; i ++) {
 					    
@@ -338,10 +339,31 @@
 					        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 					        image : markerImage // 마커 이미지 
 					    });
+					 // 마커에 표시할 인포윈도우를 생성합니다 
+					    var infowindow = new daum.maps.InfoWindow({
+					        content: positions[i].content // 인포윈도우에 표시할 내용
+					    });
+					    daum.maps.event.addListener(marker5, 'click', function(){
+					    	infowindow.open(map, marker5);
+					    });
+					    //daum.maps.event.addListener(marker5, 'mouseover', makeOverListener(map, marker, infowindow));
+					    //daum.maps.event.addListener(marker5, 'mouseout', makeOutListener(infowindow));
 					}
 		    		
 			     	
-			     	
+					// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+					function makeOverListener(map, marker5, infowindow) {
+					    return function() {
+					        infowindow.open(map, marker5);
+					    };
+					}
+
+					// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+					function makeOutListener(infowindow) {
+					    return function() {
+					        infowindow.close();
+					    };
+					}
 			     	
 			     	
 			     	
