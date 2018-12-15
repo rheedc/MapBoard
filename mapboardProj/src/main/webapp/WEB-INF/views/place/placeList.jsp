@@ -282,7 +282,7 @@
 		    // 처음 클릭시 정보창이 
 			    
 			    
-			// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
+			// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니
 			daum.maps.event.addListener(map, 'rightclick', function(mouseEvent) {
 			    searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
 			        if (status === daum.maps.services.Status.OK) {
