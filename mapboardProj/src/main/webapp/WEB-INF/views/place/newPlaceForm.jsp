@@ -52,12 +52,6 @@
 				    alert("분류를 선택해 주세요");
 				    return;
 				}
-				// 상세주소명을 무결성검사하고...-----------
-				var newPlaceDetailAddress = $('#newPlaceDetailAddress').val();
-				if(newPlaceDetailAddress.length<1){
-					alert("상세주소명을 한글자 이상 작성해주세요.");
-					return;
-				}
 				// newPlaceForm에 보내기-----------
 				$("#newPlaceForm").submit();
 			});	// newWBtn 끝-------------------------------------------------------
@@ -80,19 +74,18 @@
 			
 			mouseLat	=	getCookie('mouseLat'); 
 			mouseLng	=	getCookie('mouseLng');
-			detailAddr5	=	getCookie('detailAddr');
-			detailAddr4 = detailAddr5.replace('지번','  지번')
-			detailAddr3 = detailAddr4.replace('<div>','')
-			detailAddr2 = detailAddr3.replace('<div>','')
-			detailAddr1 = detailAddr2.replace('</div>','')
-			detailAddr = detailAddr1.replace('</div>','')
+			detailAddr	=	getCookie('detailAddr');
+			//detailAddr = detailAddr1.replace('</div>','')
+			var array=[];
+			array = detailAddr.split(" ");			
 			
 			console.log('x'+mouseLat);
 			console.log('y'+mouseLng);
 			
-			$("#newPlaceLocationX").val(mouseLat);
-			$("#newPlaceLocationY").val(mouseLng);
+			$("#newPlaceX").val(mouseLat);
+			$("#newPlaceY").val(mouseLng);
 			$("#newPlaceAddress1").val(detailAddr);
+			$("#guname").val(array[1]);
 			
 		});
 	</script>
@@ -100,7 +93,11 @@
 <body>
 <h1>newPlaceForm</h1>
 	<%-- action부분에 insert부분으로 넘기기 --%>
-  <form id="newPlaceForm" action="#" method="get">
+  <form id="newPlaceForm" action="../place/newPlaceProc.yo" method="get">
+  	<!-- 임시로 !!!!!!!!!!!! jojo로 넣고 나중에 고치기 -->
+  	<%-- <input type="hidden" id="id" name="id" value="${sessionScope.userid}"/> --%>
+  	<input type="hidden" id="id" name="id" value="jojo"/>
+	<input type="hidden" id="guname" name="guname"/>
   	<table width="50%" align="center">
   		<tr>
   			<td align="center" width="20%">장소명</td>
@@ -122,20 +119,14 @@
   		<tr>
   			<td align="center" width="20%">좌표정보</td>
   			<td>
-  				위도:<input type="text" id="newPlaceLocationX" name="myPlaceLocationX"readonly/>
-  				경도:<input type="text" id="newPlaceLocationY" name="myPlaceLocationY" readonly/>
+  				위도:<input type="text" id="newPlaceX" name="newPlaceX"readonly/>
+  				경도:<input type="text" id="newPlaceY" name="newPlaceY" readonly/>
   			</td>
   		</tr>
   		<tr>
-  			<td align="center" width="20%">주소</td>
+  			<td align="center" width="20%">지번주소</td>
   			<td>
-  				<textarea rows="2" cols="80" id="newPlaceAddress1" readonly></textarea>
-  			</td>
-  		</tr>
-  		<tr>
-  			<td align="center" width="20%">상세주소</td>
-  			<td>
-  				<input type="text" id="newPlaceDetailAddress" name="newPlaceDetailAddress" placeholder="상세주소를 한 글자 이상 입력해주세요"/ >
+  				<input type="text" id="newPlaceAddress1" name="newPlaceAddress1" readonly />
   			</td>
   		</tr>
   		<tr>

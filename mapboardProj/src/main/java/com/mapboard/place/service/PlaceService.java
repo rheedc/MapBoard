@@ -21,4 +21,11 @@ public interface PlaceService {
 
 	public ArrayList getTotalPlaceList(PlaceVO vo, int situation);
 	
+	public int insertNewPlace(PlaceVO vo);
+	
+	public void myPlaceUpdate(PlaceVO vo);
+	
+	public int selectPlaceNo(PlaceVO vo);
+	
+	
 }

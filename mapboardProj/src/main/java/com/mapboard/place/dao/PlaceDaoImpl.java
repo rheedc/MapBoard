@@ -1,6 +1,7 @@
 package com.mapboard.place.dao;
 
 import java.util.ArrayList;
+import java.util.concurrent.SynchronousQueue;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,5 +134,32 @@ public class PlaceDaoImpl implements PlaceDao{
 			blist=(ArrayList) sqlSession.selectList("placeSql.boardList_p_cd", vo);
 		}
 		return blist;	
+	}
+
+	// 신규장소 등록 함수 sql에 등록해서 insert하자
+	@Override
+	public int insertNewPlace(PlaceVO vo) {
+		System.out.println("신규장소 dao시작");
+		// 신규장소 등록 구문 실행
+		sqlSession.insert("placeSql.insertNewPlace", vo);
+		// 신규장소 등록 후 place_no 값을 select로 찾아 넘겨주자
+		int place_no= sqlSession.selectOne("placeSql.selectPlace_no");
+		System.out.println("신규장소 dao끝");
+		return place_no;
+	}
+
+	//myplace 수정 하자!
+	@Override
+	public void myPlaceUpdate(PlaceVO vo) {
+		System.out.println("내 장소 update dao 시작");
+		sqlSession.update("placeSql.myPlaceUpdate", vo);
+		System.out.println("내 장소 update dao 시작");
+	}
+
+	// selectPlaceNo 장소 no 구하는 놈
+	@Override
+	public int selectPlaceNo(PlaceVO vo) {
+		int place_no= sqlSession.selectOne("placeSql.selectPlace_no2", vo);
+		return 0;
 	}
 }

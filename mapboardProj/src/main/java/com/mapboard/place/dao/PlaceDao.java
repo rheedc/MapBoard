@@ -17,5 +17,12 @@ public interface PlaceDao {
 	public int getPlaceListCnt(PlaceVO vo, int situation);
 	
 	public int getBoardListCnt(PlaceVO vo, int situation);
+	
+	public int insertNewPlace(PlaceVO vo);
+	
+	public void myPlaceUpdate(PlaceVO vo);
+	
+	public int selectPlaceNo(PlaceVO vo);
+	
 
 }

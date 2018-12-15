@@ -67,15 +67,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
 	
-	//게시글보기 이동
-	function  boardList() {
-		$(location).attr('href', '../board/boardList.yo')
-	}
-	
-	// 새글쓰기 이동
-	function  newWrite() {
-		$(location).attr('href', '../board/writeForm.yo')
-	}
+
 	
 	
 	// 쿠키 설정 함수
@@ -308,8 +300,8 @@
                 		mouseLng = latlng.getLng();		//mouseLng 경도 전역변수
                 		setCookie('mouseLat',mouseLat, 1); 
             			setCookie('mouseLng',mouseLng, 1); 
-            			setCookie('detailAddr',detailAddr, 1);
-            			console.log('detailAddr'+detailAddr);
+            			setCookie('detailAddr',result[0].address.address_name , 1);
+            			console.log('detailAddr'+result[0].address.address_name );
                 		console.log('위도=',mouseLat,'경도=',mouseLng);
 			
 			            // 마커를 클릭한 위치에 표시합니다 
@@ -360,7 +352,17 @@
 			}
 		     
 		     // -----------------------------------------------
-		      
+		     	//게시글보기 이동
+			/* function  boardList() {
+				$(location).attr('href', '../board/boardList1.yo')
+				/place/boardListProc
+			}
+			
+			// 새글쓰기 이동
+			function  newWrite() {
+				$(location).attr('href', '../board/writeForm1.yo')
+				/place/writeFormProc
+			}  */
 			// 마커를 표시할 위치와 title 객체 배열입니다			
 			
 			var positions = [
@@ -371,8 +373,8 @@
 			        "<div  class='title'>${m.place_name}</div>"+
 			        "<div>${m.juso}</div><div>${m.doro_juso}</div>"+
 			        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
-			        "<input type='button' class='btn2' id='boardListBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글보기' onclick='boardList() '/>"+
-			        "<input type='button' class='btn2' id='newBoardBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' onclick='newWrite() '/>"+
+			        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글보기' onclick=\"location.href=\' ../place/boardListProc?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+			        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' onclick=\"location.href=\'../place/writeFormProc?$place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
 			        "</div>",
 			        juso: "<div>${m.juso}</div>",
 			        good:"<div>good:${m.goodcnt}</div>",

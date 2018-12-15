@@ -102,6 +102,34 @@ public class PlaceServiceImpl implements PlaceService{
 		ArrayList blist=pdao.getBoardList(vo,situation);
 		return blist;
 	}
+
+	// 신규장소 등록 서비스 dao를 통해 등록하자
+	@Override
+	public int insertNewPlace(PlaceVO vo) {
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		System.out.println("신규장소 서비스시작");
+		int place_no= pdao.insertNewPlace(vo);
+		// 신규장소 등록 후 place_no 값을 select로 찾아 넘겨주자
+		System.out.println("신규장소 서비스끝");
+		
+		return place_no;
+		
+	}
+
+	//myplace 수정 dao한테 일시키자
+	@Override
+	public void myPlaceUpdate(PlaceVO vo) {
+		System.out.println("내 장소 update 서비스 시작");
+		pdao.myPlaceUpdate(vo);
+		System.out.println("내 장소 update 서비스 시작");
+	}
+
+	// selectPlaceNo 장소 no 구하는 놈
+	@Override
+	public int selectPlaceNo(PlaceVO vo) {
+		//바로 넘기기 
+		return pdao.selectPlaceNo(vo);
+	}
 	
 	
 

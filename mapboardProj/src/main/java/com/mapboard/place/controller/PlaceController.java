@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.mapboard.place.service.PlaceService;
 import com.mapboard.place.vo.PlaceVO;
@@ -280,5 +281,122 @@ public class PlaceController {
 			//4.뷰호출
 			return mv;
 		}
+		
+		
+		//----------송승환 신규장소 등록 
+		@RequestMapping("/place/newPlaceProc")
+		public ModelAndView newPlaceProc(
+				ModelAndView mv, 
+				PlaceVO vo, 
+				HttpSession session,HttpServletRequest req) {
+			
+			System.out.println("신규장소 controller시작");
+			//파라미터 받고
+			String userid	=	req.getParameter("id");
+			String place_name	=	req.getParameter("newPlaceName");
+			
+			String str_gory_no	=	req.getParameter("category_no");
+			int category_no	=	Integer.parseInt(str_gory_no);	
+			String sigungu_name	= req.getParameter("guname");
+			String juso	= req.getParameter("newPlaceAddress1");
+			
+			String str_lat	=	req.getParameter("newPlaceX");
+			double latitude	= Double.parseDouble(str_lat);
+			
+			String str_lon	=	req.getParameter("newPlaceY");
+			double longitude	= Double.parseDouble(str_lon);
+			
+			// vo에 다 태우자~
+			vo.setUserid(userid);
+			vo.setPlace_name(place_name);
+			vo.setCategory_no(category_no);
+			vo.setSigungu_name(sigungu_name);
+			vo.setJuso(juso);
+			vo.setLatitude(latitude);
+			vo.setLongitude(longitude);
+			
+			//서비스로 일하러 보내자 신규장소 등록 서비스 newPlaceProc
+			int place_no= pservice.insertNewPlace(vo);
+			
+			
+			System.out.println("신규장소 controller끝");
+			RedirectView rv	=	new RedirectView("/board/writeForm.yo?place_no="+place_no);
+			mv.setView(rv);
+			
+			return mv;
+			
+		}
+		
+		
+		//----------송승환 내 장소 update 
+		//myPlaceProc
+		@RequestMapping("/place/myPlaceProc")
+		public ModelAndView myPlaceProc(
+				ModelAndView mv, 
+				PlaceVO vo, 
+				HttpSession session,HttpServletRequest req) {
+			System.out.println("내 장소 update controller 시작");
+			//파라미터 받고
+			String userid	=	req.getParameter("id");
+			String juso	= req.getParameter("myPlaceAddress1");
+			
+			String str_lat	=	req.getParameter("myPlaceX");
+			double latitude	= Double.parseDouble(str_lat);
+			
+			String str_lon	=	req.getParameter("myPlaceY");
+			double longitude	= Double.parseDouble(str_lon);
+			
+			// vo에 다 태우자~
+			vo.setUserid(userid);
+			vo.setJuso(juso);
+			vo.setLatitude(latitude);
+			vo.setLongitude(longitude);
+			
+			// myPlaceUpdate 내장소 수정!!! 서비스로 보내서 일하자!
+			pservice.myPlaceUpdate(vo);
+			
+			//뷰는 myPage로 넘기자
+			
+			System.out.println("내 장소 update controller끝");
+			RedirectView rv	=	new RedirectView("/member/myPage.yo");
+			mv.setView(rv);
+			
+			return mv;
+		}
+		
+		
+		//----------송승환 boardList로 place_no 넘겨주자 
+		//../place/boardListProc.yo
+		@RequestMapping("/place/boardListProc")
+		public ModelAndView boardViewProc(
+				ModelAndView mv, 
+				PlaceVO vo, 
+				HttpSession session,HttpServletRequest req) {
+			System.out.println("boardViewProc controller시작");
+			String juso	= req.getParameter("juso");
+			String place_name	= req.getParameter("place_name");
+
+			// vo에 다 태우자~
+			vo.setPlace_name(place_name);
+			vo.setJuso(juso);
+			
+			// selectPlaceNo
+			int place_no=pservice.selectPlaceNo(vo);
+			
+			
+				
+			RedirectView rv	=	new RedirectView("/board/boardList.yo?");
+			//?place_no="+place_no);
+			
+			mv.setView(rv);
+			return mv;
+		}
+		
+		
+		//../place/writeFormProc.yo
+		//../board/writeForm.yo
+			
+		
+		
 		
 }

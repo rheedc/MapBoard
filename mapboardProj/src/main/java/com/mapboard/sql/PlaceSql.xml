@@ -335,4 +335,47 @@
 	    and p.category_no=#{category_no}
 	</select>
 	
+	<insert id="insertNewPlace" parameterType="PlaceVO">
+		INSERT INTO 
+			place (PLACE_NO , USERID , PLACE_NAME , CATEGORY_NO , 
+						SIGUNGU_NAME , JUSO , LATITUDE , 
+						LONGITUDE , CREATEDT , STATUS) 
+		VALUES(place_seq.nextval,
+						#{userid}, #{place_name}, #{category_no}, 
+						#{sigungu_name}, #{juso}, #{latitude}, 
+						#{longitude}, sysdate, 'Y' )
+	</insert>
+	
+	<select id="selectPlace_no" resultType="int">
+		select 
+		    place_no 
+		from 
+		    place 
+		where 
+		    rownum=1
+		order by place_no desc
+	</select>
+	
+	<select id="selectPlace_no2" resultType="int" parameterType="PlaceVO">
+		select 
+		    place_no 
+		from 
+		    place 
+		where 
+		    PLACE_NAME=#{place_name}
+	    and
+	    	JUSO=#{juso}
+	</select>
+	
+	<update id="myPlaceUpdate" parameterType="PlaceVO">
+		UPDATE member
+		  SET JUSO = #{juso},
+		  			LATITUDE=#{latitude},
+		  			LONGITUDE=#{longitude}
+		where userid=#{userid}
+	</update>
+	
+	
+	
+	
 </mapper>

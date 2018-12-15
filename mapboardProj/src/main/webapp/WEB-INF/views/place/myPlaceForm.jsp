@@ -82,19 +82,7 @@
 			
 			// myWBtn 클릭시
 			$('#myWBtn').click(function(){
-				// 장소명을 무결성검사하고...
-				var myPlaceName = $('#myPlaceName').val();
-				if(myPlaceName.length<1){
-					alert("장소명을 한글자 이상 작성해주세요.");
-					return;
-				}
 				
-				// 상세주소명을 무결성검사하고...
-				var myPlaceDetailAddress = $('#myPlaceDetailAddress').val();
-				if(myPlaceDetailAddress.length<1){
-					alert("상세주소명을 한글자 이상 작성해주세요.");
-					return;
-				}
 			
 				// myPlaceForm에 보내기
 				$("#myPlaceForm").submit();
@@ -112,26 +100,17 @@
 			});
 			
 			
-			// resetBtn 클릭시 위도경도와 주소는 사라지지 않고 장소명과, 상세주소만 리셋
-			$('#resetBtn').click(function(){
-				$('#myPlaceName').val('');
-				$('#myPlaceDetailAddress').val('');
-			});	// resetBtn 끝
 			
 			
 			mouseLat	=	getCookie('mouseLat'); 
 			mouseLng	=	getCookie('mouseLng');
-			detailAddr5	=	getCookie('detailAddr');
-			detailAddr4 = detailAddr5.replace('지번',' 지번')
-			detailAddr3 = detailAddr4.replace('<div>','')
-			detailAddr2 = detailAddr3.replace('<div>','')
-			detailAddr1 = detailAddr2.replace('</div>','')
-			detailAddr = detailAddr1.replace('</div>','')
+			detailAddr	=	getCookie('detailAddr');
+			//detailAddr = detailAddr1.replace('</div>','')
 			console.log('x'+mouseLat);
 			console.log('y'+mouseLng);
 			
-			$("#myPlaceLocationX").val(mouseLat);
-			$("#myPlaceLocationY").val(mouseLng);
+			$("#myPlaceX").val(mouseLat);
+			$("#myPlaceY").val(mouseLng);
 			$("#myPlaceAddress1").val(detailAddr);
 			
 		});
@@ -147,40 +126,29 @@
 		</td>
 	</tr>
 </table>
-<form id="myPlaceForm" action="#" method="get" enctype="multipart/form-data">
+<form id="myPlaceForm" action="../place/myPlaceProc.yo" method="get" enctype="multipart/form-data">
+	<%-- <input type="hidden" id="id" name="id" value="${sessionScope.userid}"/> --%>
+  	<input type="hidden" id="id" name="id" value="jojo"/>
 	<table border="1px" align="center" width="70%">
-		<tr>
-			<th>장소명</th>
-  			<td>
-  				<input type="text" id="myPlaceName" name="myPlaceName" placeholder="장소를 한 글자 이상 입력해주세요" />
-  			</td>
-		</tr>
 		<tr>
   			<th>좌표정보</th>
   			<td>
-  				위도:<input type="text" id="myPlaceLocationX" name="myPlaceLocationX"readonly style="width:35%;"/>
-  				경도:<input type="text" id="myPlaceLocationY" name="myPlaceLocationY" readonly style="width:35%;"/>
+  				위도:<input type="text" id="myPlaceX" name="myPlaceX"readonly style="width:35%;"/>
+  				경도:<input type="text" id="myPlaceY" name="myPlaceY" readonly style="width:35%;"/>
   			</td>
   		</tr>
 		<tr>
-  			<th>주소</th>
+  			<th>지번주소</th>
   			<td>
-  				<textarea id="myPlaceAddress1" readonly></textarea>
-  			</td>
-  		</tr>
-  		<tr>
-  			<th >상세주소</th>
-  			<td>
-  				<input type="text" id="myPlaceDetailAddress" name="myPlaceDetailAddress" placeholder="상세주소를 한 글자 이상 입력해주세요"/ >
+  				<input type="text" id="myPlaceAddress1" name="myPlaceAddress1" readonly />
   			</td>
   		</tr>
 	</table>
-	<table align="center" width="70%">
+	<table align="center" width="70%"> 
 		<tr>
 			<td colspan="2" align="center">
 				<input type="button" class="btn2" id=seoul  name="seoul" value="서울시전체보기" style="width:100px;"/>
 	  			<input type="button" class="btn2" id=myWBtn  name="myWBtn" value="등록" style="width:100px;"/>
-	  			<input type="button" class="btn2" id=resetBtn  name="resetBtn" value="입력취소" style="width:100px;"/>
 			</td>
 		</tr>
 	</table>
