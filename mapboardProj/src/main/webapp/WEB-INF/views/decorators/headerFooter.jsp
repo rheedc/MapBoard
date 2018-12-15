@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator"%>
 <%@ taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page"%>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -45,17 +46,31 @@
 	   			<ul class="nav navbar-nav">
 	   				<li>
 	   					<ul class="nav nav-tabs">
+	   						<!-- 로그인 전/후 모두 노출 -->
 		   					<li><a href="/place/placeList.yo"><span class="glyphicon glyphicon-cloud"></span> 지도</a></li>
-						    <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> 커뮤니티</a></li>
+						    <li><a href="/board/boardList.yo"><span class="glyphicon glyphicon-cloud"></span> 커뮤니티</a></li>
 		   					<c:if test="${sessionScope.userid eq null}">
-							  <li <c:if test="${conPath eq '/member/loginFormAction.yo'}">class="active"</c:if>><a href="/member/LoginForm.yo" ><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
-							  <li <c:if test="${conPath eq '/member/joinFormAction.yo'}">class="active"</c:if>><a href="/member/joinForm.yo"><span class="glyphicon glyphicon-cloud-upload"></span> 회원가입</a></li>
+							  <li><a href="/member/LoginForm.yo" ><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+							  <li><a href="/member/joinForm.yo"><span class="glyphicon glyphicon-cloud-upload"></span> 회원가입</a></li>
 							</c:if>
+				
+							<!-- 로그인시 노출 -->
 							<c:if test="${sessionScope.userid ne null}">
+								<!-- 일반레벨 로그인유저에게 노출 -->
+								<c:if test="${sessionScope.ulevel ne 10}">
 								<li <c:if test="${conPath eq '/member/memberInfoFormAction.yo' or conPath eq '/member/memberUpdateFormAction.yo'}">class="active"</c:if>><a href="/member/memberInfoFormAction.yo"><span class="glyphicon glyphicon-user"></span> 회원정보</a></li>
-								<c:if test="${sessionScope.ulevel eq 10}">
-								<li><a href="/admin/orderHistoryListAction.yo"><span class="glyphicon glyphicon-lock"></span> 사이트관리</a></li>
 								</c:if>
+								<!-- 관리자레벨 로그인유저에게 노출 -->
+								<c:if test="${sessionScope.ulevel eq 10}">
+								<li class="dropdown">
+							    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-lock"></span> 사이트관리<span class="caret"></span></a>
+							    <ul class="dropdown-menu">
+							      <li><a href="/admin/memberList.yo"><span class="glyphicon glyphicon-user"></span> 회원관리</a></li>
+							      <li><a href="/admin/placeList.yo"><span class="glyphicon glyphicon-globe"></span> 장소관리</a></li>
+							    </ul>
+							  	</li>
+								</c:if>
+							  	<!-- 일반/관리자 모두에게 노출 -->
 								<li><a href="/member/LogoutProc.yo"><span class="glyphicon glyphicon-log-out"></span> 로그아웃</a></li>
 							</c:if>
 						</ul>
