@@ -143,7 +143,7 @@
 <table align="center" width="70%">
 	<tr>
 		<td>
-			<h3 align="left">게시판 등록하기</h3>
+			<h3 align="left">내 기준지 등록</h3>
 		</td>
 	</tr>
 </table>

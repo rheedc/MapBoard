@@ -67,6 +67,16 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
 	
+	//게시글보기 이동
+	function  boardList() {
+		$(location).attr('href', '../board/boardList.yo')
+	}
+	
+	// 새글쓰기 이동
+	function  newWrite() {
+		$(location).attr('href', '../board/writeForm.yo')
+	}
+	
 	
 	// 쿠키 설정 함수
 	var setCookie = function(name, value, exp) {
@@ -265,7 +275,7 @@
 			
 			var marker = new daum.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
 			    infowindow = new daum.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
-			
+			    
 			// 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 상단에 표시합니다
 			searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 			
@@ -279,16 +289,20 @@
 			            var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 			            detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 			            
-			            var content = '<div class="bAddr" style="width:250px;">' +
+			            var content = '<div class="bAddr" style="width:340px;">' + 
 			                            '<span class="title">법정동 주소정보</span>' + 
 			                            detailAddr + 
-			                            '<span class="new">'+'<input type="button" class="btn2" id="newBtn" style="width:130px;background-color: rgba(174, 218, 232, 1);"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
-			                            '<span class="my">'+'<input type="button" class="btn2" id="myBtn" style="width:130px;background-color: rgba(174, 218, 232, 1);"  value="내 기준지 등록" onclick="location.href=\'../place/myPlaceForm.yo\'"/>'+'</span>'+
+			                            '<span>'+'<input type="button" class="btn2" id="newBtn" style="width:110px;background-color: rgba(174, 218, 232, 1);"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+
+			                            '<span>'+'<input type="button" class="btn2" id="myBtn" style="width:110px;background-color: rgba(174, 218, 232, 1);"  value="내 기준지 등록" onclick="location.href=\'../place/myPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
 			                        '</div>';
-			                        
+                         
                         deleteCookie('mouseLat');
             			deleteCookie('mouseLng');
-            			            	
+            			
+
+            			daum.maps.event.addListener(marker, 'custom_action', function(data){
+            				console.log(data + '가 발생했습니다.');
+            			});            	
                         var latlng = mouseEvent.latLng;
                         mouseLat = latlng.getLat();		//mouseLat 위도 전역변수
                 		mouseLng = latlng.getLng();		//mouseLng 경도 전역변수
@@ -305,6 +319,10 @@
 			            // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
 			            infowindow.setContent(content);
 			            infowindow.open(map, marker);
+			            
+                  	// 마커 위에 인포윈도우를 삭제합니다
+	            	daum.maps.event.addListener(marker, 'click', makeOutListener2(infowindow));	 			            	
+			            
 			        }   
 			    });
 			});
@@ -343,16 +361,19 @@
 		     
 		     // -----------------------------------------------
 		      
-			// 마커를 표시할 위치와 title 객체 배열입니다
-			//주소출력 정상임~~~
-			<c:forEach var="m" items="${TLIST}" varStatus="status">
-			console.log('m의 주소는 ? ${m.juso}');
-			</c:forEach>
+			// 마커를 표시할 위치와 title 객체 배열입니다			
+			
 			var positions = [
 				<c:forEach var="m" items="${TLIST}" varStatus="status">
 			    {
 			        title: "${m.place_name}",
-			        content: "<div style='width:250px;'><div class='title'>${m.place_name}</div><div>${m.juso}</div><div>${m.doro_juso}</div><div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div></div>",
+			        content: "<div style='width:270px;'>"+
+			        "<div  class='title'>${m.place_name}</div>"+
+			        "<div>${m.juso}</div><div>${m.doro_juso}</div>"+
+			        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
+			        "<input type='button' class='btn2' id='boardListBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글보기' onclick='boardList() '/>"+
+			        "<input type='button' class='btn2' id='newBoardBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' onclick='newWrite() '/>"+
+			        "</div>",
 			        juso: "<div>${m.juso}</div>",
 			        good:"<div>good:${m.goodcnt}</div>",
 			        soso:"<div>soso:${m.sosocnt}</div>",
@@ -391,7 +412,7 @@
 			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
 			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
 			    daum.maps.event.addListener(marker5, 'click', makeOverListener(map, marker5, infowindow_s));
-			    daum.maps.event.addListener(map, 'rightclick', makeOutListener(infowindow_s));
+			    daum.maps.event.addListener(map, 'click', makeOutListener(infowindow_s));
 			    
 			    
 			}
@@ -407,6 +428,14 @@
 			function makeOutListener(infowindow_s) {
 			    return function() {
 			    	infowindow_s.close();
+			    };
+			}
+			
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener2(infowindow) {
+			    return function() {
+			    	infowindow.close();
+	            	marker.setMap(null);
 			    };
 			}
 			
@@ -456,7 +485,6 @@
 		    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
 		    
 		    // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
-		    console.log(message);
 		}
 		
 		// 서울시 전체보기를 클릭시 place/placeList.yo로 다시 요청
@@ -468,6 +496,12 @@
 			console.log(getCookie('guname'));
 			$(location).attr('href', '../place/placeList.yo')
 		});
+		
+		$('#xBtn').click(function bclose(){			
+			alert('22');
+		}); 
+
+		
 		
 		// 쿠키를 set하는 과정
 		function placeSetCookie(){
