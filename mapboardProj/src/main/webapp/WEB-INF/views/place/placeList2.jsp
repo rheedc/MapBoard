@@ -8,7 +8,24 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type="text/css">
-	
+		.btn2 {
+		    width:50px;
+		    background-color: #d2bdad;
+		    border: none;
+		    color:black;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 13px;
+		    margin: 4px;
+		    cursor: pointer;
+		    border-radius:5px;
+		 }
+		.btn2:hover {
+			background-color: #f6f2ef;
+			font-weight:bold;
+		    color:black;
+		} 
 		.area {
 		    position: absolute;
 		    background: #fff;

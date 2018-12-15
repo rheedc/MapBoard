@@ -282,8 +282,8 @@
 			            var content = '<div class="bAddr" style="width:250px;">' +
 			                            '<span class="title">법정동 주소정보</span>' + 
 			                            detailAddr + 
-			                            '<span class="new">'+'<input type="button" id="newBtn"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
-			                            '<span class="my">'+'<input type="button" id="myBtn"  value="내 기준지 등록" onclick="location.href=\'../place/myPlaceForm.yo\'"/>'+'</span>'+
+			                            '<span class="new">'+'<input type="button" class="btn2" id="newBtn" style="width:130px;background-color: rgba(174, 218, 232, 1);"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
+			                            '<span class="my">'+'<input type="button" class="btn2" id="myBtn" style="width:130px;background-color: rgba(174, 218, 232, 1);"  value="내 기준지 등록" onclick="location.href=\'../place/myPlaceForm.yo\'"/>'+'</span>'+
 			                        '</div>';
 			                        
                         deleteCookie('mouseLat');
@@ -352,7 +352,7 @@
 				<c:forEach var="m" items="${TLIST}" varStatus="status">
 			    {
 			        title: "${m.place_name}",
-			        content: "<div style='width:250px;'><div>${m.place_name}</div><div>${m.juso}</div><div>${m.doro_juso}</div><div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div></div>",
+			        content: "<div style='width:250px;'><div class='title'>${m.place_name}</div><div>${m.juso}</div><div>${m.doro_juso}</div><div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div></div>",
 			        juso: "<div>${m.juso}</div>",
 			        good:"<div>good:${m.goodcnt}</div>",
 			        soso:"<div>soso:${m.sosocnt}</div>",
@@ -534,10 +534,12 @@
 		/**********************************이벤트적용부분*************************************/
 		//카테고리에서 클릭이벤트 발생할 때
 		$(".category_no").click(function(){
+			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
 		//검색버튼 클릭이벤트 발생했을 때
 		$("#sBtn_j").click(function(){
+			placeSetCookie();
 			$("#searchFrm_j").submit()
 		})
 		
