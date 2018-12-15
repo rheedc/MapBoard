@@ -1,7 +1,5 @@
 @charset "UTF-8";
 @import url(carousel.css);
-@import url(product.css);
-@import url(order.css);
 @import url(board.css);
 
 ::-webkit-scrollbar {

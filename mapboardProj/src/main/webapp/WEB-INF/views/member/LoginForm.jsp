@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type="text/css">
-	.formGroup{width:600px;text-align:center;padding:10px}
+	.formGroup{width:600px;text-align:center;padding:10px;}
 	.formControl{width: 100%;
 						  padding: 15px 20px;
 						  margin: 8px 0;
@@ -28,7 +28,7 @@
 					  margin: 4px 2px;
 					  cursor: pointer;}
 	#joinBtn{background-color: #555555; /* black */}
-	#subTitle{font-size:50px; text-align:center; font-weight:bold;width:800px;}
+	#subTitle{font-size:50px; font-weight:bold;width:600px;text-align:center;padding:10px;}
 
 	</style>
 	

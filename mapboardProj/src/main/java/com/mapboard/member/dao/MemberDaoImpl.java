@@ -1,5 +1,8 @@
 package com.mapboard.member.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,6 +19,7 @@ import com.mapboard.member.vo.MemberVO;
  * 이력
  * 12/12 최초 작성
  * 12/13 memberDao의 함수 변경에 따라 실행함수 변경
+ * 12/14 
 */
 
 @Service("memberDao")
@@ -23,9 +27,15 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
-		
 	//membersql.xml 파일의 쿼리문을 실행하고 그 결과값을 map 담아 반환한다.
 
+	//id체크 쿼리문 실행
+	@Override
+	public int selectID(String useid) throws Exception {
+		int result =sqlSession.selectOne("member.idChk", useid);
+		
+		return result;
+	}	
 	
 	//회원 로그인 체크 함수
 	@Override
@@ -33,6 +43,7 @@ public class MemberDaoImpl implements MemberDao{
 		String name=sqlSession.selectOne("member.loginChk", vo);
 		return (name == null) ? false : true;
 	}
+	
 	//회원 로그인 정보 함수
 	@Override
 	public MemberVO viewMember(MemberVO vo) {

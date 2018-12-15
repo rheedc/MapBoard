@@ -1,5 +1,7 @@
 package com.mapboard.member.service;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,13 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDao mdao;
 	
+	//아이디 중복체크 함수
+	@Override
+	public int selectID(String userid) throws Exception {
+		return mdao.selectID(userid);
+	}
+		
+	
 	//회원 로그인 체크하는 함수
 	@Override
 	public boolean loginProc(MemberVO vo, HttpSession session) {
@@ -34,6 +43,7 @@ public class MemberServiceImpl implements MemberService{
 			//세션 변수에 등록
 			session.setAttribute("userid", vo2.getUserid());
 			session.setAttribute("uname", vo2.getUname());
+			session.setAttribute("ulevel", vo2.getUlevel());
 			
 		}
 		return result;
@@ -53,10 +63,5 @@ public class MemberServiceImpl implements MemberService{
 		session.invalidate();
 		
 	}
-	
-	
-	
 		
-	
-	
 }

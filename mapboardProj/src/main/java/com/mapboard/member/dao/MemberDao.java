@@ -20,4 +20,8 @@ public interface MemberDao{
 	public MemberVO viewMember(MemberVO vo);
 	//회원 로그아웃
 	public void logout(HttpSession session);
+	//아이디 중복체크
+	public int selectID(String userid) throws Exception;
+	
+	
 }

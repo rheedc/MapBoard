@@ -49,7 +49,7 @@
 						    <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> 커뮤니티</a></li>
 		   					<c:if test="${sessionScope.userid eq null}">
 							  <li <c:if test="${conPath eq '/member/loginFormAction.yo'}">class="active"</c:if>><a href="/member/LoginForm.yo" ><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
-							  <li <c:if test="${conPath eq '/member/joinFormAction.yo'}">class="active"</c:if>><a href="/member/joinFormAction.yo"><span class="glyphicon glyphicon-cloud-upload"></span> 회원가입</a></li>
+							  <li <c:if test="${conPath eq '/member/joinFormAction.yo'}">class="active"</c:if>><a href="/member/joinForm.yo"><span class="glyphicon glyphicon-cloud-upload"></span> 회원가입</a></li>
 							</c:if>
 							<c:if test="${sessionScope.userid ne null}">
 								<li <c:if test="${conPath eq '/member/memberInfoFormAction.yo' or conPath eq '/member/memberUpdateFormAction.yo'}">class="active"</c:if>><a href="/member/memberInfoFormAction.yo"><span class="glyphicon glyphicon-user"></span> 회원정보</a></li>

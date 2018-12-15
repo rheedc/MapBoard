@@ -3,14 +3,40 @@
 				"-//mybatis.org//DTD Mapper 3.0//EN" 
 				"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 				
+<!-- 
+개요: member 용 sql 쿼리문을 모아놓은 xml
+작성자: 이덕천
+작성일: 2018-12-07
+최종수정일: 2018-12-14
+이력
+	=> 12/7 최초작성
+	=> 12/13 loginChk, viewMember 쿼리문 추가
+	=> 12/14 idChk 쿼리문 추가
+
+ --> 
 
 <mapper namespace="member">
+	<!-- id 중복체크를 위해 id 존재여부를 int로 조회하는 쿼리문 -->
+	<select id="idChk" resultType="int" parameterType="String">
+		select 
+			nvl(count(userid),0) cnt 
+		from 
+			member 
+		where userid=#{userid}';
+	</select>
+
+
+
+
+
+
 	<!-- 로그인 처리를 위해 ID,PW를 조회하는 쿼리문 -->
 	<select id="loginChk" resultType="String">
 		select USERID
 				from member 
 				where USERID=#{userid} and PASSWD=#{passwd}
 	</select>
+	
 	<!-- 회원 정보 조회 쿼리문 -->
 	<select id="viewMember" resultType="memberVO">
 		select USERID, PASSWD, NICK, ULEVEL, STATUS, JUSO, LATITUDE, LONGITUDE   
