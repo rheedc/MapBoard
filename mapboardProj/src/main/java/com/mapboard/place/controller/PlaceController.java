@@ -367,6 +367,7 @@ public class PlaceController {
 		
 		//----------송승환 boardList로 place_no 넘겨주자 
 		//../place/boardListProc.yo
+		
 		@RequestMapping("/place/boardListProc")
 		public ModelAndView boardViewProc(
 				ModelAndView mv, 
@@ -385,15 +386,37 @@ public class PlaceController {
 			
 			
 				
-			RedirectView rv	=	new RedirectView("/board/boardList.yo?");
-			//?place_no="+place_no);
-			
+			RedirectView rv	=	new RedirectView("/board/boardList.yo?place_no="+place_no);
+			System.out.println("boardViewProc controller끝");
 			mv.setView(rv);
 			return mv;
 		}
 		
 		
 		//../place/writeFormProc.yo
+		@RequestMapping("/place/writeFormProc")
+		public ModelAndView writeFormProc(
+				ModelAndView mv, 
+				PlaceVO vo, 
+				HttpSession session,HttpServletRequest req) {
+			System.out.println("writeFormProc controller시작");
+			String juso	= req.getParameter("juso");
+			String place_name	= req.getParameter("place_name");
+
+			// vo에 다 태우자~
+			vo.setPlace_name(place_name);
+			vo.setJuso(juso);
+			
+			// selectPlaceNo
+			int place_no=pservice.selectPlaceNo(vo);
+			
+			
+				
+			RedirectView rv	=	new RedirectView("/board/writeForm.yo?place_no="+place_no);
+			System.out.println("writeFormProc controller끝");
+			mv.setView(rv);
+			return mv;
+		}
 		//../board/writeForm.yo
 			
 		

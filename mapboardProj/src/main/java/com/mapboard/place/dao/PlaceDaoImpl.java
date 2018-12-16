@@ -159,7 +159,9 @@ public class PlaceDaoImpl implements PlaceDao{
 	// selectPlaceNo 장소 no 구하는 놈
 	@Override
 	public int selectPlaceNo(PlaceVO vo) {
+		System.out.println("selectPlaceNo dao시작");
 		int place_no= sqlSession.selectOne("placeSql.selectPlace_no2", vo);
-		return 0;
+		System.out.println("selectPlaceNo dao끝");
+		return place_no;
 	}
 }

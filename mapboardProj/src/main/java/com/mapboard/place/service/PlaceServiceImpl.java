@@ -128,7 +128,10 @@ public class PlaceServiceImpl implements PlaceService{
 	@Override
 	public int selectPlaceNo(PlaceVO vo) {
 		//바로 넘기기 
-		return pdao.selectPlaceNo(vo);
+		System.out.println("selectPlaceNo servicet시작");
+		int place_no	=	pdao.selectPlaceNo(vo);
+		System.out.println("selectPlaceNo service끝");
+		return place_no;
 	}
 	
 	

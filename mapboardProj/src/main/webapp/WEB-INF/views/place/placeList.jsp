@@ -363,7 +363,7 @@
 				$(location).attr('href', '../board/writeForm1.yo')
 				/place/writeFormProc
 			}  */
-			// 마커를 표시할 위치와 title 객체 배열입니다			
+			// 마커를 표시할 위치와 title 객체 배열입니다 			
 			
 			var positions = [
 				<c:forEach var="m" items="${TLIST}" varStatus="status">
@@ -373,8 +373,12 @@
 			        "<div  class='title'>${m.place_name}</div>"+
 			        "<div>${m.juso}</div><div>${m.doro_juso}</div>"+
 			        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
-			        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글보기' onclick=\"location.href=\' ../place/boardListProc?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
-			        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' onclick=\"location.href=\'../place/writeFormProc?$place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+			        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
+			        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
+			        " onclick=\"location.href=\'../place/boardListProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+			        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' "+
+			        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' "+
+			        " onclick=\"location.href=\'../place/writeFormProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
 			        "</div>",
 			        juso: "<div>${m.juso}</div>",
 			        good:"<div>good:${m.goodcnt}</div>",
