@@ -25,4 +25,12 @@ public interface PlaceDao {
 	public int selectPlaceNo(PlaceVO vo);
 	
 
+	//관리자용
+	public ArrayList getAdminPlaceList(PlaceVO vo,String type);
+
+	public int getAdminPlaceListCnt(String type);
+
+	public void changeStatus(PlaceVO vo);
+	
+
 }

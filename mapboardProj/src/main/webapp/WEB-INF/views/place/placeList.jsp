@@ -23,7 +23,7 @@
 		.info {font-size: 12px; padding: 5px;}
 		.info .title {font-weight: bold;}
 		
-		 .map_wrap {position:relative;width:1150px;height:720px;}
+		 .map_wrap {position:relative;width:1400px;height:760px;}
 	    .title {font-weight:bold;display:block;}
 	    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
 	    #centerAddr {display:block;margin-top:2px;font-weight: normal;}

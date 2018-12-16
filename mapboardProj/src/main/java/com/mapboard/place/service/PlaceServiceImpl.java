@@ -31,6 +31,36 @@ public class PlaceServiceImpl implements PlaceService{
 		
 		return arrayList;
 	}
+	// 신규장소 등록 서비스 dao를 통해 등록하자
+	@Override
+	public int insertNewPlace(PlaceVO vo) {
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		System.out.println("신규장소 서비스시작");
+		int place_no= pdao.insertNewPlace(vo);
+		// 신규장소 등록 후 place_no 값을 select로 찾아 넘겨주자
+		System.out.println("신규장소 서비스끝");
+		
+		return place_no;
+		
+	}
+
+	//myplace 수정 dao한테 일시키자
+	@Override
+	public void myPlaceUpdate(PlaceVO vo) {
+		System.out.println("내 장소 update 서비스 시작");
+		pdao.myPlaceUpdate(vo);
+		System.out.println("내 장소 update 서비스 시작");
+	}
+
+	// selectPlaceNo 장소 no 구하는 놈
+	@Override
+	public int selectPlaceNo(PlaceVO vo) {
+		//바로 넘기기 
+		System.out.println("selectPlaceNo servicet시작");
+		int place_no	=	pdao.selectPlaceNo(vo);
+		System.out.println("selectPlaceNo service끝");
+		return place_no;
+	}
 	
 	/*-----------------------------------작성자 : 조은비-----------------------------------	 */
 	
@@ -103,38 +133,30 @@ public class PlaceServiceImpl implements PlaceService{
 		return blist;
 	}
 
-	// 신규장소 등록 서비스 dao를 통해 등록하자
-	@Override
-	public int insertNewPlace(PlaceVO vo) {
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		System.out.println("신규장소 서비스시작");
-		int place_no= pdao.insertNewPlace(vo);
-		// 신규장소 등록 후 place_no 값을 select로 찾아 넘겨주자
-		System.out.println("신규장소 서비스끝");
-		
-		return place_no;
-		
-	}
 
-	//myplace 수정 dao한테 일시키자
-	@Override
-	public void myPlaceUpdate(PlaceVO vo) {
-		System.out.println("내 장소 update 서비스 시작");
-		pdao.myPlaceUpdate(vo);
-		System.out.println("내 장소 update 서비스 시작");
-	}
-
-	// selectPlaceNo 장소 no 구하는 놈
-	@Override
-	public int selectPlaceNo(PlaceVO vo) {
-		//바로 넘기기 
-		System.out.println("selectPlaceNo servicet시작");
-		int place_no	=	pdao.selectPlaceNo(vo);
-		System.out.println("selectPlaceNo service끝");
-		return place_no;
+	//관리자페이지 장소관리요청시 사용할 페이지정보
+	public PageUtil getPageInfo_Admin(int nowPage, String type) {
+		//장소결과 목록의 총개수 구하기
+		int totalCount=pdao.getAdminPlaceListCnt(type);
+		//한 페이지당 10개의 게시물을 뿌리고, 5페이지씩 보여주자
+		PageUtil pInfo=new PageUtil(nowPage, totalCount, 10, 5);
+		return pInfo;
 	}
 	
-	
 
+	//관리자페이지 장소관리요청시 사용할 장소목록정보
+	public ArrayList getPlaceList_Admin(PlaceVO vo,String type, PageUtil pInfo) {
+		int start=(pInfo.getNowPage()-1)*pInfo.getListCount()+1;
+		int end=start+pInfo.getListCount()-1;
+		vo.setStart(start);
+		vo.setEnd(end);
+		ArrayList list=pdao.getAdminPlaceList(vo,type);
+		return list;
+	}
+
+	//노출,미노출 상태전환하는 서비스
+	public void changeStatus(PlaceVO vo) {
+		pdao.changeStatus(vo);
+	}
 	
 }

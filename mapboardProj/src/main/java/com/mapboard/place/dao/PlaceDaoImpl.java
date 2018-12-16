@@ -36,6 +36,35 @@ public class PlaceDaoImpl implements PlaceDao{
 		return arrayList;
 				
 	}
+	// 신규장소 등록 함수 sql에 등록해서 insert하자
+	@Override
+	public int insertNewPlace(PlaceVO vo) {
+		System.out.println("신규장소 dao시작");
+		// 신규장소 등록 구문 실행
+		sqlSession.insert("placeSql.insertNewPlace", vo);
+		// 신규장소 등록 후 place_no 값을 select로 찾아 넘겨주자
+		int place_no= sqlSession.selectOne("placeSql.selectPlace_no");
+		System.out.println("신규장소 dao끝");
+		return place_no;
+	}
+
+	//myplace 수정 하자!
+	@Override
+	public void myPlaceUpdate(PlaceVO vo) {
+		System.out.println("내 장소 update dao 시작");
+		sqlSession.update("placeSql.myPlaceUpdate", vo);
+		System.out.println("내 장소 update dao 시작");
+	}
+
+	// selectPlaceNo 장소 no 구하는 놈
+	@Override
+	public int selectPlaceNo(PlaceVO vo) {
+		System.out.println("selectPlaceNo dao시작");
+		int place_no= sqlSession.selectOne("placeSql.selectPlace_no2", vo);
+		System.out.println("selectPlaceNo dao끝");
+		return place_no;
+	}
+
 	
 	/*
 	 * 작성자 : 조은비 
@@ -135,33 +164,38 @@ public class PlaceDaoImpl implements PlaceDao{
 		}
 		return blist;	
 	}
-
-	// 신규장소 등록 함수 sql에 등록해서 insert하자
-	@Override
-	public int insertNewPlace(PlaceVO vo) {
-		System.out.println("신규장소 dao시작");
-		// 신규장소 등록 구문 실행
-		sqlSession.insert("placeSql.insertNewPlace", vo);
-		// 신규장소 등록 후 place_no 값을 select로 찾아 넘겨주자
-		int place_no= sqlSession.selectOne("placeSql.selectPlace_no");
-		System.out.println("신규장소 dao끝");
-		return place_no;
+	//관리자용 장소 목록 불러오는 함수
+	public ArrayList getAdminPlaceList(PlaceVO vo, String type) {
+		ArrayList placeList=new ArrayList();
+		if(type.equals("all")) {
+			placeList=(ArrayList) sqlSession.selectList("placeSql.placeList_all", vo);
+		}
+		if(type.equals("old")) {
+			placeList=(ArrayList) sqlSession.selectList("placeSql.placeList_old", vo);
+		}
+		if(type.equals("new")) {
+			placeList=(ArrayList) sqlSession.selectList("placeSql.placeList_new", vo);
+		}
+		return placeList;
 	}
 
-	//myplace 수정 하자!
-	@Override
-	public void myPlaceUpdate(PlaceVO vo) {
-		System.out.println("내 장소 update dao 시작");
-		sqlSession.update("placeSql.myPlaceUpdate", vo);
-		System.out.println("내 장소 update dao 시작");
+	//관리자용 장소 목록 개수 얻어내는 함수
+	public int getAdminPlaceListCnt(String type) {
+		int totalCount=0;
+		if(type.equals("all")) {
+			totalCount=sqlSession.selectOne("placeSql.cnt_adminPlaceList_all");			
+		}
+		if(type.equals("old")) {
+			totalCount=sqlSession.selectOne("placeSql.cnt_adminPlaceList_old");
+		}
+		if(type.equals("new")) {
+			totalCount=sqlSession.selectOne("placeSql.cnt_adminPlaceList_new");
+		}
+		return totalCount;
 	}
 
-	// selectPlaceNo 장소 no 구하는 놈
-	@Override
-	public int selectPlaceNo(PlaceVO vo) {
-		System.out.println("selectPlaceNo dao시작");
-		int place_no= sqlSession.selectOne("placeSql.selectPlace_no2", vo);
-		System.out.println("selectPlaceNo dao끝");
-		return place_no;
+	//장소 노출/미노출 상태변경해주는 함수
+	public void changeStatus(PlaceVO vo) {
+		sqlSession.update("placeSql.changeStatus",vo);
 	}
 }

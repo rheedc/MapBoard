@@ -16,6 +16,47 @@
 					and
 					    CATEGORY_NO=#{category_no}
 	</select>
+		
+	<insert id="insertNewPlace" parameterType="PlaceVO">
+		INSERT INTO 
+			place (PLACE_NO , USERID , PLACE_NAME , CATEGORY_NO , 
+						SIGUNGU_NAME , JUSO , LATITUDE , 
+						LONGITUDE , CREATEDT , STATUS) 
+		VALUES(place_seq.nextval,
+						#{userid}, #{place_name}, #{category_no}, 
+						#{sigungu_name}, #{juso}, #{latitude}, 
+						#{longitude}, sysdate, 'Y' )
+	</insert>
+	
+	<select id="selectPlace_no" resultType="int">
+		select 
+		    place_no 
+		from 
+		    place 
+		where 
+		    rownum=1
+		order by place_no desc
+	</select>
+	
+	<select id="selectPlace_no2" resultType="int" parameterType="PlaceVO">
+		select 
+		    place_no 
+		from 
+		    place 
+		where 
+		    PLACE_NAME=#{place_name}
+	    and
+	    	JUSO=#{juso}
+	</select>
+	
+	<update id="myPlaceUpdate" parameterType="PlaceVO">
+		UPDATE member
+		  SET JUSO = #{juso},
+		  			LATITUDE=#{latitude},
+		  			LONGITUDE=#{longitude}
+		where userid=#{userid}
+	</update>
+	
 	
 	<!-- 
 	작성자 : 조은비 
@@ -334,48 +375,93 @@
 	    and p.place_name like '%' || #{place_name} || '%'
 	    and p.category_no=#{category_no}
 	</select>
-	
-	<insert id="insertNewPlace" parameterType="PlaceVO">
-		INSERT INTO 
-			place (PLACE_NO , USERID , PLACE_NAME , CATEGORY_NO , 
-						SIGUNGU_NAME , JUSO , LATITUDE , 
-						LONGITUDE , CREATEDT , STATUS) 
-		VALUES(place_seq.nextval,
-						#{userid}, #{place_name}, #{category_no}, 
-						#{sigungu_name}, #{juso}, #{latitude}, 
-						#{longitude}, sysdate, 'Y' )
-	</insert>
-	
-	<select id="selectPlace_no" resultType="int">
-		select 
-		    place_no 
-		from 
-		    place 
-		where 
-		    rownum=1
-		order by place_no desc
+
+	<!-- 자주쓰는 건 빼놓기 -->
+	<sql id="adminPlace">
+	SELECT
+        ROW_NUMBER() OVER(ORDER BY p.CREATEDT DESC) AS RNO,
+	    p.PLACE_NO,
+	    p.USERID,
+        m.ULEVEL,
+	    p.PLACE_NAME,
+	    p.CATEGORY_NO,
+	    p.SIGUNGU_CODE,
+	    p.SIGUNGU_NAME,
+	    p.JUSO,
+	    p.DORO_JUSO,
+	    p.LATITUDE,
+	    p.LONGITUDE,
+	    p.CREATEDT,
+	    p.UPDATEDT,
+	    p.STATUS
+	FROM
+	    PLACE p, MEMBER m
+	</sql>
+	<!-- 관리자의 장소관리 페이지에 뿌려줄 정보 -->
+	<select id="placeList_all" resultType="PlaceVO" parameterType="PlaceVO">
+	SELECT * FROM(
+		<include refid="adminPlace" />
+	WHERE
+	    p.USERID=m.USERID
+	)
+	WHERE 
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
+	<select id="placeList_old" resultType="PlaceVO" parameterType="PlaceVO">
+	SELECT * FROM(
+		<include refid="adminPlace" />
+	WHERE
+	    p.USERID=m.USERID
+	    AND m.ULEVEL=10
+	)
+	WHERE 
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
+	<select id="placeList_new" resultType="PlaceVO" parameterType="PlaceVO">
+	SELECT * FROM(
+		<include refid="adminPlace" />
+	WHERE
+	    p.USERID=m.USERID
+	    AND m.ULEVEL!=10
+	)
+	WHERE 
+	    RNO BETWEEN #{start} AND #{end}
 	</select>
 	
-	<select id="selectPlace_no2" resultType="int" parameterType="PlaceVO">
-		select 
-		    place_no 
-		from 
-		    place 
-		where 
-		    PLACE_NAME=#{place_name}
-	    and
-	    	JUSO=#{juso}
-	</select>
 	
-	<update id="myPlaceUpdate" parameterType="PlaceVO">
-		UPDATE member
-		  SET JUSO = #{juso},
-		  			LATITUDE=#{latitude},
-		  			LONGITUDE=#{longitude}
-		where userid=#{userid}
+	<select id="cnt_adminPlaceList_all" resultType="int">
+	SELECT count(*) 
+	FROM
+	    PLACE p, MEMBER m
+	WHERE
+	    p.USERID=m.USERID
+	</select>
+	<select id="cnt_adminPlaceList_old" resultType="int">
+	SELECT count(*) 
+	FROM
+	    PLACE p, MEMBER m
+	WHERE
+	    p.USERID=m.USERID
+	    AND m.ULEVEL=10
+	</select>
+	<select id="cnt_adminPlaceList_new" resultType="int">
+	SELECT count(*) 
+	FROM
+	    PLACE p, MEMBER m
+	WHERE
+	    p.USERID=m.USERID
+	    AND m.ULEVEL!=10
+	</select>
+
+	<!-- 장소의 노출/미노출 변경 -->
+	<update id="changeStatus" parameterType="PlaceVO">
+	UPDATE 
+		Place
+	SET
+		Status=#{status}
+	WHERE
+		Place_no=#{place_no}
 	</update>
-	
-	
 	
 	
 </mapper>

@@ -27,5 +27,10 @@ public interface PlaceService {
 	
 	public int selectPlaceNo(PlaceVO vo);
 	
+	public PageUtil getPageInfo_Admin(int nowPage, String type);
+	
+	public ArrayList getPlaceList_Admin(PlaceVO vo, String type, PageUtil pInfo);
+
+	public void changeStatus(PlaceVO vo);
 	
 }
