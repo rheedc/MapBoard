@@ -58,7 +58,7 @@
 							<c:if test="${sessionScope.userid ne null}">
 								<!-- 일반레벨 로그인유저에게 노출 -->
 								<c:if test="${sessionScope.ulevel ne 10}">
-								<li <c:if test="${conPath eq '/member/memberInfoFormAction.yo' or conPath eq '/member/memberUpdateFormAction.yo'}">class="active"</c:if>><a href="/member/memberInfoFormAction.yo"><span class="glyphicon glyphicon-user"></span> 회원정보</a></li>
+								<li <c:if test="${conPath eq '/member/memberDetail.yo' or conPath eq '/member/memberUpdate.yo'}">class="active"</c:if>><a href="/member/memberDetail.yo"><span class="glyphicon glyphicon-user"></span> 회원정보</a></li>
 								</c:if>
 								<!-- 관리자레벨 로그인유저에게 노출 -->
 								<c:if test="${sessionScope.ulevel eq 10}">
