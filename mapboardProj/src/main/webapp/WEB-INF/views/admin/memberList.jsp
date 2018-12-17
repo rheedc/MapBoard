@@ -18,10 +18,12 @@
 					  display: inline-block;
 					  font-size: 13px;
 					  font-weight: bold;
-					  margin: 4px 2px;
+					  margin: 0px 2px;
 					  cursor: pointer;}
 	.searchArea{border:1px solid gray;margin:auto;text-align:center; width:60%;height:60px; }
 	#listArea{border:1px solid gray;margin:auto;text-align:center; width:60%;}
+	#pageArea{border-style:none;margin:auto;text-align:center; width:60%;}
+	#keyword{line-height:30px;}
 	table {
 		border-collapse:collapse;
 	}
@@ -39,7 +41,7 @@
 		text-align:center;
 	}
 	.style1 tr {
-		border-bottom:1px solid #d7edf4;
+		border-bottom:1px solid gray;
 	}
 	.style1 tr:hover { 
 		background-color: #d7edf4; 
@@ -58,7 +60,18 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
-	
+	$(function(){
+		<%--수정 버튼을 클릭했을 때 수정페이지로 이동하는 함수  --%>
+		$("#modifyBtn").click(function(e){
+			alert("회원수정 페이지로 이동합니다.")
+		});
+					
+		<%--탈퇴 버튼을 클릭했을 때 탈퇴처리하는 함수--%>
+		$("#leaveBtn").click(function(){
+			alert("탈퇴 처리를 수행합니다.")
+		});
+		
+	});
 	</script>
 </head>
 <body>
@@ -70,7 +83,7 @@
 		<table class="searchArea">
 			<tr>
 				<td>
-					<input type="text" name="keyword" class="category_no" placeholder="검색어를 입력해 주세요."> 
+					<input type="text" name="keyword" id="keyword" class="category_no" placeholder="검색어를 입력해 주세요." size=80 /> 
 					<input type="button" name="searchBtn" id="searchBtn" value="조회하기" class="category_no">
 					
 				</td>
@@ -90,7 +103,7 @@
 			<th width="10%">등급</th>
 			<th width="15%">수정</th>
 		</tr> 
-		<c:forEach var="data" items="${LIST}">
+		<c:forEach var="data" items="${MLIST}">
 			<tr height="40px" id="${data.place_no}">
 				<td>${data.userid}</td>
 				<td>${data.uname}</td>
@@ -98,14 +111,14 @@
 				<td>${data.createdt}</td>
 				<td>${data.status}</td>
 				<td>${data.ulevel}</td>
-				<td>	<input type="button" id="mBtn_y" value="수정"><input type="button" id="mBtn_n" value="삭제" />
+				<td>	<input type="button" id="modifyBtn" value="수정">&nbsp&nbsp<input type="button" id="leaveBtn" value="탈퇴" />
 				</td>
 			</tr>
 		</c:forEach>		
 	</table>
 	<br>
 	<%-- 2. 페이지 이동 기능을 추가  [이전][1][2][3][다음]--%>
-	<table align="center" width="70%">		
+	<table id="pageArea">		
 		
 		<tr>
 			<td>

@@ -1,5 +1,7 @@
 package com.mapboard.member.dao;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import com.mapboard.member.vo.MemberVO;
@@ -13,6 +15,7 @@ import com.mapboard.member.vo.MemberVO;
  * 12/12: 1,2,3 함수 추가
  * 12/15: 4 함수 추가
  * 12/16: 5,6 함수 추가
+ * 12/17: 7,8 함수 추가
  */
 
 
@@ -30,5 +33,11 @@ public interface MemberDao{
 	public void insertMember(MemberVO vo);
 	//6. 사용자 이름 가져오기
 	public MemberVO selectMemberbyId(String userid);
+	//7. 게시글 총 개수 구하기
+	public int getTotalCount();
+	//8. 게시글 목록 구하기
+	public ArrayList<?> getMemberList(MemberVO vo);
+	
+	
 	
 }

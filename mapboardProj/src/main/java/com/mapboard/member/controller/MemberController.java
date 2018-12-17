@@ -1,5 +1,7 @@
 package com.mapboard.member.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.mapboard.member.service.MemberService;
 import com.mapboard.member.vo.MemberVO;
+import com.mapboard.util.PageUtil;
 
 
 /*클래스 목적: 메인화면에서 로그인 폼을 보여주고 로그인을 처리하는 클래스
@@ -40,8 +44,17 @@ public class MemberController {
 	
 	//회원목록보기 요청 처리
 	@RequestMapping("/memberList")
-	public String memberList() {
-		return "/admin/memberList";
+	public String memberList(@RequestParam(value="nowPage", defaultValue="1") int nowPage, HttpServletRequest req) {
+		PageUtil pInfo = mservice.getPageInfo(nowPage);
+		ArrayList list=mservice.getMemberList(pInfo);
+		System.out.println("게시물 수="+list.size());
+		
+		//모델
+		req.setAttribute("PINFO",pInfo);
+		req.setAttribute("MLIST", list);
+		
+		//뷰
+		return "admin/memberList";
 		
 	}
 	

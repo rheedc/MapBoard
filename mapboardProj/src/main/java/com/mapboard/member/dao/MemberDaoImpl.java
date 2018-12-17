@@ -1,5 +1,6 @@
 package com.mapboard.member.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +39,20 @@ public class MemberDaoImpl implements MemberDao{
 	public MemberVO selectMemberbyId(String userid) {
 		System.out.println("사용자 정보 검색 쿼리 실행");
 		return sqlSession.selectOne("member.selectMemberbyId",userid);
+	}
+
+	//회원 목록조회 쿼리문 실행
+	@Override
+	public ArrayList<?> getMemberList(MemberVO vo) {
+		ArrayList result=(ArrayList) sqlSession.selectList("member.memeberList",vo);
+		return result;
+	}
+
+	//게시글 총 갯수를 구하는 쿼리문 실행
+	@Override
+	public int getTotalCount() {
+		int result=sqlSession.selectOne("member.totalCount");
+		return result ;
 	}
 
 
