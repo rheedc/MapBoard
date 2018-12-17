@@ -58,8 +58,17 @@
 							<c:if test="${sessionScope.userid ne null}">
 								<!-- 일반레벨 로그인유저에게 노출 -->
 								<c:if test="${sessionScope.ulevel ne 10}">
-								<li <c:if test="${conPath eq '/member/memberDetail.yo' or conPath eq '/member/memberUpdate.yo'}">class="active"</c:if>><a href="/member/memberDetail.yo"><span class="glyphicon glyphicon-user"></span> 회원정보</a></li>
+								<li class="dropdown">
+							    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> 마이페이지<span class="caret"></span></a>
+							    <ul class="dropdown-menu">
+							      <li><a href="/member/memberDetail.yo"> 내정보</a></li>
+							      <li><a href="/member/memberBoardList.yo"> 내글보기</a></li>
+							      <li><a href="/member/memberStatistics.yo"> my통계</a></li>
+							    </ul>
+							  	</li>
 								</c:if>
+								
+								
 								<!-- 관리자레벨 로그인유저에게 노출 -->
 								<c:if test="${sessionScope.ulevel eq 10}">
 								<li class="dropdown">
