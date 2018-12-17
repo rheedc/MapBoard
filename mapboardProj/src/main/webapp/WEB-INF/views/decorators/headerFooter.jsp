@@ -22,7 +22,35 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
+	// 쿠키 설정 함수
+	var setCookie = function(name, value, exp) {
+		var date = new Date();
+		date.setTime(date.getTime() + exp*24*60*60*1000);
+		document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+	};
 	
+	// 쿠키 얻기 함수
+	var getCookie = function(name) {
+		var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+		return value? value[2] : null;
+	};
+	
+	// 쿠키 삭제 함수
+	var deleteCookie = function(name) {
+		setCookie(name,'',-1);
+	};
+	
+	$(function(){	
+		$('#seoul3').click(function(){			
+			deleteCookie('gupath');
+			deleteCookie('guname');
+			deleteCookie('mouseLat');
+			deleteCookie('mouseLng');
+			console.log(getCookie('guname'));
+			$(location).attr('href', '../place/placeList.yo')
+		});			
+	});	
+	// 함수끝
 	</script>
 </head>
 <body>
@@ -47,7 +75,7 @@
 	   				<li>
 	   					<ul class="nav nav-tabs">
 	   						<!-- 로그인 전/후 모두 노출 -->
-		   					<li><a href="/place/placeList.yo"><span class="glyphicon glyphicon-cloud"></span> 지도</a></li>
+		   					<li><a href="/place/placeList.yo" id="seoul3"><span class="glyphicon glyphicon-cloud"></span> 지도</a></li>
 						    <li><a href="/board/boardList.yo"><span class="glyphicon glyphicon-cloud"></span> 커뮤니티</a></li>
 		   					<c:if test="${sessionScope.userid eq null}">
 							  <li><a href="/member/LoginForm.yo" ><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
