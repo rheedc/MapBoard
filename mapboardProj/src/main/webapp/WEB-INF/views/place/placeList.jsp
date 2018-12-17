@@ -459,6 +459,146 @@
 			    };
 			}
 			
+			//==============송 승환 클릭시  좌표 클릭!=================
+			<c:forEach var="m" items="${PLIST}" varStatus="status">
+				 $("#click_name_${m.place_no}").click(function(){
+					alert('place_no~=${m.place_name}${m.latitude}, ${m.longitude}');
+					 var position_c = [
+						    {
+						        title_c: "${m.place_name}",
+						        content_c: "<div style='width:270px;'>"+
+						        "<div  class='title'>상가명: ${m.place_name}</div>"+
+						        "<div>지번주소: ${m.juso}</div><div>도로주소: ${m.doro_juso}</div>"+
+						        "<div>평균평점: ${m.avgpoint}</div>"+
+						        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
+						        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
+						        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
+						        " onclick=\"location.href=\'../place/boardListProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+						        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' "+
+						        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' "+
+						        " onclick=\"location.href=\'../place/writeFormProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+						        "</div>",
+						        juso: "<div>${m.juso}</div>",
+						        good:"<div>good:${m.goodcnt}</div>",
+						        soso:"<div>soso:${m.sosocnt}</div>",
+						        bad:"<div>bad:${m.badcnt}</div>",
+						        latlng_c: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
+						    }
+						    
+						];
+					 	
+					 	var imageSrc_c = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";		   
+						for (var i = 0; i < position_c.length; i ++) {
+							var imageSize_c = new daum.maps.Size(24, 35);
+
+							var markerImage_c = new daum.maps.MarkerImage(imageSrc_c, imageSize_c);
+							// 마커를 생성합니다
+						    var marker_c = new daum.maps.Marker({
+						        map: map, // 마커를 표시할 지도
+						        position: position_c[i].latlng_c, // 마커를 표시할 위치
+						        title : position_c[i].title_c, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+						        image : markerImage_c // 마커 이미지 
+						    });
+						    
+						 	// 마커에 표시할 인포윈도우를 생성합니다 
+						    var infowindow_c = new daum.maps.InfoWindow({
+						        content: position_c[i].content_c, // 인포윈도우에 표시할 내용
+						    });
+						    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+						    daum.maps.event.addListener(marker_c, 'mouseover', makeOverListener3(map, marker_c, infowindow_c));
+						    daum.maps.event.addListener(marker_c, 'click', makeOutListener3(infowindow_c));
+						}
+					 
+					 
+				 });
+			 </c:forEach>
+			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+				function makeOverListener3(map, marker_c, infowindow_c) {
+				    return function() {
+				    	infowindow_c.open(map, marker_c);
+				    };
+				}
+
+				// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+				function makeOutListener3(infowindow_c) {
+				    return function() {
+				    	infowindow_c.close();
+				    };
+				}				
+			
+			//"click_board_${data.BIDX}" 게시글!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			<c:forEach var="b" items="${BLIST}" >
+				 $("#click_board_${b.bidx}").click(function(){
+					 <c:forEach var="m" items="${TLIST}" >
+					 	<c:if test="${m.place_no==b.place_no }">
+							alert('place_no~=${m.latitude}, ${m.longitude} ${m.juso}');
+							var position_b = [
+							    {
+							        title_b: "${m.place_name}",
+							        content_b: "<div style='width:270px;'>"+
+							        "<div  class='title'>상가명: ${m.place_name}</div>"+
+							        "<div>지번주소: ${m.juso}</div><div>도로주소: ${m.doro_juso}</div>"+
+							        "<div>평균평점: ${m.avgpoint}</div>"+
+							        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
+							        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
+							        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
+							        " onclick=\"location.href=\'../place/boardListProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+							        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' "+
+							        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' "+
+							        " onclick=\"location.href=\'../place/writeFormProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+							        "</div>",
+							        juso: "<div>${m.juso}</div>",
+							        good:"<div>good:${m.goodcnt}</div>",
+							        soso:"<div>soso:${m.sosocnt}</div>",
+							        bad:"<div>bad:${m.badcnt}</div>",
+							        latlng_b: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
+							    }
+							    
+							];
+					</c:if>
+				</c:forEach>
+						 	
+						 	var imageSrc_b = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";		   
+							for (var i = 0; i < position_b.length; i ++) {
+								var imageSize_b = new daum.maps.Size(32, 35);
+	
+								var markerImage_b = new daum.maps.MarkerImage(imageSrc_b, imageSize_b);
+								// 마커를 생성합니다
+							    var marker_b = new daum.maps.Marker({
+							        map: map, // 마커를 표시할 지도
+							        position: position_b[i].latlng_b, // 마커를 표시할 위치
+							        title : position_b[i].title_b, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+							        image : markerImage_b // 마커 이미지 
+							    });
+							    
+							 	// 마커에 표시할 인포윈도우를 생성합니다 
+							    var infowindow_b = new daum.maps.InfoWindow({
+							        content: position_b[i].content_b, // 인포윈도우에 표시할 내용
+							    });
+							    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+							    daum.maps.event.addListener(marker_b, 'mouseover', makeOverListener4(map, marker_b, infowindow_b));
+							    daum.maps.event.addListener(marker_b, 'click', makeOutListener4(infowindow_b));
+							}
+
+				 });
+			 </c:forEach>
+			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+				function makeOverListener4(map, marker_b, infowindow_b) {
+				    return function() {
+				    	infowindow_b.open(map, marker_b);
+				    };
+				}
+
+				// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+				function makeOutListener4(infowindow_b) {
+				    return function() {
+				    	infowindow_b.close();
+				    };
+				}
+			//"click_board_${data.BIDX}" 게시글!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
+			
+			//==============송 승환 클릭시  좌표 클릭!=================
+			
 		        
 	    	});// 구 클릭 끝
 	    	//-------함수로 만들자-----------------------------------------------------끝
@@ -536,7 +676,6 @@
 			setCookie('mouseLng',mouseLng, 5); 
 	    	// 쿠키에다가 gupath랑 guname 마우스 위도경도 도 넘겼다 -----------------------
 		}
-		
 		
 		
 		
@@ -668,10 +807,10 @@
 					</table>
 					</c:if>
 					<table width="500px" >
-						<c:forEach var="data" items="${PLIST}">
+						<c:forEach var="data" items="${PLIST}" varStatus="status">
 							<tr height="100px">
 								<td width="350px">
-								${data.place_name}<br/>
+								<div id="click_name_${data.place_no}">${data.place_name}</div>
 								${data.juso}<br/>
 								관련글:${data.reviewcnt}건
 								</td>
@@ -740,7 +879,7 @@
 						<c:forEach var="data" items="${BLIST}">
 							<tr height="100px">
 								<td width="350px">
-								${data.subject}<br/>
+								<div id="click_board_${data.bidx}">${data.subject}</div>								
 								${data.comm}<br/>
 								${data.createdt}
 								</td>

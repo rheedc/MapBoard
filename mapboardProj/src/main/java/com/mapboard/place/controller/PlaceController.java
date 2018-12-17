@@ -239,7 +239,7 @@ public class PlaceController {
 			//뷰는 myPage로 넘기자
 			
 			System.out.println("내 장소 update controller끝");
-			RedirectView rv	=	new RedirectView("/member/myPage.yo");
+			RedirectView rv	=	new RedirectView("/member/memberDetail.yo");
 			mv.setView(rv);
 			
 			return mv;
