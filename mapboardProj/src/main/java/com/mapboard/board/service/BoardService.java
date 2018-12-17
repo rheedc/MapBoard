@@ -15,10 +15,15 @@ public interface BoardService {
 	// void 말고 String, VO클래스 등을 사용가능하고 
 	// 매개변수
 	//	Board
+	
+	public BoardVO getSelectName(int place_no)throws Exception;
+	
 	public void insertBoard(BoardVO vo, HttpSession session, ArrayList list) throws Exception;
 
 	public ArrayList getBoardList(PageUtil pInfo) throws Exception;
 	
 	public PageUtil getPageInfo(int nowPage) throws Exception;
+
+	
 		
 }

@@ -1,20 +1,20 @@
 package com.mapboard.board.controller;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+
 import com.mapboard.board.service.BoardService;
 import com.mapboard.board.vo.BoardVO;
-import com.mapboard.board.vo.FileinfoVO;
-import com.mapboard.util.FileUtil;
 import com.mapboard.util.PageUtil;
+
 @Controller
 @RequestMapping("/board")
 public class BoardController {
@@ -25,8 +25,15 @@ public class BoardController {
 	
 	//1-1. 글쓰기 폼보기 요청
 	@RequestMapping("/writeForm")
-	public void writeForm() {
+	public void writeForm(@RequestParam(value="place_no",defaultValue="1")int place_no,
+							HttpServletRequest req) throws Exception {
 		//인터셉터를 이용하여 로그인 처리 했기 때문에 딱히 할일이 없다.
+		System.out.println("controller의 writeForm 시작과 끝");
+		
+		//2) 서비스
+		BoardVO vo = service.getSelectName(place_no);
+		req.setAttribute("VO", vo);
+		
 		System.out.println("controller의 writeForm 시작과 끝");
 	}									
 	
@@ -36,7 +43,9 @@ public class BoardController {
 	public ModelAndView writeProc(BoardVO vo, HttpSession session) throws Exception {
 		System.out.println("controller의 writeProc 시작");
 		
+		//1) 파라미터
 		ArrayList list = new ArrayList();
+		
 		//2) 서비스
 		service.insertBoard(vo, session, list); 
 		

@@ -21,6 +21,8 @@ public class BoardVO extends CommonVO{
 	private long fsize;
 	private MultipartFile[] files;
 	
+	private int place_no;
+	
 	private String place_name;
 	private int filecount;
 
@@ -29,6 +31,49 @@ public class BoardVO extends CommonVO{
 	private int start;		//common
 	private int end;		//common
 	
+	private int category_no;
+	
+	//카테고리번호로 카테고리명 추출하는 방식
+	public String getCategoryName() {
+		String category_name="";
+		if(category_no==1) {
+			category_name="관광/여가/오락";
+		}
+		if(category_no==2) {
+			category_name="숙박";
+		}
+		if(category_no==3) {
+			category_name="의료";
+		}
+		if(category_no==4) {
+			category_name="한식/중식/양식";
+		}
+		if(category_no==5) {
+			category_name="커피점/카페";
+		}
+		if(category_no==6) {
+			category_name="기타";
+		}
+		return category_name;
+	}
+	
+	
+	
+	public int getCategory_no() {
+		return category_no;
+	}
+
+
+	public void setCategory_no(int category_no) {
+		this.category_no = category_no;
+	}
+
+	public int getPlace_no() {
+		return place_no;
+	}
+	public void setPlace_no(int place_no) {
+		this.place_no = place_no;
+	}
 	public int getRno() {
 		return rno;
 	}
@@ -133,6 +178,11 @@ public class BoardVO extends CommonVO{
 	public void setReadcnt(int readcnt) {
 		this.readcnt = readcnt;
 	}
+
+	
+
+
+	
 	
 	
 

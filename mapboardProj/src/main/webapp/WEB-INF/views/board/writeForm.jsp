@@ -33,19 +33,7 @@
 			
 			$("#wBtn").click(function(){//글쓰기 버튼 클릭
 				
-				//1. 상가명
-				/* if(!$("#place_name").val()){
-					alert("상가명을 입력해주세요.");
-					$("#place_name").focus();
-					return false;
-				} */
-			
-				//2. 장소분류 : 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타
-				/* if($('select[name="category"]>option:selected').index()<1){
-					alert('장소분류를 선택해주세요')
-					$('select[name="category"]').focus()
-					return false;
-				} */
+				
 				
 				//3. 제목
 				if(!$("#subject").val()){
@@ -114,22 +102,12 @@
 		<table>
 			<tr>
 				<th>상가명</th>
-				<td id="left">place_name</td>
+				<td>${VO.place_name}</td>
 			</tr>
 			<tr>
 			<!-- 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타 -->
-				<th>category_no</th>
-				<td id="left">
-					<select name="category">
-						<option>--분류명 선택--</option>
-						<option value="1">관광/여가/오락</option>
-						<option value="2">숙박</option>
-						<option value="3">의료</option>
-						<option value="4">식당</option>
-						<option value="5">커피점/카페</option>
-						<option value="6">기타</option>
-					</select>
-				</td>
+				<th>분류명</th>
+				<td>${VO.category_no}</td>
 			</tr>
 			<tr>
 				<th>제목</th>

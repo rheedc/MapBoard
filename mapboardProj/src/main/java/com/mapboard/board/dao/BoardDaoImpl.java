@@ -1,5 +1,7 @@
 package com.mapboard.board.dao;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +12,13 @@ public class BoardDaoImpl implements BoardDao{
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
 	
-	//1. 게시물 등록
+	//1-1. 상가명 가져오기
+	public BoardVO getSelectName(int place_no)throws Exception{
+		return (BoardVO) sqlSession.selectOne("board.selectName", place_no);
+		
+	}
+	
+	//1-2. 게시물 등록
 	public void insertBoard(BoardVO vo) throws Exception{
 		sqlSession.insert("board.insertBoard", vo);
 	}
@@ -30,6 +38,9 @@ public class BoardDaoImpl implements BoardDao{
 		//결과를 반환
 		return result;
 	}
+	
+
+	
 	
 	
 }

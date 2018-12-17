@@ -20,7 +20,18 @@ public class BoardServiceImpl implements BoardService{
 	private FileinfoDao fDao;
 	
 	// board-----------------------------------------------------시작
-	//1. 게시물 기록 함수
+	
+	//1-1. 상가명 가져오기
+	@Override
+	public BoardVO getSelectName(int place_no)throws Exception{
+		System.out.println("service의 selectName 시작");
+		
+		BoardVO vo = bDao.getSelectName(place_no);
+		
+		return vo;
+	}
+	
+	//1-2. 게시물 기록 함수
 	@Override
 	public void insertBoard(BoardVO vo, HttpSession session, ArrayList list) throws Exception {
 		System.out.println("service의 insertBoard 시작 게시물수="+vo.getBidx());
@@ -34,10 +45,11 @@ public class BoardServiceImpl implements BoardService{
 		System.out.println("service의 insertBoard 끝 게시물수="+vo.getBidx());
 	}	
 
-	//게시물 정보 구하기 함수
+	//2-1. 게시물 정보 구하기 함수
 	@Override
 	public ArrayList getBoardList(PageUtil pInfo) throws Exception {
 		System.out.println("service의 boardList 시작");
+		
 		//시작 = (현재페이지-1)*(한 페이지에 보여줄 게시물수)
 		int start=(pInfo.getNowPage()-1)*pInfo.getListCount()+1;
 		
@@ -50,21 +62,26 @@ public class BoardServiceImpl implements BoardService{
 	
 		//질의 실행
 		ArrayList list = bDao.getBoardList(vo);
+		
 		System.out.println("service의 boardList 끝");
+		
 		return list;
 	}
 	
 	
-	//페이지 이동 정보를 만들어주는 함수
+	//2-2. 페이지 이동 정보를 만들어주는 함수
 	@Override
 	public PageUtil getPageInfo(int nowPage) throws Exception {
 		System.out.println("service의 pageInfo 시작");
+		
 		//게시물 총개수 구하기
 		int totalCount = bDao.getTotalCount();
 		
 		//한 페이당 3개의 게시물을 뿌리고, 5페이지씩 보여주자.
 		PageUtil pInfo = new PageUtil(nowPage, totalCount, 5, 3);
+		
 		System.out.println("service의 pageInfo 끝");
+		
 		return pInfo;
 	}
 

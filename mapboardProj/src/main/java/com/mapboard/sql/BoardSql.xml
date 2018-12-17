@@ -24,7 +24,17 @@
 	
 	
 
-	<!-- 1. 게시물 등록 : 파일은 별도로 만들기-->
+	<!-- 1-1. 상가명 가져오기 -->
+	<select id="selectName" resultType="boardVO" parameterType="int">
+		SELECT 
+			PLACE_NAME,CATEGORY_NO
+		FROM
+			PLACE
+		WHERE
+			PLACE_NO=10001
+	</select>
+	
+	<!-- 1-2. 게시물 등록 : 파일은 별도로 만들기-->
 	<insert id="insertBoard" parameterType="boardVO"><!-- fileBoard:mB의 alias -->
 		INSERT 
 			INTO
@@ -36,12 +46,11 @@
 			comm,
 			point,
 			createdt,
-			
 			status)
 		VALUES  
 			(board_seq.nextval,
 			#{userid},
-			6,
+			#{place_no},
 			#{subject},
 			#{comm},
 			#{point},
@@ -123,7 +132,7 @@
 			and	bidx = #{bidx}
 	</select>	
 	
-	<!-- 3-2. 조회수 증가 질의  -->
+	<!-- 3-3. 조회수 증가 질의  -->
 	<update id="updateHit"  parameterType="int">
 		UPDATE
 			board
@@ -132,4 +141,21 @@
 		WHERE
 			bidx = #{bidx}
 	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
