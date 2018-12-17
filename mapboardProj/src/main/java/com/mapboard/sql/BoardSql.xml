@@ -31,7 +31,7 @@
 		FROM
 			PLACE
 		WHERE
-			PLACE_NO=10001
+			PLACE_NO=#{place_no}
 	</select>
 	
 	<!-- 1-2. 게시물 등록 : 파일은 별도로 만들기-->

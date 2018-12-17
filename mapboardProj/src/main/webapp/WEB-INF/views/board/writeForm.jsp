@@ -89,7 +89,7 @@
 			//목록보기
 			$("#lBtn").click(function(){
 				//boardList로 가기
-				$(location).attr("href","../board/boardList.yo");
+				$(location).attr("href","../board/boardList.yo?place_no=${place_no}");
 			});
 		});
 	</script>
@@ -107,7 +107,7 @@
 			<tr>
 			<!-- 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타 -->
 				<th>분류명</th>
-				<td>${VO.category_no}</td>
+				<td>${VO.categoryName}</td>
 			</tr>
 			<tr>
 				<th>제목</th>
