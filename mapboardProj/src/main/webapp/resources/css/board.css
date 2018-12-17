@@ -18,7 +18,7 @@
 }
 .btn2 {
     width:40px;
-    background-color: #d2bdad;
+    background-color: #ebf6f9;
     border: none;
     color:black;
     text-align: center;
@@ -30,7 +30,7 @@
     border-radius:5px;
  }
 .btn2:hover {
-	background-color: #f6f2ef;
+	background-color: #aedae8;
 	font-weight:bold;
     color:black;
 } 

@@ -28,6 +28,12 @@
 	    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
 	    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
 	    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+	    
+	    .hover:hover {
+			background-color: #ebf6f9;
+			font-weight:bold;
+		    color:black;
+		} 
 		
 		
 	/*********************** 은비 스타일 start *************************/
@@ -462,7 +468,6 @@
 			//==============송 승환 클릭시  좌표 클릭!=================
 			<c:forEach var="m" items="${PLIST}" varStatus="status">
 				 $("#click_name_${m.place_no}").click(function(){
-					alert('place_no~=${m.place_name}${m.latitude}, ${m.longitude}');
 					 var position_c = [
 						    {
 						        title_c: "${m.place_name}",
@@ -531,7 +536,6 @@
 				 $("#click_board_${b.bidx}").click(function(){
 					 <c:forEach var="m" items="${TLIST}" >
 					 	<c:if test="${m.place_no==b.place_no }">
-							alert('place_no~=${m.latitude}, ${m.longitude} ${m.juso}');
 							var position_b = [
 							    {
 							        title_b: "${m.place_name}",
@@ -558,9 +562,9 @@
 					</c:if>
 				</c:forEach>
 						 	
-						 	var imageSrc_b = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";		   
+						 	var imageSrc_b = "../resources/img/google2.png";		   
 							for (var i = 0; i < position_b.length; i ++) {
-								var imageSize_b = new daum.maps.Size(32, 35);
+								var imageSize_b = new daum.maps.Size(35, 35);
 	
 								var markerImage_b = new daum.maps.MarkerImage(imageSrc_b, imageSize_b);
 								// 마커를 생성합니다
@@ -657,9 +661,7 @@
 			$(location).attr('href', '../place/placeList.yo')
 		});
 		
-		$('#xBtn').click(function bclose(){			
-			alert('22');
-		}); 
+
 
 		
 		
@@ -808,9 +810,9 @@
 					</c:if>
 					<table width="500px" >
 						<c:forEach var="data" items="${PLIST}" varStatus="status">
-							<tr height="100px">
+							<tr height="100px" class="hover" id="click_name_${data.place_no}">
 								<td width="350px">
-								<div id="click_name_${data.place_no}">${data.place_name}</div>
+								${data.place_name}<br/>
 								${data.juso}<br/>
 								관련글:${data.reviewcnt}건
 								</td>
@@ -877,9 +879,9 @@
 					</c:if>
 					<table width="500px" >
 						<c:forEach var="data" items="${BLIST}">
-							<tr height="100px">
+							<tr height="100px" class="hover" id="click_board_${data.bidx}">
 								<td width="350px">
-								<div id="click_board_${data.bidx}">${data.subject}</div>								
+								${data.subject}<br/>								
 								${data.comm}<br/>
 								${data.createdt}
 								</td>
