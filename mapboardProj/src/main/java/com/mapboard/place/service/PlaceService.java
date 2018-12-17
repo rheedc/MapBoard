@@ -45,4 +45,5 @@ public interface PlaceService {
 	public PlaceVO getLocation(PlaceVO vo);
 
 	
+	
 }

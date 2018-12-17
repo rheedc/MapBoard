@@ -27,6 +27,7 @@ public class PlaceVO extends CommonVO{
 	private int reviewcnt;				//장소에 남긴 게시물개수
 	private int reviewcnt_total;	//총 필터링된 게시물개수
 	
+	
 	private String createMonth;	
 	private float move_total;
 	private int movecnt_total;

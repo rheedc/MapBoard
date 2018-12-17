@@ -43,6 +43,6 @@ public interface PlaceDao {
 	public int getMonthMoveCnt(PlaceVO vo, int i);
 
 	public PlaceVO getLocation(PlaceVO vo);
-	
+
 
 }

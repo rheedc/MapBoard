@@ -226,5 +226,4 @@ public class PlaceDaoImpl implements PlaceDao{
 		int movecnt_month=sqlSession.selectOne("placeSql.cnt_month_move",vo);
 		return movecnt_month;
 	}
-	
 }
