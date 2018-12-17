@@ -64,15 +64,16 @@ $(document).ready(function(){
 	});  
 
 	//상태변경버튼 클릭시 update수행하기
-	$("#mBtn_y").click(function(){
+	$(".mBtn_y").click(function(){
 		//해당 장소번호 넘기기
 		place_no=$(this).parents('tr').attr('id');
 		$(location).attr("href","../admin/changeStatus.yo?place_no="+place_no+"&nowPage=${PINFO.nowPage}&type=${type}&nowStatus=Y");
 	});
-	$("#mBtn_n").click(function(){ 
+	$(".mBtn_n").click(function(){ 
 		//해당 장소번호 넘기기
 		place_no=$(this).parents('tr').attr('id');
 		$(location).attr("href","../admin/changeStatus.yo?place_no="+place_no+"&nowPage=${PINFO.nowPage}&type=${type}&nowStatus=N");
+		
 	}); 
 	
 });
@@ -122,7 +123,7 @@ $(document).ready(function(){
 				<td>${data.latitude}</td>
 				<td>${data.createdt}</td>
 				<td>${data.status}&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" id="mBtn_y" value="노출"><input type="button" id="mBtn_n" value="미노출">
+				<input type="button" class="mBtn_y" value="노출"><input type="button" class="mBtn_n" value="미노출">
 				</td>
 			</tr>
 		</c:forEach>		

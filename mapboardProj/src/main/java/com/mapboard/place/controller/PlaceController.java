@@ -445,8 +445,7 @@ public class PlaceController {
 		//장소의 노출/미노출 상태변경
 		@RequestMapping("admin/changeStatus")
 		public ModelAndView changePlaceStatus(ModelAndView mv, PlaceVO vo, HttpServletRequest req) {
-			System.out.println("changeStatus들어옴");
-			
+			System.out.println("상태변경들어옴");
 			
 			String type=req.getParameter("type");
 			if(type==null || type.length()==0) {
