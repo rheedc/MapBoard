@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- default directory 설정 -->
 <decorators defaultdir="/WEB-INF/views/decorators">
+	<!-- decorators를 적용시키지 않을 url 패턴 -->
+	<excludes>
+		<pattern>/popup/*</pattern>
+	</excludes>
+	
 	<!-- sample -->
 	<decorator name="headerFooter" page="headerFooter.jsp">
+		<pattern>/member/*</pattern>
+		<pattern>/total/*</pattern>
+		<pattern>/place/*</pattern>
+		<pattern>/board/*</pattern>
+		<pattern>/decorators/*</pattern>
+		<pattern>/home*</pattern>
 		<pattern>/*</pattern>
+		
 	</decorator>
 	
 	<!-- sample -->
@@ -11,9 +23,6 @@
 		<pattern>/place/*</pattern>
 	</decorator> -->
 	
-	<!-- decorators를 적용시키지 않을 url 패턴 -->
-	<excludes>
-		<pattern></pattern>
-	</excludes>
+	
 	
 </decorators>

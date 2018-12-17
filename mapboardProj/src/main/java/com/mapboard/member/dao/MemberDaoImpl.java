@@ -17,9 +17,11 @@ import com.mapboard.member.vo.MemberVO;
  * 작성일: 2018.12.12
  * 최종수정일: 2018.12.13
  * 이력
- * 12/12 최초 작성
- * 12/13 memberDao의 함수 변경에 따라 실행함수 변경
- * 12/14 
+ * 12/12: 최초 작성
+ * 12/13: memberDao의 함수 변경에 따라 실행함수 변경
+ * 12/15: 아이디 체크 함수 추가
+ * 12/16: 회원가입 처리 함수 추가
+ * 
 */
 
 @Service("memberDao")
@@ -28,15 +30,31 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
 	//membersql.xml 파일의 쿼리문을 실행하고 그 결과값을 map 담아 반환한다.
+	
+	
+	
+	//사용자 이름 검색 쿼리문 실행
+	@Override
+	public MemberVO selectMemberbyId(String userid) {
+		System.out.println("사용자 정보 검색 쿼리 실행");
+		return sqlSession.selectOne("member.selectMemberbyId",userid);
+	}
 
+
+	//회원가입 처리 쿼리문 실행
+	@Override
+	public void  insertMember(MemberVO vo) {
+		sqlSession.insert("member.insertMember", vo);
+		
+	}
+	
 	//id체크 쿼리문 실행
 	@Override
 	public int selectID(String useid) throws Exception {
 		int result =sqlSession.selectOne("member.idChk", useid);
-		
 		return result;
 	}	
-	
+		
 	//회원 로그인 체크 함수
 	@Override
 	public boolean loginProc(MemberVO vo) {
@@ -49,7 +67,7 @@ public class MemberDaoImpl implements MemberDao{
 	public MemberVO viewMember(MemberVO vo) {
 		return sqlSession.selectOne("member.viewMember", vo);
 	}
-
+	//회원 로그아웃 처리 함수
 	@Override
 	public void logout(HttpSession session) {
 				

@@ -8,20 +8,27 @@ import com.mapboard.member.vo.MemberVO;
  * 작성자:
  * 작성일:2018-12-07
  * 최종수정일: 2018-12-13
- * 수정내용: 함수 변경
+ * 이력
+ * 12/07: 최초 작성
+ * 12/12: 1,2,3 함수 추가
+ * 12/15: 4 함수 추가
+ * 12/16: 5,6 함수 추가
  */
 
 
 
 public interface MemberDao{
-	//회원 로그인 체크
+	//1. 회원 로그인 체크
 	public  boolean loginProc(MemberVO vo);
-	//회원 로그인 정보
+	//2. 회원 로그인 정보
 	public MemberVO viewMember(MemberVO vo);
-	//회원 로그아웃
+	//3. 회원 로그아웃
 	public void logout(HttpSession session);
-	//아이디 중복체크
+	//4. 아이디 중복체크
 	public int selectID(String userid) throws Exception;
-	
+	//5. 회원가입 처리
+	public void insertMember(MemberVO vo);
+	//6. 사용자 이름 가져오기
+	public MemberVO selectMemberbyId(String userid);
 	
 }

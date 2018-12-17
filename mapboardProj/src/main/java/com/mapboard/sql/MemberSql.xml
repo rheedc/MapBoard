@@ -9,25 +9,50 @@
 작성일: 2018-12-07
 최종수정일: 2018-12-14
 이력
-	=> 12/7 최초작성
-	=> 12/13 loginChk, viewMember 쿼리문 추가
-	=> 12/14 idChk 쿼리문 추가
+	=> 12/07: 최초작성
+	=> 12/13: loginChk, viewMember 쿼리문 추가
+	=> 12/14: idChk 쿼리문 추가
+	=> 12/15: insertMember 쿼리문 추가
+	=> 12/16: selectNamebyId 쿼리문 추가
 
  --> 
 
 <mapper namespace="member">
+
+	<!-- 이름 조회 쿼리문 -->
+	<select id="selectMemberbyId" resultType="memberVO" parameterType="String">
+		select
+			userid, uname, passwd, nick, ulevel, status, juso, latitude, longitude   			
+		from 
+			member
+		where
+			userid=#{userid}		
+	</select>
+	
+	
+	
+	
+	<!-- 회원가입 처리 insert 쿼리문 -->
+	<insert id="insertMember" parameterType="memberVO">
+		insert into 
+		member
+			(userid, nick, uname, passwd, ulevel)
+		 values
+			(#{userid},
+			#{nick},
+			#{uname},
+			#{passwd},
+			1)
+	</insert>
+	
 	<!-- id 중복체크를 위해 id 존재여부를 int로 조회하는 쿼리문 -->
 	<select id="idChk" resultType="int" parameterType="String">
 		select 
 			nvl(count(userid),0) cnt 
 		from 
 			member 
-		where userid=#{userid}';
+		where userid=#{userid}
 	</select>
-
-
-
-
 
 
 	<!-- 로그인 처리를 위해 ID,PW를 조회하는 쿼리문 -->
@@ -39,8 +64,13 @@
 	
 	<!-- 회원 정보 조회 쿼리문 -->
 	<select id="viewMember" resultType="memberVO">
-		select USERID, PASSWD, NICK, ULEVEL, STATUS, JUSO, LATITUDE, LONGITUDE   
-				from member 
-				where USERID=#{userid} and PASSWD=#{passwd}
+		select 
+			USERID, UNAME, PASSWD, NICK, ULEVEL, STATUS, JUSO, LATITUDE, LONGITUDE   
+		from
+			member 
+		where 
+			USERID=#{userid} 
+		and 
+			PASSWD=#{passwd}
 	</select>
 </mapper>

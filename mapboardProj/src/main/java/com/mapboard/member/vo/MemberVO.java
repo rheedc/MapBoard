@@ -17,7 +17,6 @@ public class MemberVO extends CommonVO{
 		private String passwd;
 		private int ulevel;
 		
-		
 		public String getNick() {
 			return nick;
 		}

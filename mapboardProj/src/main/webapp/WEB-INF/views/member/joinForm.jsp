@@ -45,6 +45,8 @@
 					  margin: 18px 10px;
 					  cursor: pointer;}
 	#subTitle{font-size:50px; text-align:center; font-weight:bold;}
+	.alertText{color:red; font-weight:bold;padding-left:230px;}
+	#loginText{color:darkgray;font-size:20px; font-weight:bold;padding-top: 20px; }
 
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -72,7 +74,7 @@
         }
 			
 		
-		if(form.idDuplication.value != "idCheck"){
+		if(form.idDuplication.value != "idCheck"){ 	//id체크 팝업창에서 실행한 결과값을 idCheck에 넣었다.
 			alert("아이디 중복체크를 해주세요.");
 			form.userid.focus();
 			return false;
@@ -114,12 +116,31 @@
 			form.uname.focus();
 			return false;
 		}
+		if(form.uname.value.length<2){
+            alert("이름을 2자 이상 입력해주십시오.")
+            form.uname.focus();
+            return false;
+		}
+		
+		
 		
 		if(!form.nick.value){
 			alert("닉네임을 입력하세요.");
 			form.nick.focus();
 			return false;
 		}
+		
+		
+		//닉네임 유효성 검사 (한글, 영문대소문자, 숫자만 허용)
+        for (i = 0; i < form.nick.value.length; i++) {
+            ch = form.nick.value.charAt(i)
+            if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')&&!(ch >= 'A' && ch <= 'Z')&&!(ch >='가' && ch<='힣')) {
+                alert("닉네임은 한글, 영문 대소문자, 숫자만 입력가능합니다.")
+                form.userid.focus()
+                form.userid.select()
+                return false;
+            }
+        }
 		
 
 	}
@@ -131,47 +152,25 @@
 	
 	// 아이디 중복체크 실행 함수
 	function idChkAction(){
-		var userid=$("#userid").val();
-		//var userData={"userid":userid}	//JSON 에서 사용할 사용자 데이터 변수
+		//팝업창 경로
+		var url="/popup/popup_IdCheck.yo";
+		//팝업창 표시 위치
+		var popupX = (window.screen.width / 2) -(300 / 2);		// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+		var popupY= (window.screen.height /2)-(500 / 2);			// 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
 		
-		if(userid.length <1){
-			alert("아이디를 입력하세요.")
-		}
-		else{
-			$.ajax({
-				async:false,
-				type : "POST",
-				url : "/member/idCheckProc.yo",
-				data : userid,
-				//dataType : "JSON",
-				dataType : "text",
-				contentType: "application/json; charset=UTF-8",
-				error : function(error){
-					alert("서버가 응답하지 않습니다. \n다시 시도해주시기 바랍니다.");
-				},
-				success : function(result){
-					if(result==0){
-						$("#userid").attr("disabled",true);
-					}
-					else if(result==1){
-						alert("이미 존재하는 아이디입니다. \n다른 아이디를 사용해 주세요.")	
-					}
-					else{
-						alert("에러가 발생하였습니다.")
-					}
-				}
-				
-			})	;
-		}
-			
+		window.name = "parentForm";
+		//팝업창 경로, 팝업창 이름, 위치(화면 중앙정렬) 및 크기 등 설정
+		window.open(url,"chkForm", "status=no, width=500, height=300, resizable = no, scrollbars = no, left="+ popupX + ", top="+ popupY + ", screenX="+ popupX + ", screenY= "+ popupY);	
 	}
-
+	
 	// 아이디 입력창에 값 입력시 hidden에 idUncheck를 세팅한다.
 	// 이렇게 하는 이유는 중복체크 후 다시 아이디 창이 새로운 아이디를 입력했을 때
 	// 다시 중복체크를 하도록 한다.
 	function inputIdChk(){
-		document.userInfo.idDuplication.value ="idUncheck";
+		document.joinForm.idDuplication.value ="idUncheck";
 	}
+	
+	
 	
 
 	</script>
@@ -183,18 +182,21 @@
 
 	<form id="joinForm" name="joinForm"  method="post" action="/member/joinProc.yo" onsubmit="return checkValue()">
 		<div class="formGroup">
-			<div class="inputTitle">아이디</div><div class="inputbox">
-				<input type="text" name="userid"  id="userid" placeholder="아이디를 입력하세요" class="formControl" maxlength="50" onkeydown="inputIdChk()" /></div>
-				<button type="button" id="idChk" onclick="idChkAction()">중복체크</button>
-			<input type="hidden" name="idDuplication" value="idUncheck" >
+			<div class="inputTitle">아이디</div>
+			<div class="inputbox">
+				<input type="text" name="userid"  id="userid" placeholder="아이디를 입력하세요" class="formControl" maxlength="50" onkeydown="inputIdChk()" />
+			</div>
+			<button type="button" id="idChk" onclick="idChkAction()">중복체크</button>
+			<input type="hidden" name="idDuplication"  id="idDuplication" value="idUncheck" >
 		</div>
+		<p class="alertText" >* 아이디는 영문 대소문자, 숫자만 입력가능합니다.</p>
 		<div class="formGroup">
 			<div class="inputTitle">비밀번호</div><div class="inputbox">
-			<input type="text" name="passwd"  id="passwd" placeholder="비밀번호를 입력하세요" class="formControl" maxlength="50" /></div>
+			<input type="password" name="passwd"  id="passwd" placeholder="비밀번호를 입력하세요" class="formControl" maxlength="50" /></div>
 		</div>
 		<div class="formGroup">
 			<div class="inputTitle">비밀번호확인</div><div class="inputbox">
-			<input type="text" name="passwordcheck"  id="passwordcheck" placeholder="비밀번호를 다시 입력하세요" class="formControl" maxlength="50" /></div>
+			<input type="password" name="passwordcheck"  id="passwordcheck" placeholder="비밀번호를 다시 입력하세요" class="formControl" maxlength="50" /></div>
 		</div>
 		<div class="formGroup">
 			<div class="inputTitle">이름</div><div class="inputbox">
@@ -204,11 +206,14 @@
 			<div class="inputTitle">닉네임</div><div class="inputbox">
 			<input type="text" name="nick"  id="nick" placeholder="닉네임을 입력하세요" class="formControl" maxlength="50" /></div>
 		</div>
+		<p class="alertText" >*특수문자 및 공백은 제외하고 입력하세요.</p>
 		
 	
 		<div class="formBtn">
 			<input type="submit" id="loginBtn" class="actionBtn" value="회원가입" />
 			<input type="button" id="joinBtn" class="actionBtn" onclick="goFirstForm()" value="취소" />
+			<br/>
+			<p id="loginText">이미 계정이 있습니까? <a href="/member/LoginForm.yo" style="text-decoration: underline; ">로그인</a></p>
 		</div>
 	</form>
 
