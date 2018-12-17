@@ -24,7 +24,37 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
+	
+			//승환 작성 -----------------------------------------------
+			// 쿠키 설정 함수
+			var setCookie = function(name, value, exp) {
+				var date = new Date();
+				date.setTime(date.getTime() + exp*24*60*60*1000);
+				document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+			};
+			
+			// 쿠키 얻기 함수
+			var getCookie = function(name) {
+				var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+				return value? value[2] : null;
+			};
+			
+			// 쿠키 삭제 함수
+			var deleteCookie = function(name) {
+				setCookie(name,'',-1);
+			};
+	
+	
 		$(document).ready(function(){
+			//지도 보기 클릭시 페이지 넘어가는거
+			$('#seoul').click(function(){			
+				deleteCookie('guname');
+				deleteCookie('mouseLat');
+				deleteCookie('mouseLng');
+				$(location).attr('href', '../place/placeList.yo')
+			});
+			//승환 작성 -----------------------------------------------	
+			
 		//제목검색 sBtn
 		$("#sBtn").click(function(){
 			//지역(구) 선택
@@ -41,11 +71,6 @@
 			}
 		});
 		
-		//지도로 보기 mBtn
-		$("#mBtn").click(function(){
-			//placeList로 가기
-			$(location).attr("href","../place/placeList.yo");
-		});
 	});
 	</script>
 </head>
@@ -168,7 +193,7 @@
 		<table align="center">
 			<tr>	
  				<td align="right">
- 					<input type="button" id="mBtn" value="지도로 즐기기" action="../place/placeList.yo"/>
+ 					<input type="button" id="seoul" value="지도로 즐기기"/>
  				</td>
  			</tr>
 	  	</table>
