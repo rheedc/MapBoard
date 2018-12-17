@@ -136,8 +136,8 @@
             ch = form.nick.value.charAt(i)
             if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')&&!(ch >= 'A' && ch <= 'Z')&&!(ch >='가' && ch<='힣')) {
                 alert("닉네임은 한글, 영문 대소문자, 숫자만 입력가능합니다.")
-                form.userid.focus()
-                form.userid.select()
+                form.nick.focus()
+                form.nick.select()
                 return false;
             }
         }
@@ -155,8 +155,8 @@
 		//팝업창 경로
 		var url="/popup/popup_IdCheck.yo";
 		//팝업창 표시 위치
-		var popupX = (window.screen.width / 2) -(300 / 2);		// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
-		var popupY= (window.screen.height /2)-(500 / 2);			// 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+		var popupX = (window.screen.width / 2) - (300 / 2);		// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+		var popupY= (window.screen.height /2) - (500 / 2);			// 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
 		
 		window.name = "parentForm";
 		//팝업창 경로, 팝업창 이름, 위치(화면 중앙정렬) 및 크기 등 설정
@@ -206,7 +206,7 @@
 			<div class="inputTitle">닉네임</div><div class="inputbox">
 			<input type="text" name="nick"  id="nick" placeholder="닉네임을 입력하세요" class="formControl" maxlength="50" /></div>
 		</div>
-		<p class="alertText" >*특수문자 및 공백은 제외하고 입력하세요.</p>
+		<p class="alertText" >*특수문자는 제외하고 입력하세요.</p>
 		
 	
 		<div class="formBtn">

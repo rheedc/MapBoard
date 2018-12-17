@@ -102,7 +102,7 @@
 								<li class="dropdown">
 							    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-lock"></span> 사이트관리<span class="caret"></span></a>
 							    <ul class="dropdown-menu">
-							      <li><a href="/admin/memberList.yo"><span class="glyphicon glyphicon-user"></span> 회원관리</a></li>
+							      <li><a href="/member/memberList.yo"><span class="glyphicon glyphicon-user"></span> 회원관리</a></li>
 							      <li><a href="/admin/placeList.yo"><span class="glyphicon glyphicon-globe"></span> 장소관리</a></li>
 							    </ul>
 							  	</li>

@@ -1,10 +1,12 @@
 package com.mapboard.member.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
 import com.mapboard.member.vo.MemberVO;
+import com.mapboard.util.PageUtil;
 
 /*클래스 목적: member서비스 클래스에서 사용할 함수를 정의하여 해당 패키지에서는 공통으로 사용하도록 설정해주는 인터페이스
  * 작성자: 이덕천
@@ -14,6 +16,7 @@ import com.mapboard.member.vo.MemberVO;
  * 12/13: 1,2,3 함수 추가
  * 12/14: 4 함수 추가
  * 12/16: 5,6 함수 추가
+ * 12/17: 7, 8함수 추가
  */
 
 public interface MemberService {
@@ -35,6 +38,11 @@ public interface MemberService {
 	//6. 사용자 이름 조회 함수
 	public MemberVO selectMemberbyId(String userid);
 	
+	//7. 페이지 이동 정보를 만들어 주는 함수
+	public PageUtil getPageInfo(int nowPage);
+	
+	//8. 회원 목록정보 구하기 함수
+	public ArrayList<?> getMemberList(PageUtil pInfo);
 	
 
 }

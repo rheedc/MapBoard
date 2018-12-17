@@ -1,5 +1,7 @@
 package com.mapboard.member.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.mapboard.member.service.MemberService;
 import com.mapboard.member.vo.MemberVO;
+import com.mapboard.util.PageUtil;
 
 
 /*클래스 목적: 메인화면에서 로그인 폼을 보여주고 로그인을 처리하는 클래스
@@ -26,7 +30,7 @@ import com.mapboard.member.vo.MemberVO;
  * 12/13: joinForm() 추가
  * 12/14: joinProc(), idCheckProc() 추가
  * 12/16: joinProc() 변경, memberDetail() 추가
- * 12/17: 전체 함수 부분 수정
+ * 12/17: memberUpdateForm() 추가
  */
 
 @Controller
@@ -36,6 +40,46 @@ public class MemberController {
 	//서비스 클래스를 자동주입하는 명령
 	@Autowired
 	private MemberService mservice;
+	
+	
+	//회원목록보기 요청 처리
+	@RequestMapping("/memberList")
+	public String memberList(@RequestParam(value="nowPage", defaultValue="1") int nowPage, HttpServletRequest req) {
+		PageUtil pInfo = mservice.getPageInfo(nowPage);
+		ArrayList list=mservice.getMemberList(pInfo);
+		System.out.println("게시물 수="+list.size());
+		
+		//모델
+		req.setAttribute("PINFO",pInfo);
+		req.setAttribute("MLIST", list);
+		
+		//뷰
+		return "admin/memberList";
+		
+	}
+	
+	
+
+	//나의 정보 수정 폼 보여주기 요청 처리
+	@RequestMapping("/memberUpdateForm")
+	public ModelAndView memberUpdateForm(ModelAndView mv, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String userid = session.getAttribute("userid").toString();
+		System.out.println("회원정보수정 컨트롤러 실행 userid="+userid);
+		MemberVO vo = new MemberVO();
+		vo=mservice.selectMemberbyId(userid);
+		
+		//모델
+		mv.addObject("VIEW", vo);
+		
+		//뷰
+		mv.setViewName("/member/memberUpdateForm");
+		return mv;
+		
+	}
+	
+	
+	
 	
 	//나의 정보 상세보기 처리
 	@RequestMapping("/memberDetail")
@@ -78,7 +122,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/idCheckProc", method=RequestMethod.POST)
 	public String idCheckProc(@RequestBody String userid) throws Exception {
-		System.out.println("idCheckProc함수 실행 시작"+userid+"받음");
+		System.out.println("idCheckProc함수 실행 시작 아이디="+userid+" 받음");
 		
 		int intResult=mservice.selectID(userid);
 		String result =Integer.toString(intResult);
