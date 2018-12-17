@@ -95,8 +95,8 @@
 	<%-- action부분에 insert부분으로 넘기기 --%>
   <form id="newPlaceForm" action="../place/newPlaceProc.yo" method="get">
   	<!-- 임시로 !!!!!!!!!!!! jojo로 넣고 나중에 고치기 -->
-  	<%-- <input type="hidden" id="id" name="id" value="${sessionScope.userid}"/> --%>
-  	<input type="hidden" id="id" name="id" value="jojo"/>
+  	<input type="hidden" id="id" name="id" value="${sessionScope.userid}"/>
+  	<!-- <input type="hidden" id="id" name="id" value="jojo"/> -->
 	<input type="hidden" id="guname" name="guname"/>
   	<table width="50%" align="center">
   		<tr>

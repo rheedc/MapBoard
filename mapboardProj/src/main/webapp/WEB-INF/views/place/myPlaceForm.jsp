@@ -126,9 +126,9 @@
 		</td>
 	</tr>
 </table>
-<form id="myPlaceForm" action="../place/myPlaceProc.yo" method="get" enctype="multipart/form-data">
-	<%-- <input type="hidden" id="id" name="id" value="${sessionScope.userid}"/> --%>
-  	<input type="hidden" id="id" name="id" value="jojo"/>
+<form id="myPlaceForm" action="../place/memberDetail.yo" method="get" enctype="multipart/form-data">
+	<input type="hidden" id="id" name="id" value="${sessionScope.userid}"/>
+  	<!-- <input type="hidden" id="id" name="id" value="jojo"/> -->
 	<table border="1px" align="center" width="70%">
 		<tr>
   			<th>좌표정보</th>

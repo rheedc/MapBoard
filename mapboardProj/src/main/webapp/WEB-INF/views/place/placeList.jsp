@@ -19,11 +19,11 @@
 		    left: 15px;
 		    padding:2px;
 		}
-		
+		 
 		.info {font-size: 12px; padding: 5px;}
 		.info .title {font-weight: bold;}
 		
-		 .map_wrap {position:relative;width:1400px;height:760px;}
+		 .map_wrap {position:relative;width:1200px;height:700px;}
 	    .title {font-weight:bold;display:block;}
 	    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
 	    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
@@ -370,8 +370,9 @@
 			    {
 			        title: "${m.place_name}",
 			        content: "<div style='width:270px;'>"+
-			        "<div  class='title'>${m.place_name}</div>"+
-			        "<div>${m.juso}</div><div>${m.doro_juso}</div>"+
+			        "<div  class='title'>상가명: ${m.place_name}</div>"+
+			        "<div>지번주소: ${m.juso}</div><div>도로주소: ${m.doro_juso}</div>"+
+			        "<div>평균평점: ${m.avgpoint}</div>"+
 			        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
 			        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
 			        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
@@ -392,27 +393,39 @@
 			];
 		     
 			// 마커 이미지의 이미지 주소입니다
-			var imageSrc = "../resources/img/dot_good.png"; 
+			var imageSrc_good = "../resources/img/dot_good.png"; 
+			var imageSrc_soso = "../resources/img/dot_green.png";
+			var imageSrc_bad = "../resources/img/dot_bad.png";
+			var imageSrc_0 = "../resources/img/dot_0.png";
+						    
+			<c:forEach var="m" items="${TLIST}"  varStatus="status">
+			//for (var i = 0; i < positions.length; i ++) {
 			    
-			for (var i = 0; i < positions.length; i ++) {
+			    // 마커 이미지의 이미지 크기 입니다 reviewcnt
+			    var imageSize = new daum.maps.Size(8+${m.reviewcnt}*10, 8+${m.reviewcnt}*10); 
 			    
-			    // 마커 이미지의 이미지 크기 입니다
-			    var imageSize = new daum.maps.Size(8, 8); 
-			    
-			    // 마커 이미지를 생성합니다    
-			    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
+			    // 마커 이미지를 생성합니다    			 imageSrc_0    imageSrc_soso imageSrc_good
+			    if(${m.avgpoint}==0){
+			    	var markerImage = new daum.maps.MarkerImage(imageSrc_0, imageSize); 
+			    } else if (${m.avgpoint}>=1&& ${m.avgpoint}<2.4 ){
+			    	var markerImage = new daum.maps.MarkerImage(imageSrc_bad, imageSize); 
+			    } else if (${m.avgpoint}>=2.4 && ${m.avgpoint}<3.7 ){
+			    	var markerImage = new daum.maps.MarkerImage(imageSrc_soso, imageSize); 
+			    } else {
+			    	var markerImage = new daum.maps.MarkerImage(imageSrc_good, imageSize); 
+			    } 			    
 			    
 			    // 마커를 생성합니다
 			    var marker5 = new daum.maps.Marker({
 			        map: map, // 마커를 표시할 지도
-			        position: positions[i].latlng, // 마커를 표시할 위치
-			        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+			        position: positions[${status.index}].latlng, // 마커를 표시할 위치
+			        title : positions[${status.index}].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 			        image : markerImage // 마커 이미지 
 			    });
 			    
 			 	// 마커에 표시할 인포윈도우를 생성합니다 
 			    var infowindow_s = new daum.maps.InfoWindow({
-			        content: positions[i].content, // 인포윈도우에 표시할 내용
+			        content: positions[${status.index}].content, // 인포윈도우에 표시할 내용
 			    });
 			    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
 			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
@@ -421,7 +434,8 @@
 			    daum.maps.event.addListener(map, 'click', makeOutListener(infowindow_s));
 			    
 			    
-			}
+			//}
+			</c:forEach>
 			
 			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
 			function makeOverListener(map, marker5, infowindow_s) {
