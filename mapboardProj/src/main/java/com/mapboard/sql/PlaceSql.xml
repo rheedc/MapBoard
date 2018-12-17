@@ -464,4 +464,67 @@
 	</update>
 	
 	
+	<!-- 회원의 기준지 위치구하기 -->
+	<select id="member_location" resultType="PlaceVO" parameterType="PlaceVO">
+	select nvl(LATITUDE,0) LATITUDE,nvl(LONGITUDE,0) LONGITUDE from member where userid=#{userid}
+	</select>
+	
+	<!-- 총이동거리구하기 -->
+	<select id="total_move" resultType="float" parameterType="PlaceVO">
+	SELECT nvl(sum(distance),0) move_total FROM
+	(
+	SELECT  
+	    SQRT(POWER((#{latitude}-LATITUDE)*110979.309,2)+POWER((#{longitude}-LONGITUDE)*88907.949, 2))/1000 distance,
+	    trim(to_char(CREATEDT,'MONTH')) createMonth
+	FROM
+	(SELECT p.LATITUDE,p.LONGITUDE,b.CREATEDT CREATEDT
+	FROM Board b, Place p
+	WHERE b.PLACE_NO=p.PLACE_NO
+	AND b.USERID=#{userid})
+	)
+	</select>
+	<!-- 총방문건수구하기 -->
+	<select id="cnt_total_move" resultType="int" parameterType="PlaceVO">
+	SELECT count(*) movecnt_total FROM
+	(
+	SELECT  
+	    SQRT(POWER((#{latitude}-LATITUDE)*110979.309,2)+POWER((#{longitude}-LONGITUDE)*88907.949, 2))/1000 distance,
+	    trim(to_char(CREATEDT,'MONTH')) createMonth
+	FROM
+	(SELECT p.LATITUDE,p.LONGITUDE,b.CREATEDT CREATEDT
+	FROM Board b, Place p
+	WHERE b.PLACE_NO=p.PLACE_NO
+	AND b.USERID=#{userid})
+	)
+	</select>
+	<!-- 월별이동거리구하기 -->
+	<select id="month_move" resultType="float" parameterType="PlaceVO">
+	SELECT nvl(sum(distance),0) move_month FROM
+	(
+	SELECT  
+	    SQRT(POWER((#{latitude}-LATITUDE)*110979.309,2)+POWER((#{longitude}-LONGITUDE)*88907.949, 2))/1000 distance,
+	    trim(to_char(CREATEDT,'MONTH')) createMonth
+	FROM
+	(SELECT p.LATITUDE,p.LONGITUDE,b.CREATEDT CREATEDT
+	FROM Board b, Place p
+	WHERE b.PLACE_NO=p.PLACE_NO
+	AND b.USERID=#{userid})
+	)
+	WHERE createMonth=#{createMonth}
+	</select>
+	<!-- 월별방문건수구하기 -->
+	<select id="cnt_month_move" resultType="int" parameterType="PlaceVO">
+	SELECT count(*) movecnt_month FROM
+	(
+	SELECT  
+	    SQRT(POWER((#{latitude}-LATITUDE)*110979.309,2)+POWER((#{longitude}-LONGITUDE)*88907.949, 2))/1000 distance,
+	    trim(to_char(CREATEDT,'MONTH')) createMonth
+	FROM
+	(SELECT p.LATITUDE,p.LONGITUDE,b.CREATEDT CREATEDT
+	FROM Board b, Place p
+	WHERE b.PLACE_NO=p.PLACE_NO
+	AND b.USERID=#{userid})
+	)
+	WHERE createMonth=#{createMonth}
+	</select>
 </mapper>

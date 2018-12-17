@@ -31,6 +31,18 @@ public interface PlaceDao {
 	public int getAdminPlaceListCnt(String type);
 
 	public void changeStatus(PlaceVO vo);
+
+	
+	//my통계를 위한 자료
+	public float getTotalMove(PlaceVO vo);
+
+	public int getTotalMoveCnt(PlaceVO vo);
+
+	public float getMonthMove(PlaceVO vo, int i);
+
+	public int getMonthMoveCnt(PlaceVO vo, int i);
+
+	public PlaceVO getLocation(PlaceVO vo);
 	
 
 }

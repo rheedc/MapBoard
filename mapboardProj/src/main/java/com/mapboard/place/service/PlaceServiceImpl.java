@@ -1,6 +1,7 @@
 package com.mapboard.place.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -158,5 +159,45 @@ public class PlaceServiceImpl implements PlaceService{
 	public void changeStatus(PlaceVO vo) {
 		pdao.changeStatus(vo);
 	}
+	
+	//회원의 기준위치구하기
+	public PlaceVO getLocation(PlaceVO vo) {
+		return pdao.getLocation(vo);
+	}
+	//총이동거리구하기
+	public float getTotalMove(PlaceVO vo) {
+		float move_total=pdao.getTotalMove(vo);
+		return move_total;
+	}
+	//총이동건수구하기
+	public int getTotalMoveCnt(PlaceVO vo) {
+		int movecnt_total=pdao.getTotalMoveCnt(vo);
+		return movecnt_total;
+	}
+	//월별이동거리구하기
+	public HashMap getMonthMove(PlaceVO vo) {
+		HashMap map=new HashMap();
+		for(int i=1;i<13;i++) {
+			float move_month=0;
+			if(pdao.getMonthMove(vo,i)!=0.0f) {
+				move_month=pdao.getMonthMove(vo,i);
+			}
+			map.put(i+"월",move_month);
+		}
+		return map;
+	}
+	//월별이동건수구하기
+	public HashMap getMonthMoveCnt(PlaceVO vo) {
+		HashMap map=new HashMap();
+		for(int i=1;i<13;i++) {
+			int cnt_month_move=0;
+			if(pdao.getMonthMoveCnt(vo,i)!=0) {
+				cnt_month_move=pdao.getMonthMoveCnt(vo,i);
+			}
+			map.put(i+"월",cnt_month_move);
+		}
+		return map;
+	}
+	
 	
 }

@@ -1,6 +1,7 @@
 package com.mapboard.place.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.mapboard.place.vo.PlaceVO;
 import com.mapboard.util.PageUtil;
@@ -32,5 +33,16 @@ public interface PlaceService {
 	public ArrayList getPlaceList_Admin(PlaceVO vo, String type, PageUtil pInfo);
 
 	public void changeStatus(PlaceVO vo);
+
+	public float getTotalMove(PlaceVO vo);
+
+	public int getTotalMoveCnt(PlaceVO vo);
+
+	public HashMap getMonthMove(PlaceVO vo);
+
+	public HashMap getMonthMoveCnt(PlaceVO vo);
+
+	public PlaceVO getLocation(PlaceVO vo);
+
 	
 }

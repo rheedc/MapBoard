@@ -198,4 +198,33 @@ public class PlaceDaoImpl implements PlaceDao{
 	public void changeStatus(PlaceVO vo) {
 		sqlSession.update("placeSql.changeStatus",vo);
 	}
+	
+	//회원의 기준지 위치구하기
+	public PlaceVO getLocation(PlaceVO vo) {
+		return sqlSession.selectOne("placeSql.member_location",vo);
+	}
+	//총이동거리구하기
+	public float getTotalMove(PlaceVO vo) {
+		float move_total=sqlSession.selectOne("placeSql.total_move",vo);
+		return move_total;
+	}
+	//총방문건수구하기
+	public int getTotalMoveCnt(PlaceVO vo) {
+		int movecnt_total=sqlSession.selectOne("placeSql.cnt_total_move",vo);
+		return movecnt_total;
+	}
+	//월별이동거리구하기
+	public float getMonthMove(PlaceVO vo, int i) {
+		vo.setCreateMonth(i+"월");
+		float move_month=sqlSession.selectOne("placeSql.month_move",vo);
+		return move_month;
+	}
+	
+	//월별방문건수구하기
+	public int getMonthMoveCnt(PlaceVO vo, int i) {
+		vo.setCreateMonth(i+"월");
+		int movecnt_month=sqlSession.selectOne("placeSql.cnt_month_move",vo);
+		return movecnt_month;
+	}
+	
 }

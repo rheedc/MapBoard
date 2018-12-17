@@ -27,7 +27,53 @@ public class PlaceVO extends CommonVO{
 	private int reviewcnt;				//장소에 남긴 게시물개수
 	private int reviewcnt_total;	//총 필터링된 게시물개수
 	
+	private String createMonth;	
+	private float move_total;
+	private int movecnt_total;
+	private float move_month;
+	private int movecnt_month;
 	
+	
+	public String getCreateMonth() {
+		return createMonth;
+	}
+
+	public void setCreateMonth(String createMonth) {
+		this.createMonth = createMonth;
+	}
+
+	public float getMove_total() {
+		return move_total;
+	}
+
+	public void setMove_total(float move_total) {
+		this.move_total = move_total;
+	}
+
+	public int getMovecnt_total() {
+		return movecnt_total;
+	}
+
+	public void setMovecnt_total(int movecnt_total) {
+		this.movecnt_total = movecnt_total;
+	}
+
+	public float getMove_month() {
+		return move_month;
+	}
+
+	public void setMove_month(float move_month) {
+		this.move_month = move_month;
+	}
+
+	public int getMovecnt_month() {
+		return movecnt_month;
+	}
+
+	public void setMovecnt_month(int movecnt_month) {
+		this.movecnt_month = movecnt_month;
+	}
+
 	//카테고리번호로 카테고리명 추출하는 방식
 	public String getCategoryName() {
 		String category_name="";

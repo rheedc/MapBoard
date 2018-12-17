@@ -1,6 +1,7 @@
 package com.mapboard.place.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -470,5 +471,46 @@ public class PlaceController {
 			mv.setView(rv);
 			return mv;
 		}
-
+		
+		//my통계
+		@RequestMapping("member/memberStatistics")
+		public ModelAndView myStatistics(ModelAndView mv,PlaceVO vo,HttpSession session) {
+			String userid=(String) session.getAttribute("userid");
+			vo.setUserid(userid);
+			
+			HashMap monthMove=new HashMap();
+			HashMap monthCnt=new HashMap();
+			
+			//유저의 중심위치 구하기
+			vo=pservice.getLocation(vo);
+			
+			vo.setUserid(userid);
+			
+			System.out.println("아이디"+userid);
+			
+			
+			if(vo.getLatitude()>0) {
+				System.out.println("내기준지 등록했음");
+				//총이동거리구하기
+				vo.setMove_total(pservice.getTotalMove(vo));
+				
+				//총방문건수구하기
+				vo.setMovecnt_total(pservice.getTotalMoveCnt(vo));
+				
+				//월별이동거리구하기
+				monthMove=pservice.getMonthMove(vo);
+	
+				//월별방문건수구하기
+				monthCnt=pservice.getMonthMoveCnt(vo);
+				
+				mv.addObject("DATA",vo);
+				mv.addObject("monthMove",monthMove);
+				mv.addObject("monthCnt",monthCnt);
+				return mv;
+			}
+			else {
+				System.out.println("내기준지 등록안함");
+				return mv;
+			}
+		}
 }
