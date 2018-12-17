@@ -26,7 +26,7 @@ import com.mapboard.member.vo.MemberVO;
  * 12/13: joinForm() 추가
  * 12/14: joinProc(), idCheckProc() 추가
  * 12/16: joinProc() 변경, memberDetail() 추가
- * 12/17: 전체 함수 부분 수정
+ * 12/17: memberUpdateForm() 추가
  */
 
 @Controller
@@ -36,6 +36,37 @@ public class MemberController {
 	//서비스 클래스를 자동주입하는 명령
 	@Autowired
 	private MemberService mservice;
+	
+	
+	//회원목록보기 요청 처리
+	@RequestMapping("/memberList")
+	public String memberList() {
+		return "/admin/memberList";
+		
+	}
+	
+	
+
+	//나의 정보 수정 폼 보여주기 요청 처리
+	@RequestMapping("/memberUpdateForm")
+	public ModelAndView memberUpdateForm(ModelAndView mv, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String userid = session.getAttribute("userid").toString();
+		System.out.println("회원정보수정 컨트롤러 실행 userid="+userid);
+		MemberVO vo = new MemberVO();
+		vo=mservice.selectMemberbyId(userid);
+		
+		//모델
+		mv.addObject("VIEW", vo);
+		
+		//뷰
+		mv.setViewName("/member/memberUpdateForm");
+		return mv;
+		
+	}
+	
+	
+	
 	
 	//나의 정보 상세보기 처리
 	@RequestMapping("/memberDetail")
@@ -78,7 +109,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/idCheckProc", method=RequestMethod.POST)
 	public String idCheckProc(@RequestBody String userid) throws Exception {
-		System.out.println("idCheckProc함수 실행 시작"+userid+"받음");
+		System.out.println("idCheckProc함수 실행 시작 아이디="+userid+" 받음");
 		
 		int intResult=mservice.selectID(userid);
 		String result =Integer.toString(intResult);

@@ -52,6 +52,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public int selectID(String useid) throws Exception {
 		int result =sqlSession.selectOne("member.idChk", useid);
+		System.out.println("아이디 체크 실행결과="+result);
 		return result;
 	}	
 		

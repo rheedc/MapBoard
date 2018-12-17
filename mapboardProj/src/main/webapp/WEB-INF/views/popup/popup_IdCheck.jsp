@@ -30,17 +30,16 @@
 				alert("아이디를 입력하지 않았습니다.");
 				return false;
 			} 
-			else if( (userid < "0" || userid > "9") && (userid < "A" || userid > "Z") && (userid < "a" || userid > "z" )){ 
+			else if((userid < "0" || userid > "9") && (userid < "A" || userid > "Z") && (userid < "a" || userid > "z" )){ 
 				alert("한글 및 특수문자는 아이디로 사용하실 수 없습니다.");
 				return false;
 			}
 			else{
-				var param="userid="+userid;
-				$.ajax({
+					$.ajax({
 					async:false,
 					type : "POST",
 					url : "/member/idCheckProc.yo",
-					data : param,
+					data : userid,
 					dataType : "text",
 					contentType: "application/json; charset=UTF-8",
 					error : function(error){

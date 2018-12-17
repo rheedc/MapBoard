@@ -43,6 +43,7 @@ public class MemberServiceImpl implements MemberService{
 	//아이디 중복체크 함수
 	@Override
 	public int selectID(String userid) throws Exception {
+		System.out.println("아이디 체크 서비스 실행 아이디="+userid);
 		return mdao.selectID(userid);
 	}
 		

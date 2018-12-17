@@ -55,15 +55,15 @@
 	$(function(){
 		<%--로그인 버튼을 클릭했을 때 submit처리하는 함수  --%>
 		$("#updateBtn").click(function(e){
-			alret("수정화면으로 이동합니다.")
+			location.href = "/member/memberUpdateForm.yo";
 		});
 		
 		$("#homeBtn").click(function(){
-			location.href = '/home.yo';
+			location.href = "/home.yo";
 		});
 		
 		$("#leaveBtn").click(function(){
-			alret("탈퇴화면으로 이동합니다.")
+			alert("탈퇴화면으로 이동합니다.")
 		});
 
 	});
@@ -96,9 +96,9 @@
 		</div>
 	
 		<div class="formBtn">
-			<input type="submit" id="updateBtn" class="actionBtn" value="수정" onclick="updateDetail()" />
-			<input type="button" id="homeBtn" class="actionBtn" value="취소" onclick="goHome()" />
-			<input type="submit" id="leaveBtn" class="actionBtn" value="탈퇴" onclick="leaveHere()" />
+			<input type="submit" id="updateBtn" class="actionBtn" value="수정"  />
+			<input type="button" id="homeBtn" class="actionBtn" value="취소" />
+			<input type="submit" id="leaveBtn" class="actionBtn" value="탈퇴"  />
 		</div>
 
 </div> 
