@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.mapboard.board.vo.BoardVO;
 import com.mapboard.board.vo.FileinfoVO;
+import com.mapboard.util.PageUtil;
 
 
 public interface BoardService {
@@ -14,23 +15,10 @@ public interface BoardService {
 	// void 말고 String, VO클래스 등을 사용가능하고 
 	// 매개변수
 	//	Board
-	public BoardVO boardSelectService(int oriNo) throws Exception;
-	public void boardInsertService(BoardVO vo, HttpSession session, ArrayList list) throws Exception;
-	public void boardUpdateService() throws Exception;
-	public void boardDeleteService() throws Exception;
-	public void updateHit(int oriNo, HttpSession session) throws Exception;
+	public void insertBoard(BoardVO vo, HttpSession session, ArrayList list) throws Exception;
+
+	public ArrayList getBoardList(PageUtil pInfo) throws Exception;
 	
-	//	Boardcomm
-	public void boardcommSelectService() throws Exception;
-	public void boardcommInsertService() throws Exception;
-	public void boardcommUpdateService() throws Exception;
-	public void boardcommDeleteService() throws Exception;
-		
-	//	Fileinfo
-	public ArrayList fileinfoSelectService(int oriNo) throws Exception;
-	public void fileinfoInsertService() throws Exception;
-	public void fileinfoUpdateService() throws Exception;
-	public void fileinfoDeleteService() throws Exception;
-	public FileinfoVO getDownload(int fileNo) throws Exception;
+	public PageUtil getPageInfo(int nowPage) throws Exception;
 		
 }

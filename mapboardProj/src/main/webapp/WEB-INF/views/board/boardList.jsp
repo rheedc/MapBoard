@@ -11,18 +11,15 @@
 	/* style 작성부분 */
 		
 		table, tr, th, td {margin : auto;
-										border : 1px solid;
-										text-align : center;
-										height : 42px;
-										}
+						border : 1px solid;
+						text-align : center;
+						height : 42px;
+						}
 										
 		table {width : 1000px;
 					}
 					
-		
-		
-		
-		
+	
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
@@ -55,9 +52,10 @@
 <body>
   	<form id="" action="">
   		<div id="select">
-	  		<table >
-	  			<tr>
-	  				<th width="50%">
+  			<!-- 검색하기 -->
+	  		<table align="center">
+	  			<tr align="center">
+	  				<th width="50%" align="center">
 	  					<select name="gu">
 	  						<option>--지역(구) 선택--</option>
 	  						<option value="11680">강남구</option>
@@ -92,9 +90,11 @@
 	  					</select>
 	  				</th>
 	  				<td width="30%">
+	  					<!-- 검색단어 -->
 						<input type="text" id="select" name="select"/>
 					</td>
 	  				<td>
+	  					<!-- 검색버튼 -->
 	  					<input type="button" id="sBtn"  value="조회"/>
 	  				</td>
 				</tr>
@@ -102,28 +102,76 @@
   		</div>
   		
   		<table>
-  			<tr>
-  				<th rowspan="3" width="15%">사진</th>
-  				<td width="65%">상가명</td>
-  				<td>작성일</td>
-  			</tr>
-  			<tr>
-  				<td colspan="2">제목</td>
-  			</tr>
-  			<tr>
-  				<td>작성자</td>
-  				<td>조회수/추천수</td>
-  			</tr>
+  			<c:forEach var="data" items="${LIST}">
+	  			<tr>
+	  				<th rowspan="3" width="15%">
+	  					<!-- 첨부파일 보여주기 -->	
+	  					<%-- <c:forEach var="info" items="${LIST}">
+	  						<tr>
+	  							<td>
+	  								<a href="../board/fileDownload.yo?fidx=${info.no}">${info.oriName}</a> ( ${info.comma} Byte )FileBoardVO len
+	  							</td>
+	  						</tr>
+  						</c:forEach> --%>
+	  				</th>
+	  				<td width="65%">${data.place_name}</td>
+	  				<td>조회수</td>
+	  			</tr>
+	  			<tr>
+	  				<td colspan="2"><%-- 조회수 증가 --%>
+	  					<a href="../board/hitProc.yo?bidx=${data.bidx}&&nowPage=${PINFO.nowPage}">
+	  					${data.subject}
+	  					</a>
+	  				</td>
+	  			</tr>
+	  			<tr>
+	  				<td>${data.userid}</td>
+	  				<td>조회수 : ${data.readcnt}/추천수 : ${data.likecnt}</td>
+	  			</tr>
+  			</c:forEach>
   			
   			<tr>
   			<!-- 페이징 처리 -->
-  				<th colspan="2">페이징</th>
-  				<td>
-  					<input type="button" id="mBtn" value="지도로 즐기기" action="../place/placeList.yo"/>
-  				</td>
-  			</tr>
-  		</table>
-  		
+  				<%--페이지 이동기능 --%>
+				<!-- //3. 모델 만들기
+					req.setAttribute("LIST", list); -->
+			
+				<td align="center" colspan="3">
+					<%-- [<][1][2][3][4][5][>] --%>
+					<%-- 이전페이지 [<] --%>
+					<%-- 현재페이지가 1인 경우 --%>
+					<c:if test="${PINFO.nowPage eq 1 }">
+						이전
+					</c:if>
+				
+					<%-- 현재페이지가 1이 아닌 경우 --%>
+					<c:if test="${PINFO.nowPage ne 1 }">
+						<a href="../board/boardList.yo?nowPage=${PINFO.nowPage-1}">이전</a>
+					</c:if>
+				
+					<%--[1][2][3][4][5] --%>
+					<c:forEach var="page" begin="${PINFO.startPage}" end="${PINFO.endPage}">
+						<a href="../board/boardList.yo?nowPage=${page}">[${page}]</a>
+					</c:forEach>
+				
+				
+					<%-- 현재 보고있는 페이지가 마지막 페이지까지 갔으면 --%>
+					<c:if test="${PINFO.nowPage eq PINFO.totalPage}">
+						다음
+					</c:if>
+					
+					<c:if test="${PINFO.nowPage ne PINFO.totalPage}">
+						<a href="../board/boardList.yo?nowPage=${PINFO.nowPage+1}">다음</a>
+					</c:if>
+			</tr>
+		</table>
+		<table align="center">
+			<tr>	
+ 				<td align="right">
+ 					<input type="button" id="mBtn" value="지도로 즐기기" action="../place/placeList.yo"/>
+ 				</td>
+ 			</tr>
+	  	</table>
   	</form>
 </body>
 </html>

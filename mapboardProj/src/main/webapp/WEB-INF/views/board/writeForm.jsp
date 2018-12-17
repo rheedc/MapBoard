@@ -33,31 +33,31 @@
 			
 			$("#wBtn").click(function(){//글쓰기 버튼 클릭
 				
-				//1. 장소명
-				if(!$("#place").val()){
-					alert("장소명을 입력해주세요.");
-					$("#place").focus();
+				//1. 상가명
+				/* if(!$("#place_name").val()){
+					alert("상가명을 입력해주세요.");
+					$("#place_name").focus();
 					return false;
-				}
+				} */
 			
 				//2. 장소분류 : 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타
-				if($('select[name="category"]>option:selected').index()<1){
+				/* if($('select[name="category"]>option:selected').index()<1){
 					alert('장소분류를 선택해주세요')
 					$('select[name="category"]').focus()
 					return false;
-				}
+				} */
 				
 				//3. 제목
-				if(!$("#title").val()){
+				if(!$("#subject").val()){
 					alert("제목을 입력해주세요.");
-					$("#title").focus();
+					$("#subject").focus();
 					return false;
 				}
 				
 				//4. 내용
-				if(!$("#body").val()){
+				if(!$("#comm").val()){
 					alert("내용을 입력해주세요.");
-					$("#body").focus();
+					$("#comm").focus();
 					return false;
 				}
 				
@@ -113,12 +113,12 @@
 											encType="multipart/form-data">
 		<table>
 			<tr>
-				<th>장소명</th>
-				<td id="left"><input type="text" id="place" name="place"/></td>
+				<th>상가명</th>
+				<td id="left">place_name</td>
 			</tr>
 			<tr>
 			<!-- 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타 -->
-				<th>장소분류</th>
+				<th>category_no</th>
 				<td id="left">
 					<select name="category">
 						<option>--분류명 선택--</option>
@@ -133,12 +133,12 @@
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td id="left"><input type="text" id="title" name="title"/></td>
+				<td id="left"><input type="text" id="subject" name="subject"/></td>
 			</tr>
 			<tr>
 				<th>글내용</th>
 				<td>
-					<textarea id="body" name="body" cols="124" rows="10" style="resize:none;"></textarea>
+					<textarea id="comm" name="comm" cols="124" rows="10" style="resize:none;"></textarea>
 				</td>
 			</tr>
 			<tr>

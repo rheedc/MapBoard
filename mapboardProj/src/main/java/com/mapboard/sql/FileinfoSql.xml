@@ -10,29 +10,38 @@
 	<!-- 자주 사용되는 명령은 한번만  만들어 놓는다. -->
 	<sql id="selectFile">
 		SELECT
-			fi_No					AS	no,
-			fi_OriNo				AS	oriNo,
-			fi_Path				AS	path,
-			fi_OriName		AS	oriName,
-			fi_SaveName	AS	saveName,
-			fi_Length			AS	len
+			fidx,
+			bidx,
+			fpath,
+			foriname,
+			fsname,
+			fsize
 		FROM
 			FileInfo 
 	</sql>
 
-	<!-- 해당 페이지에 보여줄 게시물 정보 구하기 질의 -->
+	
+	<!-- 파일 등록 -->
+	<insert id="insertFileInfo" parameterType="FileinfoVO">
+		INSERT INTO
+			FileInfo
+		VALUES ((SELECT NVL(MAX(fidx),0)+1 FROM FileInfo),
+							#{bidx},#{fpath},#{foriname},#{fsname},#{fsize})
+	</insert>
+	
+	
 	<!-- 첨부파일 검색 질의 -->
 	<select id="fileInfo"	parameterType="int" resultType="fileinfoVO">
 		<include refid="selectFile"/> 
 		WHERE
-			fi_OriNo = #{oriNo}
+			bidx = #{oriNo}
 	</select>
 	
 	<!-- 다운로드 파일 정보 검색 질의 -->
 	<select id="download"	parameterType="int" resultType="fileinfoVO">
 		<include refid="selectFile"/> 
 		WHERE
-			fi_No = #{fileNo}
+			fidx = #{fileNo}
 	</select>	
 	
 </mapper>

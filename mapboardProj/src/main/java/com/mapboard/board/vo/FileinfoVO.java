@@ -1,5 +1,7 @@
 package com.mapboard.board.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.mapboard.common.vo.CommonVO;
 
 public class FileinfoVO extends CommonVO{
@@ -9,7 +11,7 @@ public class FileinfoVO extends CommonVO{
 	private String foriname;
 	private String fsname;
 	private long fsize;
-	
+	private MultipartFile[] files;
 	
 	public long getFidx() {
 		return fidx;
@@ -40,6 +42,12 @@ public class FileinfoVO extends CommonVO{
 	}
 	public void setFsize(long fsize) {
 		this.fsize = fsize;
+	}
+	public MultipartFile[] getFiles() {
+		return files;
+	}
+	public void setFiles(MultipartFile[] files) {
+		this.files = files;
 	}
 	
 	
