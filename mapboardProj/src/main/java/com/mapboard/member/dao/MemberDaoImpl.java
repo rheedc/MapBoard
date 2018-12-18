@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,12 +17,14 @@ import com.mapboard.member.vo.MemberVO;
  * 실행하고 그 결과를 전달하기 위한 클래스. 직접 db에 연결하고 난 뒤 ~~~Sql.xml 파일을 이용해서 질의 명령을 처리하는 방식
  * 작성자: 이덕천
  * 작성일: 2018.12.12
- * 최종수정일: 2018.12.13
+ * 최종수정일: 2018.12.18
  * 이력
  * 12/12: 최초 작성
  * 12/13: memberDao의 함수 변경에 따라 실행함수 변경
  * 12/15: 아이디 체크 함수 추가
  * 12/16: 회원가입 처리 함수 추가
+ * 12/17: 게시글 갯수, 본인확인, 사용자 이름 조회, 회원 목록 함수 추가
+ * 12/18: 회원탈퇴, 나의정보 수정 함수 추가
  * 
 */
 
@@ -32,13 +35,32 @@ public class MemberDaoImpl implements MemberDao{
 	protected SqlSessionTemplate sqlSession;
 	//membersql.xml 파일의 쿼리문을 실행하고 그 결과값을 map 담아 반환한다.
 	
-	
-	
-	//사용자 이름 검색 쿼리문 실행
+	//회원탈퇴 처리
+	@Override
+	public int leaveMemberProc(MemberVO vo) {
+		int result=sqlSession.update("member.statusN", vo);
+		return result;
+	}
+		
+	//나의 정보 수정
+	@Override
+	public void memberUpdate(MemberVO vo) {
+		sqlSession.update("member.memberUpdate", vo);
+		
+	}
+
+	//사용자 이름 조회 쿼리문 실행
 	@Override
 	public MemberVO selectMemberbyId(String userid) {
-		System.out.println("사용자 정보 검색 쿼리 실행");
+		System.out.println("member DAO 사용자 정보 검색 쿼리 실행");
 		return sqlSession.selectOne("member.selectMemberbyId",userid);
+	}
+
+
+	//본인확인 쿼리문 실행
+	public int selectMeChk(MemberVO vo) {
+		int result = sqlSession.selectOne("member.meCheck", vo);
+		return result;
 	}
 
 	//회원 목록조회 쿼리문 실행
@@ -67,7 +89,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public int selectID(String useid) throws Exception {
 		int result =sqlSession.selectOne("member.idChk", useid);
-		System.out.println("아이디 체크 실행결과="+result);
+		
 		return result;
 	}	
 		

@@ -1,8 +1,6 @@
 package com.mapboard.member.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,8 @@ import com.mapboard.util.PageUtil;
  * 이력
  * 12/13: 로그인 체크함수, 로그아웃 처리 함수 추가
  * 12/16: 회원가입 처리 함수 추가
- * 12/17: 회원목록, 게시금 총개수 구하기 함수 추가
+ * 12/17: 회원목록, 게시금 총개수 구하기, 본인확인 함수 추가
+ * 12/18: 회원탈퇴 함수, 나의 정보 수정 추가
  */
 
 
@@ -30,6 +29,30 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDao mdao;
 	
+	//나의 정보 수정
+	@Override
+	public void memberUpdate(MemberVO vo) {
+		mdao.memberUpdate(vo);
+		
+	}
+
+
+	//회원탈퇴 함수
+	@Override
+	public int leaveMemberProc(MemberVO vo) {
+		int result = mdao.leaveMemberProc(vo);
+		return result;
+	}
+
+
+	//본인확인 함수
+	@Override
+	public int selectMeChk(MemberVO vo) {
+		int result=mdao.selectMeChk(vo);
+		return result;
+	}
+
+
 	//사용자 이름 조회 함수
 	public MemberVO selectMemberbyId(String userid) {
 		return mdao.selectMemberbyId(userid);

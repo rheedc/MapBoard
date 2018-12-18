@@ -14,11 +14,38 @@
 	=> 12/14: idChk 쿼리문 추가
 	=> 12/15: insertMember 쿼리문 추가
 	=> 12/16: selectNamebyId 쿼리문 추가
-	=> 12/17: totalCount, memeberList 쿼리문 추가
+	=> 12/17: totalCount, memeberList, meCheck 쿼리문 추가
+	=> 12/18: statusN, memberUpdate
 
  --> 
 
 <mapper namespace="member">
+	<!-- 나의 정보 수정 쿼리문 -->
+	<update id="memberUpdate" parameterType="memberVO">
+		update 
+			member 
+		set 
+			nick=#{nick},
+			passwd=#{passwd} 
+		where 
+			userid=#{userid} and status='Y'
+	
+	</update>
+
+
+	<!-- 회원탈퇴를 위한 상태값 변경 쿼리문 -->
+	<update id="statusN" parameterType="memberVO">
+		update 
+			member 
+		set 
+			status='N' 
+		where 
+			userid=#{userid} and status='Y'
+	
+	</update>
+
+
+
 	<!-- 회원 목록 조회 쿼리문 -->
 	<select id="memeberList" resultType="memberVO" parameterType="String">
 		select * from
@@ -42,14 +69,14 @@
 	</select>
 
 
-	<!-- 이름 조회 쿼리문 -->
+	<!-- 회원정보 조회 쿼리문 -->
 	<select id="selectMemberbyId" resultType="memberVO" parameterType="String">
 		select
 			userid, uname, passwd, nick, ulevel, status, juso, latitude, longitude   			
 		from 
 			member
 		where
-			userid=#{userid}		
+			userid=#{userid}
 	</select>
 	
 	
@@ -75,6 +102,7 @@
 		from 
 			member 
 		where userid=#{userid}
+		
 	</select>
 
 
@@ -82,8 +110,19 @@
 	<select id="loginChk" resultType="String">
 		select USERID
 				from member 
-				where USERID=#{userid} and PASSWD=#{passwd}
+				where USERID=#{userid} and PASSWD=#{passwd} and status='Y'
 	</select>
+	
+	
+	<!-- 본인확인을 위해 ID,PW 일치 여부를 int로 조회하는 쿼리문 -->
+	<select id="meCheck" resultType="int" parameterType="memberVO">
+		select 
+			nvl(count(passwd),0) cnt 
+		from 
+			member 
+		where userid=#{userid} and passwd=#{passwd}
+	</select>
+		
 	
 	<!-- 회원 정보 조회 쿼리문 -->
 	<select id="viewMember" resultType="memberVO">
@@ -94,6 +133,10 @@
 		where 
 			USERID=#{userid} 
 		and 
-			PASSWD=#{passwd}
+			PASSWD=#{passwd} 
+		and 
+			status='Y'
 	</select>
 </mapper>
+
+
