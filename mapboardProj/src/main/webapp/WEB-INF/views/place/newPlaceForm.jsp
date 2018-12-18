@@ -7,8 +7,52 @@
 	<title>newPlaceForm</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style type="text/css">
-	/* style 작성부분 */
+	<style>
+	
+		h3 {
+			color:#7C5D44;
+		}
+		th {
+			width:20%;
+			text-align:center;
+			font-weight:bold;
+			background-color:#ebf6f9;
+		}
+		tr {
+			height:30px;
+		}
+		input{
+			width:80%;
+		}
+		textarea {
+			height:30px;
+			width:80%
+		}
+		select {
+			width:30%;
+		}
+		.brdImage {
+			height:500px;
+			padding:15px; 
+		}
+		.btn2 {
+		    width:50px;
+		    background-color: #ebf6f9;
+		    border: none;
+		    color:black;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 13px;
+		    margin: 4px;
+		    cursor: pointer;
+		    border-radius:5px;
+		 }
+		.btn2:hover {
+			background-color: #f6f2ef;
+			font-weight:bold;
+		    color:black;
+		} 
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
@@ -91,52 +135,58 @@
 	</script>
 </head>
 <body>
-<h1>newPlaceForm</h1>
+<table align="center" width="70%">
+	<tr>
+		<td>
+			<h3 align="left">신규장소등록</h3> 
+		</td>
+	</tr>
+</table>
 	<%-- action부분에 insert부분으로 넘기기 --%>
   <form id="newPlaceForm" action="../place/newPlaceProc.yo" method="get">
-  	<!-- 임시로 !!!!!!!!!!!! jojo로 넣고 나중에 고치기 -->
   	<input type="hidden" id="id" name="id" value="${sessionScope.userid}"/>
-  	<!-- <input type="hidden" id="id" name="id" value="jojo"/> -->
 	<input type="hidden" id="guname" name="guname"/>
-  	<table width="50%" align="center">
+  	<table border="1px" align="center" width="70%">
   		<tr>
-  			<td align="center" width="20%">장소명</td>
-  			<td  width="30%">
+  			<th>장소명</th>
+  			<td>
   				<input type="text" id="newPlaceName" name="newPlaceName" placeholder="장소를 한 글자 이상 입력해주세요" />
   			</td>
   		</tr>
   		<tr>
-  			<td align="center" width="20%">분류명</td>
+  			<th>분류명</th>
   			<td>
-					<input type="radio" name="category_no" value=1 class="category_no"> 관광/여가/오락
-					<input type="radio" name="category_no" value=2 class="category_no"> 숙박
-					<input type="radio" name="category_no" value=3 class="category_no"> 의료<br/>
-					<input type="radio" name="category_no" value=4 class="category_no"> 한식/중식/양식
-					<input type="radio" name="category_no" value=5 class="category_no"> 커피점/카페
-					<input type="radio" name="category_no" value=6 class="category_no"> 기타
+					<input type="radio" name="category_no" value=1 class="category_no" style="width:15px;" /> 관광/여가/오락
+					<input type="radio" name="category_no" value=2 class="category_no" style="width:15px;" /> 숙박
+					<input type="radio" name="category_no" value=3 class="category_no" style="width:15px;" /> 의료
+					<input type="radio" name="category_no" value=4 class="category_no" style="width:15px;" /> 한식/중식/양식
+					<input type="radio" name="category_no" value=5 class="category_no" style="width:15px;" /> 커피점/카페
+					<input type="radio" name="category_no" value=6 class="category_no" style="width:15px;" /> 기타
 				</td>
-  		</tr>
+  		</tr> 
   		<tr>
-  			<td align="center" width="20%">좌표정보</td>
+  			<th>좌표정보</th>
   			<td>
-  				위도:<input type="text" id="newPlaceX" name="newPlaceX"readonly/>
-  				경도:<input type="text" id="newPlaceY" name="newPlaceY" readonly/>
+  				위도:<input type="text" id="newPlaceX" name="newPlaceX"readonly style="width:35%;"/>
+  				경도:<input type="text" id="newPlaceY" name="newPlaceY" readonly style="width:35%;"/>
   			</td>
   		</tr>
   		<tr>
-  			<td align="center" width="20%">지번주소</td>
+  			<th>지번주소</th>
   			<td>
   				<input type="text" id="newPlaceAddress1" name="newPlaceAddress1" readonly />
   			</td>
   		</tr>
-  		<tr>
-  		<td colspan="2" align="center">
-	  		<input type="button" id=seoul  name="seoul" value="서울시전체보기"/>
-	  		<input type="button" id=newWBtn  name="newWBtn" value="등록"/>
-	  		<input type="button" id=resetBtn  name="resetBtn" value="입력취소"/>
-  		</td>
-  		</tr>
-  	</table>
+	</table>
+ 	<table align="center" width="70%"> 
+		<tr>
+			<td colspan="2" align="center">
+				<input type="button" class="btn2" id=seoul  name="seoul" value="서울시전체보기" style="width:100px;" />
+		  		<input type="button" class="btn2" id=newWBtn  name="newWBtn" value="등록" style="width:100px;"/>
+		  		<input type="button" class="btn2" id=resetBtn  name="resetBtn" value="입력취소" style="width:100px;"/>
+			</td>
+		</tr>
+	</table>
   </form>
 </body>
 </html>

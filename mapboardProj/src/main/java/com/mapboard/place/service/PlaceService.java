@@ -44,6 +44,10 @@ public interface PlaceService {
 
 	public PlaceVO getLocation(PlaceVO vo);
 
+	public PageUtil getPageInfo_Member(PlaceVO vo, int nowPage);
+
+	public ArrayList getMemberBoardList(PlaceVO vo, PageUtil pInfo);
+
 	
 	
 }

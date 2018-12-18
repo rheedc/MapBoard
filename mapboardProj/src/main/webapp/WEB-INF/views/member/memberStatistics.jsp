@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!doctype html>
 <!-- 
  * 목적: my통계페이지
  * 작성자: 조은비
  * 작성일: 2018-12-17
- * 최종수정일:
+ * 최종수정일: 2018-12-18
  -->
 <html lang="en">
 <head>
@@ -16,38 +17,35 @@
 <style type="text/css">
 	table {
 		border-collapse:collapse;
-	}
-	th {
-		border-bottom:1px solid #337AB3;
-		background-color:#337AB3;
-		font-weight:lighter;
-		color:white;
+		margin:auto;
 		text-align:center;
+		width:50%;
 	}
-	td {
-		text-align:center;
-	}
-	.style1 th {
-		text-align:center;
-	}
-	.style1 tr {
-		border-bottom:1px solid #d7edf4;
-	}
-	h3 {
-		color:#337AB3;
-	}
+
+	/* UI Object 가로 */
+	.hGraph {width:50%;margin:auto;opacity:0}
+   	.hGraph ul{ margin:0 50px 0 50px; padding:1px 0 0 0; border:1px solid #ddd; border-top:0; border-right:0; font-size:15px; font-family:Tahoma, Geneva, sans-serif; list-style:none;}
+	.hGraph li{ position:relative; margin:10px 0; white-space:nowrap; vertical-align:top;}
+	.hGraph .gTerm{ position:absolute; width:40px; top:0; left:-50px; line-height:20px; text-align:right; color:#767676; font-weight:bold;}
+	.hGraph .gBar{ position:relative; display:inline-block; height:15px; border:1px solid #ff0000; border-left:0; background:#ff0000;}
+	.hGraph .gCnt{ position:relative; display:inline-block; height:15px; border:1px solid #ffff00; border-left:0; background:#ffff00;}
+	.hGraph .gBar span{ position:absolute; width:40px; line-height:15px; top:0; right:-50px; color:#767676;}
+	.hGraph .gCnt span{ position:absolute; width:40px; line-height:15px; top:0; right:-50px; color:#767676;}
+	
 </style>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 <!-- 추가된 프로그램 -->
 <script>
-
+	$(function(){
+		$("#view").animate({opacity:1});
+	});
 </script>
 </head>
 <body>
 	<c:if test="${empty DATA}">
 	<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	<table align="center" width="70%">
+	<table>
 		<tr>
 			<td>
 				<h1>내 기준지 등록 후 사용하실 수 있습니다</h3>
@@ -58,112 +56,79 @@
 	</table>
 	</c:if>
 	<c:if test="${not empty DATA}">
-	<table align="center" width="70%">
+	
+	<table>
 		<tr>
 			<td>
-				<h3 align="left">장소 목록</h3>
+				<h3 align="left">MY통계</h3>
 			</td>
 		</tr>
 	</table>
 
+	<br/>
 	<%-- 1. 목록을 출력 --%>
-	<table align="center" width="70%" class="style1">
-		<tr>
-			<th width="10%">총이동거리</th>
-			<td>${DATA.move_total}Km</td>
-		</tr>
-		<tr>
-			<th width="10%">총이동건수</th>
-			<td>${DATA.movecnt_total}건</td>
-		</tr>
+	<table>
+		<tr><td align="center"><h4>총이동거리 : ${DATA.move_total}Km &nbsp;&nbsp;&nbsp;&nbsp;총이동건수 : ${DATA.movecnt_total}건</h4></td></tr>
 	</table>
 	<br/>
-	<table align="center" width="70%" class="style1">
-		<tr>
-			<th width="10%" rowspan="2">1월</th>
-			<td>${monthMove.get("1월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("1월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">2월</th>
-			<td>${monthMove.get("2월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("2월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">3월</th>
-			<td>${monthMove.get("3월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("3월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">4월</th>
-			<td>${monthMove.get("4월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("4월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">5월</th>
-			<td>${monthMove.get("5월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("5월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">6월</th>
-			<td>${monthMove.get("6월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("6월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">7월</th>
-			<td>${monthMove.get("7월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("7월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">8월</th>
-			<td>${monthMove.get("8월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("8월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">9월</th>
-			<td>${monthMove.get("9월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("9월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">10월</th>
-			<td>${monthMove.get("10월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("10월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">11월</th>
-			<td>${monthMove.get("11월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("11월")}건</td>
-		</tr>
-		<tr>
-			<th width="10%" rowspan="2">12월</th>
-			<td>${monthMove.get("12월")}Km</td>
-		</tr>
-		<tr>
-			<td>${monthCnt.get("12월")}건</td>
-		</tr>
-	</table>
+	
+    <div class="hGraph" id="view">
+		<ul>
+			<li><span class="gTerm">총계</span>
+				<span class="gBar" style="width:100%"><span>${DATA.move_total}Km</span></span><br/>
+				<span class="gCnt" style="width:100%"><span>${DATA.movecnt_total}건</span></span>
+			</li>
+			<li><span class="gTerm">1월</span>
+				<span class="gBar" style="width:${monthMove.get('1월')*100/DATA.move_total}%"><span>${monthMove.get("1월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('1월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("1월")}건</span></span>
+			</li>
+			<li><span class="gTerm">2월</span>
+				<span class="gBar" style="width:${monthMove.get('2월')*100/DATA.move_total}%"><span>${monthMove.get("2월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('2월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("2월")}건</span></span>
+			</li>
+			<li><span class="gTerm">3월</span>
+				<span class="gBar" style="width:${monthMove.get('3월')*100/DATA.move_total}%"><span>${monthMove.get("3월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('3월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("3월")}건</span></span>
+			</li>
+			<li><span class="gTerm">4월</span>
+				<span class="gBar" style="width:${monthMove.get('4월')*100/DATA.move_total}%"><span>${monthMove.get("4월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('4월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("4월")}건</span></span>
+			</li>
+			<li><span class="gTerm">5월</span>
+				<span class="gBar" style="width:${monthMove.get('5월')*100/DATA.move_total}%"><span>${monthMove.get("5월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('5월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("5월")}건</span></span>
+			</li>
+			<li><span class="gTerm">6월</span>
+				<span class="gBar" style="width:${monthMove.get('6월')*100/DATA.move_total}%"><span>${monthMove.get("6월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('6월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("6월")}건</span></span>
+			</li>
+			<li><span class="gTerm">7월</span>
+				<span class="gBar" style="width:${monthMove.get('7월')*100/DATA.move_total}%"><span>${monthMove.get("7월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('7월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("7월")}건</span></span>
+			</li>
+			<li><span class="gTerm">8월</span>
+				<span class="gBar" style="width:${monthMove.get('8월')*100/DATA.move_total}%"><span>${monthMove.get("8월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('8월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("8월")}건</span></span>
+			</li>
+			<li><span class="gTerm">9월</span>
+				<span class="gBar" style="width:${monthMove.get('9월')*100/DATA.move_total}%"><span>${monthMove.get("9월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('9월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("9월")}건</span></span>
+			</li>
+			<li><span class="gTerm">10월</span>
+				<span class="gBar" style="width:${monthMove.get('10월')*100/DATA.move_total}%"><span>${monthMove.get("10월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('10월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("10월")}건</span></span>
+			</li>
+			<li><span class="gTerm">11월</span>
+				<span class="gBar" style="width:${monthMove.get('11월')*100/DATA.move_total}%"><span>${monthMove.get("11월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('11월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("11월")}건</span></span>
+			</li>
+			<li><span class="gTerm">12월</span>
+				<span class="gBar" style="width:${monthMove.get('12월')*100/DATA.move_total}%"><span>${monthMove.get("12월")}Km</span></span><br/>
+				<span class="gCnt" style="width:${monthCnt.get('12월')*100/DATA.movecnt_total}%"><span>${monthCnt.get("12월")}건</span></span>
+			</li>
+			
+		</ul>
+	</div>
 	</c:if>
 	
 </body>

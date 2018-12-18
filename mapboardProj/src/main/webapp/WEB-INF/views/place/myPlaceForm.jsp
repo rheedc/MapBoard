@@ -15,7 +15,7 @@
 		width:20%;
 		text-align:center;
 		font-weight:bold;
-		background-color:#ede4de;
+		background-color:#ebf6f9;
 	}
 	tr {
 		height:30px;
@@ -36,7 +36,7 @@
 	}
 	.btn2 {
 	    width:50px;
-	    background-color: #d2bdad;
+	    background-color: #ebf6f9;
 	    border: none;
 	    color:black;
 	    text-align: center;
@@ -117,8 +117,6 @@
 	</script>
 </head>
 <body>
-<h1>myPlaceForm</h1>
-	<%-- action부분에 insert부분으로 넘기기 --%>
 <table align="center" width="70%">
 	<tr>
 		<td>

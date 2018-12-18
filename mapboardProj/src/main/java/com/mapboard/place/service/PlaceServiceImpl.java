@@ -198,5 +198,28 @@ public class PlaceServiceImpl implements PlaceService{
 		}
 		return map;
 	}
+	//마이페이지에서 내글보기 페이징처리를 위한 함수
+	public PageUtil getPageInfo_Member(PlaceVO vo, int nowPage) {
+		//할일
+		int totalCount=0;
+		
+		//총게시물의 개수구하기
+		totalCount=pdao.getMemberBoardCnt(vo);
+		//한 페이지당 10개의 게시물을 뿌리고, 5페이지씩 보여주자
+		PageUtil pInfo=new PageUtil(nowPage, totalCount, 10, 5);
+		System.out.println(pInfo.getTotalCount());
+		System.out.println(pInfo.getStartPage());
+		System.out.println(pInfo.getEndPage());
+		return pInfo;
+	}
+	//내글보기 목록불러오는 함수
+	public ArrayList getMemberBoardList(PlaceVO vo, PageUtil pInfo) {
+		int start=(pInfo.getNowPage()-1)*pInfo.getListCount()+1;
+		int end=start+pInfo.getListCount()-1;
+		vo.setStart(start);
+		vo.setEnd(end);
+		ArrayList list=pdao.getMemberBoardList(vo);
+		return list;
+	}
 		
 }
