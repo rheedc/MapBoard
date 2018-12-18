@@ -167,6 +167,7 @@
 		
 		//행정구역 폴리곤 생성 함수
 		function displayArea(coordinates, name) {
+			 
 		 
 		    var path = [];           //폴리곤 그려줄 path
 		    var points = [];        //중심좌표 구하기 위한 지역구 좌표들
@@ -224,7 +225,9 @@
 		        });
 		        customOverlay.setMap(null);
 		    });
-		 
+		    
+		  	//$('#test2').find('span').trigger('click');
+		    
 		    // 클릭시 해당구 표현 하는 것을 함수로 만들고 이곳에 함수실행 함수는 전역으로
 		    //-------함수로 만들자-----------------------------------------------------끝
 		    daum.maps.event.addListener(polygon, 'click', function() {		       		    
@@ -606,6 +609,8 @@
 		        
 	    	});// 구 클릭 끝
 	    	//-------함수로 만들자-----------------------------------------------------끝
+	    	
+	    	$('#daum-maps-shape-9').click(); 
 	    	
 		  //지도 위 표시되고 있는 폴리곤 제거
 			function deletePolygon(polygons) {
