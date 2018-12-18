@@ -73,7 +73,10 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
 	
-
+	 function abc(){
+	    	var testm= $('path') 
+	    	console.log(testm.attr('style'));	    		
+    }
 	
 	
 	// 쿠키 설정 함수
@@ -230,8 +233,16 @@
 		    
 		    // 클릭시 해당구 표현 하는 것을 함수로 만들고 이곳에 함수실행 함수는 전역으로
 		    //-------함수로 만들자-----------------------------------------------------끝
-		    daum.maps.event.addListener(polygon, 'click', function() {		       		    
+		   
+			
+		    if(guname==name){
 		    	
+				 
+	        }
+		    
+		    
+			daum.maps.event.addListener(polygon, 'click', function () {		       		    
+				
 		    	// 클릭한 곳에 클릭한 좌표를 전역변수 clickpath를 담는다.	
 		    	//console.log(path)
 		    	
@@ -494,7 +505,17 @@
 						    }
 						    
 						];
-					 	
+					 
+						 panTo();
+					 	function panTo() {
+						    // 이동할 위도 경도 위치를 생성합니다 
+						    var moveLatLon = new daum.maps.LatLng(${m.latitude}, ${m.longitude});
+						    
+						    // 지도 중심을 부드럽게 이동시킵니다
+						    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+						    map.panTo(moveLatLon);            
+						}  
+					 
 					 	var imageSrc_c = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";		   
 						for (var i = 0; i < position_c.length; i ++) {
 							var imageSize_c = new daum.maps.Size(24, 35);
@@ -560,8 +581,17 @@
 							        bad:"<div>bad:${m.badcnt}</div>",
 							        latlng_b: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
 							    }
-							    
+							     
 							];
+							panTo();
+						 	function panTo() {
+							    // 이동할 위도 경도 위치를 생성합니다 
+							    var moveLatLon = new daum.maps.LatLng(${m.latitude}, ${m.longitude});
+							    
+							    // 지도 중심을 부드럽게 이동시킵니다
+							    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+							    map.panTo(moveLatLon);            
+							}  
 					</c:if>
 				</c:forEach>
 						 	
@@ -610,7 +640,7 @@
 	    	});// 구 클릭 끝
 	    	//-------함수로 만들자-----------------------------------------------------끝
 	    	
-	    	$('#daum-maps-shape-9').click(); 
+
 	    	
 		  //지도 위 표시되고 있는 폴리곤 제거
 			function deletePolygon(polygons) {

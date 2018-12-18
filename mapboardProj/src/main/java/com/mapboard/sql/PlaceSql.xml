@@ -555,4 +555,124 @@
 	    AND b.STATUS='Y'
 	    AND b.USERID=#{userid}
 	</select>
+	
+	<!-- 게시물목록구하는 쿼리들 -->
+	<!-- 자주쓰는건 떼어놓기 -->
+	<sql id="boardList_jo">
+	SELECT * FROM(
+	SELECT
+	    ROW_NUMBER() OVER(ORDER BY b.CREATEDT DESC) AS RNO,
+	    b.BIDX,
+	    b.PLACE_NO,
+	    b.SUBJECT,
+	    b.COMM,
+	    b.CREATEDT,
+	    b.STATUS,
+	    p.SIGUNGU_NAME,
+	    p.PLACE_NAME,
+	    p.CATEGORY_NO,
+	    p.LATITUDE,
+	    p.LONGITUDE,
+	    b.LIKECNT,
+	    b.READCNT,
+	    m.NICK
+	FROM
+	    board b,place p,member m
+	WHERE 
+	    b.STATUS='Y'
+	    AND b.PLACE_NO=p.PLACE_NO
+	    AND b.USERID=m.USERID
+	</sql>
+	<!-- 게시물목록개수구하기 -->
+	<select id="boardCnt" resultType="int" parameterType="PlaceVO">
+	SELECT
+	    count(*)
+	FROM
+	    board b,place p,member m
+	WHERE 
+	    b.STATUS='Y'
+    	AND b.PLACE_NO=p.PLACE_NO
+	    AND b.USERID=m.USERID
+	    AND b.PLACE_NO=#{place_no}
+	</select>
+	<select id="cnt_boardSearch_st_pt" resultType="int" parameterType="PlaceVO">
+	SELECT
+	    count(*)
+	FROM
+	    board b,place p,member m
+	WHERE 
+	    b.STATUS='Y'
+    	AND b.PLACE_NO=p.PLACE_NO
+	    AND b.USERID=m.USERID
+	</select>
+	<select id="cnt_boardSearch_st_pd" resultType="int" parameterType="PlaceVO">
+	SELECT
+	    count(*)
+	FROM
+	    board b,place p,member m
+	WHERE 
+	    b.STATUS='Y'
+    	AND b.PLACE_NO=p.PLACE_NO
+	    AND b.USERID=m.USERID
+	    AND p.PLACE_NAME like '%' || #{place_name} || '%'
+	</select>
+	<select id="cnt_boardSearch_sd_pt" resultType="int" parameterType="PlaceVO">
+	SELECT
+	    count(*)
+	FROM
+	    board b,place p,member m
+	WHERE 
+	    b.STATUS='Y'
+    	AND b.PLACE_NO=p.PLACE_NO
+	    AND b.USERID=m.USERID
+	    AND p.SIGUNGU_NAME=#{sigungu_name}
+	</select>
+	<select id="cnt_boardSearch_sd_pd" resultType="int" parameterType="PlaceVO">
+	SELECT
+	    count(*)
+	FROM
+	    board b,place p,member m
+	WHERE 
+	    b.PLACE_NO=p.PLACE_NO
+	    AND b.USERID=m.USERID
+	    AND p.SIGUNGU_NAME=#{sigungu_name}
+	    AND p.PLACE_NAME like '%' || #{place_name} || '%'
+	</select>
+	 
+	<!-- 개시물목록구하기 -->
+	<select id="boardList" resultType="PlaceVO" parameterType="PlaceVO">
+	<include refid="boardList_jo" /> 
+	    AND b.PLACE_NO=#{place_no}
+	)
+	WHERE
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearch_st_pt" resultType="PlaceVO" parameterType="PlaceVO">
+	<include refid="boardList_jo" /> 
+	)
+	WHERE
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearch_st_pd" resultType="PlaceVO" parameterType="PlaceVO">
+	<include refid="boardList_jo" /> 
+	    AND p.PLACE_NAME like '%' || #{place_name} || '%'
+	)
+	WHERE
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearch_sd_pt" resultType="PlaceVO" parameterType="PlaceVO">
+	<include refid="boardList_jo" /> 
+	    AND p.SIGUNGU_NAME=#{sigungu_name}
+	)
+	WHERE
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearch_sd_pd" resultType="PlaceVO" parameterType="PlaceVO">
+	<include refid="boardList_jo" /> 
+		AND p.SIGUNGU_NAME=#{sigungu_name} 
+	    AND p.PLACE_NAME like '%' || #{place_name} || '%'
+	)
+	WHERE
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
 </mapper>

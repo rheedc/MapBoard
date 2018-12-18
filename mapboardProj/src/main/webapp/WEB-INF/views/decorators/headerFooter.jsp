@@ -76,7 +76,7 @@
 	   					<ul class="nav nav-tabs">
 	   						<!-- 로그인 전/후 모두 노출 -->
 		   					<li><a href="/place/placeList.yo" id="seoul3"><span class="glyphicon glyphicon-cloud"></span> 지도</a></li>
-						    <li><a href="/board/boardList.yo"><span class="glyphicon glyphicon-cloud"></span> 커뮤니티</a></li>
+						    <li><a href="/board/boardList2.yo"><span class="glyphicon glyphicon-cloud"></span> 커뮤니티</a></li>
 		   					<c:if test="${sessionScope.userid eq null}">
 							  <li><a href="/member/LoginForm.yo" ><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
 							  <li><a href="/member/joinForm.yo"><span class="glyphicon glyphicon-cloud-upload"></span> 회원가입</a></li>

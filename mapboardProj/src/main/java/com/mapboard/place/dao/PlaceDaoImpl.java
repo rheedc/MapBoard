@@ -239,4 +239,53 @@ public class PlaceDaoImpl implements PlaceDao{
 		list=(ArrayList)sqlSession.selectList("placeSql.meberBoardList", vo);
 		return list;
 	}
+
+	//게시글 목록보기를 위한 함수들
+	
+	//특정 장소의 목록 총개수
+	public int getBoardListCnt(PlaceVO vo) {
+		int totalCount=0;
+		totalCount=sqlSession.selectOne("placeSql.boardCnt",vo);			
+		return totalCount;
+	}
+	//특정 장소의 목록리스트
+	public ArrayList getBoardList(PlaceVO vo) {
+		ArrayList list=new ArrayList();
+		list=(ArrayList)sqlSession.selectList("placeSql.boardList",vo);
+		return list;
+	}
+	//검색결과 목록 총개수
+	public int getBoardSearchListCnt(PlaceVO vo, int situation) {
+		int totalCount=0;
+		if(situation==1) {
+			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_st_pt",vo);			
+		}
+		if(situation==2) {
+			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_st_pd",vo);
+		}
+		if(situation==3) {
+			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_sd_pt",vo);
+		}
+		if(situation==4) {
+			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_sd_pd",vo);
+		}
+		return totalCount;
+	}
+	//검색결과 목록리스트
+	public ArrayList getBoardSearchList(PlaceVO vo, int situation) {
+		ArrayList searchlist=new ArrayList();
+		if(situation==1) {
+			searchlist=(ArrayList) sqlSession.selectList("placeSql.boardSearch_st_pt",vo);
+		}
+		if(situation==2) {
+			searchlist=(ArrayList) sqlSession.selectList("placeSql.boardSearch_st_pd",vo);
+		}
+		if(situation==3) {
+			searchlist=(ArrayList) sqlSession.selectList("placeSql.boardSearch_sd_pt",vo);
+		}
+		if(situation==4) {
+			searchlist=(ArrayList) sqlSession.selectList("placeSql.boardSearch_sd_pd",vo);
+		}
+		return searchlist;	
+	}
 }

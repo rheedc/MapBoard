@@ -16,9 +16,17 @@ public class PlaceVO extends CommonVO{
 	private int point;
 	private int likecnt;
 	private int readcnt;
+	private String nick;
 	
 	//정보를 뿌리기 위해 추가로 필요한 변수들
 	
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 	private int placecnt_total;		//총 필터링된 장소개수
 	private float avgpoint;			//장소별 평균평점
 	private int goodcnt;				//good개수
