@@ -31,6 +31,7 @@ import com.mapboard.util.PageUtil;
  * 12/14: joinProc(), idCheckProc() 추가
  * 12/16: joinProc() 변경, memberDetail() 추가
  * 12/17: memberUpdateForm() 추가
+ * 12/18: memberUpdateProc() 추가
  */
 
 @Controller
@@ -40,6 +41,67 @@ public class MemberController {
 	//서비스 클래스를 자동주입하는 명령
 	@Autowired
 	private MemberService mservice;
+	
+	
+	//나의 정보 수정 처리
+	@RequestMapping("/memberUpdateProc")
+	public ModelAndView memberUpdateProc(HttpSession session, MemberVO vo, ModelAndView mv) {
+		//파라미터
+		String userid = session.getAttribute("userid").toString();
+		vo.setUserid(userid);
+		
+		//로직
+		mservice.memberUpdate(vo);
+		
+		//모델: update라서 해당없음.
+		//뷰
+		RedirectView view = new RedirectView("/member/memberDetail.yo");
+		mv.setView(view);
+		System.out.println("나의 정보 수정처리 완료");
+		
+		return mv;
+		
+		
+		
+	}
+	
+	
+	
+	
+	//회원탈퇴 요청 처리
+	@RequestMapping("/memberLeaveProc")
+	public ModelAndView memberLeaveProc(HttpSession session, MemberVO vo, ModelAndView mv) throws Exception {
+		//파라미터 받아서 넘기고
+		String userid = session.getAttribute("userid").toString();
+		
+		vo.setUserid(userid);
+		
+		
+		//로직 처리
+		//해당 회원의 상태를 n으로 하고 상태가 n인 사용자의 세션 정보를 삭제
+		int result = mservice.leaveMemberProc(vo);
+		mservice.logout(session);
+		
+		
+		//뷰
+		RedirectView rv=null;
+		//탈퇴가 실패하면
+		if(result==0) {
+			rv=new RedirectView("/member/memberDetail.yo");
+			mv.addObject("msg","회원탈퇴에 실패하였습니다.");
+		}
+		else if(result==1) {
+			rv=new RedirectView("/member/leaveResult.yo");
+		}
+		mv.setView(rv);
+		return mv;
+	}
+	
+	//회원탈퇴 결과 페이지 보기
+	@RequestMapping("/leaveResult")
+	public void leaveResult() {
+		
+	}
 	
 	
 	//회원목록보기 요청 처리
@@ -57,15 +119,13 @@ public class MemberController {
 		return "admin/memberList";
 		
 	}
-	
-	
 
 	//나의 정보 수정 폼 보여주기 요청 처리
 	@RequestMapping("/memberUpdateForm")
 	public ModelAndView memberUpdateForm(ModelAndView mv, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		String userid = session.getAttribute("userid").toString();
-		System.out.println("회원정보수정 컨트롤러 실행 userid="+userid);
+		
 		MemberVO vo = new MemberVO();
 		vo=mservice.selectMemberbyId(userid);
 		
@@ -75,18 +135,14 @@ public class MemberController {
 		//뷰
 		mv.setViewName("/member/memberUpdateForm");
 		return mv;
-		
 	}
-	
-	
-	
-	
+		
 	//나의 정보 상세보기 처리
 	@RequestMapping("/memberDetail")
 	public ModelAndView memberDatail(ModelAndView mv, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		String userid = session.getAttribute("userid").toString();
-		System.out.println("회원상세 컨트롤러 실행 userid="+userid);
+		
 		MemberVO vo = new MemberVO();
 		vo=mservice.selectMemberbyId(userid);
 		
@@ -116,8 +172,7 @@ public class MemberController {
 		mv.setViewName("/member/actionResult");
 		return mv;
 	}
-		
-			
+				
 	//아이디 중복체크 처리
 	@ResponseBody
 	@RequestMapping(value="/idCheckProc", method=RequestMethod.POST)
@@ -130,8 +185,23 @@ public class MemberController {
 		System.out.println("idCheckProc함수 실행 결과 ="+result+" 받음");
 		return result;
 	}
+	//본인확인 처리
+	@ResponseBody
+	@RequestMapping(value="/meCheckProc", method=RequestMethod.POST)
+	public String meCheckProc(@RequestBody String passwd, HttpServletRequest req, MemberVO vo) throws Exception {
+		//파라미터 받고
+		HttpSession session = req.getSession();
+		String userid = session.getAttribute("userid").toString();
+		vo.setUserid(userid);
+		vo.setPasswd(passwd);
+				
+		//로직 처리
+		int intResult=mservice.selectMeChk(vo);
+		String result =Integer.toString(intResult);
 	
-		
+		return result;
+	}	
+			
 	//회원가입 폼 보여주기 요청 처리
 	@RequestMapping("/joinForm")
 	public void joinForm() {

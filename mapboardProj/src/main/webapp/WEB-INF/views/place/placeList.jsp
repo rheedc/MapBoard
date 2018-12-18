@@ -393,7 +393,9 @@
 			        "<div  class='title'>상가명: ${m.place_name}</div>"+
 			        "<div>지번주소: ${m.juso}</div><div>도로주소: ${m.doro_juso}</div>"+
 			        "<div>평균평점: ${m.avgpoint}</div>"+
-			        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
+			        "<div><img src='../resources/img/good_map.png' width='8' height='8'/>GOOD:${m.goodcnt}"+
+			        " <img src='../resources/img/soso_map.png' width='8' height='8'/>SOSO:${m.sosocnt}"+
+			        " <img src='../resources/img/bad_map.png' width='8' height='8'/>BAD:${m.badcnt}</div>"+
 			        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
 			        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
 			        " onclick=\"location.href=\'../place/boardListProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
@@ -412,10 +414,10 @@
 			    
 			];
 		     
-			// 마커 이미지의 이미지 주소입니다
-			var imageSrc_good = "../resources/img/dot_good.png"; 
-			var imageSrc_soso = "../resources/img/dot_green.png";
-			var imageSrc_bad = "../resources/img/dot_bad.png";
+			// 마커 이미지의 이미지 주소입니다 
+			var imageSrc_good = "../resources/img/good_map.png"; 
+			var imageSrc_soso = "../resources/img/soso_map.png";
+			var imageSrc_bad = "../resources/img/bad_map.png";
 			var imageSrc_0 = "../resources/img/dot_0.png";
 						    
 			<c:forEach var="m" items="${TLIST}"  varStatus="status">
@@ -595,9 +597,9 @@
 					</c:if>
 				</c:forEach>
 						 	
-						 	var imageSrc_b = "../resources/img/google2.png";		   
+						 	var imageSrc_b = "../resources/img/google1.png";		   
 							for (var i = 0; i < position_b.length; i ++) {
-								var imageSize_b = new daum.maps.Size(35, 35);
+								var imageSize_b = new daum.maps.Size(24, 35);
 	
 								var markerImage_b = new daum.maps.MarkerImage(imageSrc_b, imageSize_b);
 								// 마커를 생성합니다
@@ -852,9 +854,9 @@
 								관련글:${data.reviewcnt}건
 								</td>
 								<td>
-								good:${data.goodcnt}<br/>
-								soso:${data.sosocnt}<br/>
-								bad:${data.badcnt}
+								<img src='../resources/img/good_map.png' width='8' height='8'/>GOOD:${data.goodcnt}<br/>
+								<img src='../resources/img/soso_map.png' width='8' height='8'/>SOSO:${data.sosocnt}<br/>
+								<img src='../resources/img/bad_map.png' width='8' height='8'/>B A D:${data.badcnt}
 								</td>
 							</tr>
 						</c:forEach>

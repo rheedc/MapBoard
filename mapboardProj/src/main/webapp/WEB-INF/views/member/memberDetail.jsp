@@ -53,7 +53,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
 	$(function(){
-		<%--로그인 버튼을 클릭했을 때 submit처리하는 함수  --%>
+		<%--수정 버튼을 클릭했을 때 수정화면으로 이동  --%>
 		$("#updateBtn").click(function(e){
 			location.href = "/member/memberUpdateForm.yo";
 		});
@@ -62,11 +62,19 @@
 			location.href = "/home.yo";
 		});
 		
-		$("#leaveBtn").click(function(){
-			alert("탈퇴화면으로 이동합니다.")
-		});
-
 	});
+	// 본인확인 실행 함수
+	function meChkAction(){
+		//팝업창 경로
+		var url="/popup/popup_meCheck.yo";
+		//팝업창 표시 위치
+		var popupX = (window.screen.width / 2) - (300 / 2);		// 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+		var popupY= (window.screen.height /2) - (500 / 2);			// 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+		
+		window.name = "parentForm";
+		//팝업창 경로, 팝업창 이름, 위치(화면 중앙정렬) 및 크기 등 설정
+		window.open(url,"chkForm", "status=no, width=500, height=300, resizable = no, scrollbars = no, left="+ popupX + ", top="+ popupY + ", screenX="+ popupX + ", screenY= "+ popupY);	
+	}
 
 	</script>
 </head>
@@ -98,7 +106,7 @@
 		<div class="formBtn">
 			<input type="submit" id="updateBtn" class="actionBtn" value="수정"  />
 			<input type="button" id="homeBtn" class="actionBtn" value="취소" />
-			<input type="submit" id="leaveBtn" class="actionBtn" value="탈퇴"  />
+			<input type="submit" id="leaveBtn" class="actionBtn" value="탈퇴" onclick="meChkAction()" />
 		</div>
 
 </div> 

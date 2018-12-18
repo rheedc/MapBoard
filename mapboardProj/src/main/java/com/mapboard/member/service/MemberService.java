@@ -1,8 +1,6 @@
 package com.mapboard.member.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
 
 import com.mapboard.member.vo.MemberVO;
@@ -16,7 +14,8 @@ import com.mapboard.util.PageUtil;
  * 12/13: 1,2,3 함수 추가
  * 12/14: 4 함수 추가
  * 12/16: 5,6 함수 추가
- * 12/17: 7, 8함수 추가
+ * 12/17: 7, 8,9 함수 추가
+ * 12/18: 10,11 함수 추가
  */
 
 public interface MemberService {
@@ -43,6 +42,15 @@ public interface MemberService {
 	
 	//8. 회원 목록정보 구하기 함수
 	public ArrayList<?> getMemberList(PageUtil pInfo);
+	
+	//9. 본인확인 함수
+	public int selectMeChk(MemberVO vo);
+	
+	//10. 회원탈퇴
+	public int leaveMemberProc(MemberVO vo);
+	
+	//11. 나의 정보 수정
+	public void memberUpdate(MemberVO vo);
 	
 
 }

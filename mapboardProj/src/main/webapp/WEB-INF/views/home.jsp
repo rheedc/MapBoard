@@ -62,12 +62,12 @@
 			</td>
 		</tr>
 		<tr>
-			<td align="center">
-				<input type="button" class="btn2" id="seoul" value="지도로 즐기기" style="width:110px;background-color: rgba(174, 218, 232, 1);"/>
+			<td align="center">				
+				<a href="#" id="seoul"><h1>지도로 즐기기</h1></a>
 			</td>
 			<td>
 				<a href="/board/boardList.yo"><h1>글로 즐기기</h1></a>
-			</td>
+			</td> 
 		</tr>
 	</table>
 </body>
