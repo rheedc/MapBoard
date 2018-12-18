@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 작성자: 이덕천
  * 작성일: 2018-12-15
  * 최종수정일: 2018-12-15
- * 
+ * 이력
+ * 12/15: 아이디 중복체크 추가
+ * 12/17: 본인확인 추가
  */
 
 
@@ -21,6 +23,12 @@ public class PopupController {
 	public void idCheckPop(){
 						
 	}
+	
+	//본인확인 팝업창 보이기
+		@RequestMapping("/popup_meCheck")
+		public void meCheckPop(){
+							
+		}
 	
 	
 }
