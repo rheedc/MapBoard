@@ -581,7 +581,7 @@
 							        bad:"<div>bad:${m.badcnt}</div>",
 							        latlng_b: new daum.maps.LatLng(${m.latitude}, ${m.longitude})
 							    }
-							    
+							     
 							];
 							panTo();
 						 	function panTo() {
