@@ -261,7 +261,7 @@ public class PlaceDaoImpl implements PlaceDao{
 			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_st_pt",vo);			
 		}
 		if(situation==2) {
-			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_st_pt",vo);
+			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_st_pd",vo);
 		}
 		if(situation==3) {
 			totalCount=sqlSession.selectOne("placeSql.cnt_boardSearch_sd_pt",vo);

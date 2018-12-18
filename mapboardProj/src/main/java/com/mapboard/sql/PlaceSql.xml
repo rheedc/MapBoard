@@ -572,8 +572,7 @@
 	    p.PLACE_NAME,
 	    p.CATEGORY_NO,
 	    p.LATITUDE,
-	    p.LONGITUDE
-	    ,
+	    p.LONGITUDE,
 	    b.LIKECNT,
 	    b.READCNT,
 	    m.NICK

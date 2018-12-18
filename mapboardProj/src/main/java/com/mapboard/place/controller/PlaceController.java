@@ -540,11 +540,11 @@ public class PlaceController {
 		}
 		
 		//게시판 목록보기(검색기능 존재)
-		@RequestMapping("/board/boardList2")
+		@RequestMapping("board/boardList2")
 		public ModelAndView boardList(
 				ModelAndView mv, 
 				PlaceVO vo, 
-				HttpSession session,HttpServletRequest req) {
+				HttpServletRequest req) {
 			
 			//할일
 			//1.파라미터 받고
@@ -562,7 +562,7 @@ public class PlaceController {
 			//검색케이스분류를 위한 변수
 			int situation=0;
 			
-			if(sigungu_name.equals("전체") || sigungu_name==null || sigungu_name.length()==0) {
+			if(sigungu_name==null || sigungu_name.length()==0 || sigungu_name.equals("전체") ) {
 				//시군구전체,장소전체
 				if(place_name==null || place_name.length()==0) {
 					situation=1;
@@ -583,10 +583,7 @@ public class PlaceController {
 				}
 			}
 			
-			//vo에 userid세팅하기
-			vo.setUserid((String) session.getAttribute("userid"));
-			
-			
+
 			System.out.println("userid : "+vo.getUserid());
 			System.out.println("place_name : "+place_name);
 			System.out.println("place_no : "+place_no);

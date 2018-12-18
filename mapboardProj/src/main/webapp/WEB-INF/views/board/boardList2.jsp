@@ -26,11 +26,13 @@
 		text-align:center;
 	}
 	.style1 tr {
-		border-bottom:1px solid #d7edf4;
+		border-bottom:1px solid #d7edf4;	
 	}
-	.style1 tr:hover { 
-		background-color: #d7edf4; 
-	} 
+	
+	.style1 td {
+		text-align:left;	
+		padding-left:10px;
+	}
 	h3 {
 		color:#337AB3;
 	}
@@ -41,16 +43,33 @@
 		font-weight:bold;
 		color:#337AB3;
 	}
+	.style2:hover { 
+		background-color: #d7edf4; 
+	} 
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
+
 	$(document).ready(function(){
-		//제목검색 sBtn
+		
+		//검색조건을 받아오고 기본세팅해놓기
+	 	sigungu_name="${DATA.sigungu_name}";
+	 	place_name="${DATA.place_name}";
+	 	place_no="${DATA.place_no}";
+
+		if(sigungu_name!=null && sigungu_name!="전체"){
+			$("#sigungu_name").val(sigungu_name).prop("selected", true);
+		}
+		if(place_name.length!=0){
+			$("#place_name").val(place_name);
+		}
+		
+		//검색 sBtn
 		$("#sBtn").click(function(){
 			$("#searchFrm").submit();
-		});
-	});
+		});	
+ 	}); 
 	</script>
 </head>
 <body>
@@ -61,12 +80,13 @@
 			</td>
 		</tr>
 	</table>
+	<br/>
   	<form id="searchFrm" action="../board/boardList2.yo" method="get">
  			<!-- 검색하기 -->
   		<table border="1" align="center" width="70%"  height="50px">
   			<tr>
   				<td>
-  					<select name="sigungu_name">
+  					<select id="sigungu_name" name="sigungu_name">
   						<option value="전체">--지역(구) 선택--</option>
   						<option value="강남구">강남구</option>
   						<option value="강동구">강동구</option>
@@ -99,50 +119,48 @@
   				</td>
 			</tr>
   		</table>
-  		<br/><br/><br/>
-  		<table align="center" width="70%" class="style1">
-  			<c:forEach var="data" items="${LIST}">
-	  			<tr>
-	  				<th rowspan="3" width="15%">
-					${data.place_name }
-	  				</th>
-	  				<td width="65%">${data.place_name}</td>
-	  				<td>조회수</td>
+  		<br/>
+  		<c:if test="${empty LIST }">
+  			<h1 align="center">게시물이 존재하지 않습니다</h1>
+  		</c:if>
+  		<c:if test="${not empty LIST }">
+		<c:forEach var="data" items="${LIST}">
+	  		<table align="center" width="70%" class="style1">
+	  			<tr height="35px">
+	  				<th rowspan="3" width="15%">이미지</th>
+	  				<td width="55%">${data.place_name}</td>
+	  				<td width="30%">${data.createdt}</td>
 	  			</tr>
 	  			<tr>
-	  				<td colspan="2"><%-- 조회수 증가 --%>
-	  					<a href="../board/hitProc.yo?bidx=${data.bidx}&&nowPage=${PINFO.nowPage}">
-	  					${data.subject}
-	  					</a>
+	  				<td colspan="2">
+	  				<a href="../board/hitProc.yo?bidx=${data.bidx}&nowPage=${PINFO.nowPage}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}">${data.subject}</a>
 	  				</td>
 	  			</tr>
 	  			<tr>
-	  				<td>${data.userid}</td>
-	  				<td>조회수 : ${data.readcnt}/추천수 : ${data.likecnt}</td>
+	  				<td>${data.nick}</td>
+	  				<td>조회수 ${data.readcnt} | 추천수  ${data.likecnt}</td>
 	  			</tr>
-  			</c:forEach>
-  		</table>
-  		<br/><br/>
+	  		</table>
+	  		<br/>
+		</c:forEach>
+  		<br/>
   		<table align="center" width="70%">	
 			<tr>
 				<td align="center">
-		  		<%-- 완성예시 : [<][1][2][3][4][5][>] --%>
-		  		<%-- 이전페이지 --%>
-		  		<%-- 현재 보고있는 페이지가 첫번째 페이지라면 --%>
 		  		<c:if test="${PINFO.nowPage eq 1}">
 		  			이전
 		  		</c:if>
 		  		<c:if test="${PINFO.nowPage ne 1}">
-		  			<a href="../board/boardList2.yo?nowPage=${PINFO.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}">이전</a>
+		  			<a href="../board/boardList2.yo?nowPage=${PINFO.nowPage-1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}">[이전]</a>
 		  		</c:if>
 		  		
 		  		<%-- [1][2][3][4][5] --%>
 		  		<c:forEach var="page" begin="${PINFO.startPage }" end="${PINFO.endPage}">
 		  			<c:if test="${PINFO.nowPage eq page }">
-		  			<a href="../board/boardList2.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=boardSearch"><font color="blue">[${page}]</font></a>
+		  			<a href="../board/boardList2.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}"><font color="blue">[${page}]</font></a>
 		  			</c:if>
 		  			<c:if test="${PINFO.nowPage ne page }">
-		  			<a href="../board/boardList2.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}&category_no=${DATA.category_no}&searchType=boardSearch">${page}</a>
+		  			<a href="../board/boardList2.yo?nowPage=${page}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}">[${page}]</a>
 		  			</c:if>
 		  		</c:forEach>
 		  		
@@ -152,11 +170,12 @@
 		  			다음
 		  		</c:if>
 		  		<c:if test="${PINFO.nowPage ne PINFO.totalPage}">
-		  			<a href="../board/boardList2.yo?nowPage=${PINFO.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}">다음</a>
+		  			<a href="../board/boardList2.yo?nowPage=${PINFO.nowPage+1}&sigungu_name=${DATA.sigungu_name}&place_name=${DATA.place_name}">[다음]</a>
 		  		</c:if>
 		  		</td>
 			</tr>
 		</table>
+		</c:if>
 		<br/>
 		<table align="center">
 			<tr>	
