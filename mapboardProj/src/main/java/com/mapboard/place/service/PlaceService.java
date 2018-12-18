@@ -48,6 +48,12 @@ public interface PlaceService {
 
 	public ArrayList getMemberBoardList(PlaceVO vo, PageUtil pInfo);
 
-	
-	
+	//게시판 목록보기를 위한 명령들
+	public PageUtil getPageInfo_board(PlaceVO vo, int nowPage);
+
+	public ArrayList getBoardList(PlaceVO vo, PageUtil pInfo_board);
+
+	public PageUtil getPageInfo_boardSearch(PlaceVO vo, int nowPage, int situation);
+
+	public ArrayList getBoardSearchList(PlaceVO vo, int situation, PageUtil pInfo_boardSearch);	
 }

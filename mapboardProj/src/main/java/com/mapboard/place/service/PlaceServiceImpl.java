@@ -221,5 +221,52 @@ public class PlaceServiceImpl implements PlaceService{
 		ArrayList list=pdao.getMemberBoardList(vo);
 		return list;
 	}
+
+
+	//게시판 목록보기를 위한 함수들
+	
+	//특정상가에 대한 페이지유틸
+	public PageUtil getPageInfo_board(PlaceVO vo, int nowPage) {
+		//목록의 총개수 구하기
+		int totalCount=pdao.getBoardListCnt(vo);
+		//한 페이지당 5개의 게시물을 뿌리고, 5페이지씩 보여주자
+		PageUtil pInfo_board=new PageUtil(nowPage, totalCount, 5, 5);
+		return pInfo_board;
+	}
+	//특정상가에 대한 목록보기
+	public ArrayList getBoardList(PlaceVO vo, PageUtil pInfo_board) {
+		//페이징처리 적용
+		//시작=(현재페이지-1)*(한 페이지에 보여줄 게시물 수 )
+		int start=(pInfo_board.getNowPage()-1)*pInfo_board.getListCount()+1;
+		//끝=시작페이지+그 페이지에서 보여줄 게시물수-1
+		int end=start+pInfo_board.getListCount()-1;
+		vo.setStart(start);
+		vo.setEnd(end);
 		
+		ArrayList list=pdao.getBoardList(vo);
+		return list;
+	}
+	
+	//검색에 대한 페이지유틸
+	public PageUtil getPageInfo_boardSearch(PlaceVO vo, int nowPage, int situation) {
+			int totalCount=0;
+			//목록의 총개수구하기
+			totalCount=pdao.getBoardSearchListCnt(vo, situation);
+			//한 페이지당 5개의 게시물을 뿌리고, 5페이지씩 보여주자
+			PageUtil pInfo_boardSearch=new PageUtil(nowPage, totalCount, 5, 5);
+			return pInfo_boardSearch;
+		}
+	//검색에 대한 목록보기
+	public ArrayList getBoardSearchList(PlaceVO vo, int situation, PageUtil pInfo_boardSearch) {
+		//페이징처리 적용
+		//시작=(현재페이지-1)*(한 페이지에 보여줄 게시물 수 )
+		int start=(pInfo_boardSearch.getNowPage()-1)*pInfo_boardSearch.getListCount()+1;
+		//끝=시작페이지+그 페이지에서 보여줄 게시물수-1
+		int end=start+pInfo_boardSearch.getListCount()-1;
+		vo.setStart(start);
+		vo.setEnd(end);
+		
+		ArrayList searchlist=pdao.getBoardSearchList(vo,situation);
+		return searchlist;
+	}
 }
