@@ -539,4 +539,79 @@ public class PlaceController {
 			return mv;
 		}
 		
+		//게시판 목록보기(검색기능 존재)
+		@RequestMapping("/board/boardList2")
+		public ModelAndView boardList(
+				ModelAndView mv, 
+				PlaceVO vo, 
+				HttpSession session,HttpServletRequest req) {
+			
+			//할일
+			//1.파라미터 받고
+			//장소번호,시군구명,장소명,nowPage
+			int place_no=vo.getPlace_no();
+			String sigungu_name=req.getParameter("sigungu_name");
+			String place_name=req.getParameter("place_name");
+			String strPage=req.getParameter("nowPage");				
+			int nowPage=0;
+			if(strPage==null || strPage.length()==0) {	
+				nowPage=1;
+			}else {
+				nowPage=Integer.parseInt(strPage);
+			}
+			//검색케이스분류를 위한 변수
+			int situation=0;
+			
+			if(sigungu_name.equals("전체") || sigungu_name==null || sigungu_name.length()==0) {
+				//시군구전체,장소전체
+				if(place_name==null || place_name.length()==0) {
+					situation=1;
+				}
+				//시군구전체,장소특정
+				if(place_name!=null && place_name.length()>0) {
+					situation=2;
+				}
+			}
+			else {
+				//시군구특정,장소전체
+				if(place_name==null || place_name.length()==0) {
+					situation=3;
+				}
+				//시군구특정,장소특정
+				if(place_name!=null && place_name.length()>0) {
+					situation=4;
+				}
+			}
+			
+			//vo에 userid세팅하기
+			vo.setUserid((String) session.getAttribute("userid"));
+			
+			
+			System.out.println("userid : "+vo.getUserid());
+			System.out.println("place_name : "+place_name);
+			System.out.println("place_no : "+place_no);
+			System.out.println("sigungu_name : "+sigungu_name);
+			System.out.println("nowPage : "+nowPage);
+			System.out.println("situation : "+situation);
+			
+			//2.비지니스로직수행
+			//상가번호가 넘어온 경우
+			PageUtil pInfo=null;
+			ArrayList list=null;
+			
+			if(place_no!=0) {
+				//특정상가번호에 대한 목록보기수행
+				pInfo=pservice.getPageInfo_board(vo,nowPage);
+				list=pservice.getBoardList(vo,pInfo);				
+			}
+			//상가번호가 넘어오지 않은 경우
+			else {
+				pInfo=pservice.getPageInfo_boardSearch(vo,nowPage,situation);
+				list=pservice.getBoardSearchList(vo,situation,pInfo);
+			}
+			mv.addObject("DATA", vo);
+			mv.addObject("PINFO", pInfo);
+			mv.addObject("LIST", list);	
+			return mv;
+		}		
 }
