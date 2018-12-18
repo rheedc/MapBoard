@@ -67,7 +67,7 @@
 			</td>
 			<td>
 				<a href="/board/boardList.yo"><h1>글로 즐기기</h1></a>
-			</td>
+			</td> 
 		</tr>
 	</table>
 </body>
