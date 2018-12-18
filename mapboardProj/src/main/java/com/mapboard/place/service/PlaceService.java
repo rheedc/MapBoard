@@ -55,5 +55,8 @@ public interface PlaceService {
 
 	public PageUtil getPageInfo_boardSearch(PlaceVO vo, int nowPage, int situation);
 
-	public ArrayList getBoardSearchList(PlaceVO vo, int situation, PageUtil pInfo_boardSearch);	
+	public ArrayList getBoardSearchList(PlaceVO vo, int situation, PageUtil pInfo_boardSearch);
+
+	//리뷰
+	public String getReview(PlaceVO vo);	
 }

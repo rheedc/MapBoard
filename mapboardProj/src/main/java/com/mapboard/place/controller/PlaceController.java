@@ -2,6 +2,11 @@ package com.mapboard.place.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +20,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.mapboard.place.service.PlaceService;
 import com.mapboard.place.vo.PlaceVO;
 import com.mapboard.util.PageUtil;
+import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
+import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
+
+import scala.collection.Seq;
 
 @Controller
 public class PlaceController {
@@ -472,6 +481,7 @@ public class PlaceController {
 			return mv;
 		}
 		
+		
 		//my통계
 		@RequestMapping("member/memberStatistics")
 		public ModelAndView myStatistics(ModelAndView mv,PlaceVO vo,HttpSession session) {
@@ -503,6 +513,13 @@ public class PlaceController {
 				//월별방문건수구하기
 				monthCnt=pservice.getMonthMoveCnt(vo);
 				
+				//내가 남긴 리뷰 내용 모아보기
+				String review=pservice.getReview(vo);
+				
+				System.out.println(review);
+				
+				
+
 				mv.addObject("DATA",vo);
 				mv.addObject("monthMove",monthMove);
 				mv.addObject("monthCnt",monthCnt);
@@ -513,6 +530,7 @@ public class PlaceController {
 				return mv;
 			}
 		}
+
 		
 		//내 글목록보기
 		@RequestMapping("member/memberBoardList")
@@ -530,9 +548,10 @@ public class PlaceController {
 				nowPage=Integer.parseInt(strPage);
 			}
 			
+			
 			PageUtil pInfo=pservice.getPageInfo_Member(vo,nowPage); 
 			ArrayList list=pservice.getMemberBoardList(vo,pInfo);
-
+			
 			mv.addObject("LIST", list);
 			mv.addObject("PINFO", pInfo);
 			

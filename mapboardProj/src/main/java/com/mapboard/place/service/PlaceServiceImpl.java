@@ -269,4 +269,14 @@ public class PlaceServiceImpl implements PlaceService{
 		ArrayList searchlist=pdao.getBoardSearchList(vo,situation);
 		return searchlist;
 	}
+	//리뷰모아보기
+	public String getReview(PlaceVO vo) {
+		String review="";
+		ArrayList list=pdao.getReview(vo);
+		for(int i=0;i<list.size();i++) {
+			vo=(PlaceVO) list.get(i);
+			review+=" "+vo.getComm();
+		}
+		return review;
+	}
 }

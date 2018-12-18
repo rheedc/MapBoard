@@ -45,6 +45,9 @@
 	}
 	.style2:hover { 
 		background-color: #d7edf4; 
+	}
+	.container:hover{
+		background-color: #d7edf4;
 	} 
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -58,7 +61,7 @@
 	 	place_name="${DATA.place_name}";
 	 	place_no="${DATA.place_no}";
 
-		if(sigungu_name!=null && sigungu_name!="전체"){
+		if(sigungu_name.length>0 && sigungu_name!="전체"){
 			$("#sigungu_name").val(sigungu_name).prop("selected", true);
 		}
 		if(place_name.length!=0){
@@ -125,7 +128,8 @@
   		</c:if>
   		<c:if test="${not empty LIST }">
 		<c:forEach var="data" items="${LIST}">
-	  		<table align="center" width="70%" class="style1">
+		<div class="container" width="70%">
+	  		<table align="center" width="100%" class="style1">
 	  			<tr height="35px">
 	  				<th rowspan="3" width="15%">이미지</th>
 	  				<td width="55%">${data.place_name}</td>
@@ -141,7 +145,8 @@
 	  				<td>조회수 ${data.readcnt} | 추천수  ${data.likecnt}</td>
 	  			</tr>
 	  		</table>
-	  		<br/>
+	  	</div>
+	  	<br/>
 		</c:forEach>
   		<br/>
   		<table align="center" width="70%">	

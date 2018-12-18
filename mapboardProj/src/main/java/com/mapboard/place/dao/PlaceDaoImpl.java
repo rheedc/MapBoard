@@ -288,4 +288,8 @@ public class PlaceDaoImpl implements PlaceDao{
 		}
 		return searchlist;	
 	}
+	//리뷰
+	public ArrayList getReview(PlaceVO vo) {
+		return (ArrayList) sqlSession.selectList("placeSql.review",vo);
+	}
 }
