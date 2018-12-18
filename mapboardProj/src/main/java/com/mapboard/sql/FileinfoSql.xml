@@ -21,27 +21,13 @@
 	</sql>
 
 	
-	<!-- 파일 등록 -->
-	<insert id="insertFileInfo" parameterType="FileinfoVO">
-		INSERT INTO
-			FileInfo
-		VALUES ((SELECT NVL(MAX(fidx),0)+1 FROM FileInfo),
-							#{bidx},#{fpath},#{foriname},#{fsname},#{fsize})
-	</insert>
 	
 	
-	<!-- 첨부파일 검색 질의 -->
-	<select id="fileInfo"	parameterType="int" resultType="fileinfoVO">
-		<include refid="selectFile"/> 
-		WHERE
-			bidx = #{oriNo}
-	</select>
 	
-	<!-- 다운로드 파일 정보 검색 질의 -->
-	<select id="download"	parameterType="int" resultType="fileinfoVO">
-		<include refid="selectFile"/> 
-		WHERE
-			fidx = #{fileNo}
-	</select>	
+	
+	<!-- 파일 수정 -->
+	<update id="updateFileInfo" parameterType="fileinfoVO">
+			
+	</update>
 	
 </mapper>

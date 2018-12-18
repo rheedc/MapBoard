@@ -69,7 +69,7 @@
 				}
 				//폼 추가
 				var tr= "<tr><th>파일첨부"+count+"</th>"+
-				"<td id='left'><input type='file' id='files"+count+"' name='files' value='파일첨부'/>"+
+				"<td><input type='file' id='files"+count+"' name='files'/>"+
 				"</td></tr>"
 				$("#copy").before(tr);
 			});
@@ -102,12 +102,19 @@
 		<table>
 			<tr>
 				<th>상가명</th>
-				<td>${VO.place_name}</td>
+				<td>
+					<input type="text" id="place_name" name="place_name" 
+							value="${VO.place_name}"/>
+					<input type="hidden" id="place_no" name="place_no" 
+							value="${VO.place_no}"/>
+				</td>
 			</tr>
 			<tr>
-			<!-- 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타 -->
+			<!-- 관광/여가/오락, 숙박, 의료, 식당, 커피점/카페, 기타 -->	
 				<th>분류명</th>
-				<td>${VO.categoryName}</td>
+				<td>
+					<input type="text" id="category_name" name="category_name" value="${VO.categoryName}"/>
+				</td>
 			</tr>
 			<tr>
 				<th>제목</th>
@@ -129,11 +136,16 @@
 			</tr>
 			
 			<tr>
-				<th>파일첨부1</th>
-				<td id="left">
-					<input type="file" id="files" name="files" value="파일선택"/>
+				<th>파일첨부</th>
+				<td>
 					<input type="button" id="aBtn" value="추가"/>
 					<input type="button" id="dBtn" value="삭제"/>
+				</td>
+			</tr>
+			<tr>
+				<th>파일첨부1</th>
+				<td>
+					<input type="file" id="files1" name="files" value="파일선택"/>
 				</td>
 			</tr>
 			<tr id="copy">

@@ -27,15 +27,20 @@
 	<!-- 1-1. 상가명 가져오기 -->
 	<select id="selectName" resultType="boardVO" parameterType="int">
 		SELECT 
-			PLACE_NAME,CATEGORY_NO
+			PLACE_NAME,CATEGORY_NO,place_no
 		FROM
 			PLACE
 		WHERE
 			PLACE_NO=#{place_no}
 	</select>
 	
-	<!-- 1-2. 게시물 등록 : 파일은 별도로 만들기-->
-	<insert id="insertBoard" parameterType="boardVO"><!-- fileBoard:mB의 alias -->
+	<!-- 1-2. 게시물 등록 :-->
+	<insert id="insertBoard" parameterType="boardVO">
+		<!-- <selectKey order="BEFORE" resultType="long" keyProperty="bidx">
+			select
+				board_seq.nextval
+			from dual
+		</selectKey> -->
 		INSERT 
 			INTO
 		board 
@@ -57,90 +62,59 @@
 			SYSDATE,
 			'Y')		
 	</insert>
-
+	<insert id="insertFileInfo" parameterType="BoardVO">
+		INSERT 
+			INTO
+		fileinfo
+		values
+			(file_seq.nextval,
+			#{bidx},
+			#{fpath},
+			#{foriname},
+			#{fsname},
+			#{fsize})
+	</insert>
 	
-	<!-- 2-1. 해당 페이지에 보여줄 게시물 정보 구하기 질의 : 페이징 -->	
-	<select id="boardList" resultType="boardVO" parameterType="boardVO">
+	
+	<!-- 상세보기 질의 명령 -->
+	<select id="boardDetail" resultType="boardVO" parameterType="int">
 		SELECT
-			*
-		FROM 
-			(SELECT
-				b.bidx,
-				--f.file,
-				b.userid,
-				place_name,
-				subject,
-				comm,
-				point,
-				likecnt,
-				readcnt,
-				b.createdt,
-				b.updatedt,
-				b.status ,
-				ROW_NUMBER() over(order by bidx asc) as rno
-			from
-		 		board b,place p--, fileinfo f
-			where
-				b.place_no=p.place_no
-				--and b.bidx=f.bidx
-				and UPPER(b.status)='Y'
-				)
-		where	
-			rno 
-		between 
-			#{start} 
-		and #{end}
-	</select>
-
-	<!-- 2-2. 게시물 수 구하기 -->
-	<select id="totalCount" resultType="int">
-		SELECT 
-			COUNT(*) AS CNT
-		FROM 
-			board
-		WHERE 
-			UPPER(status)='Y'
-	</select>
-	
-	
-	<!-- 3-1. CLOB -->
-	<resultMap id="clobView" type="boardVO">
-		<!-- CLOB필드를 선언한다. --><!-- fb_Body는 body로 함 -->
-		<result property="body" 	column="fb_Body"						
-				jdbcType="CLOB"  javaType="java.lang.String"/>
-	</resultMap>
-	
-	<!-- 3-2. 상세보기 질의 명령 -->
-	<select id="boardView" resultMap="clobView" parameterType="boardVO">
-		SELECT
-			bidx,
+			b.bidx,
 			subject,
 			b.userid,
 			b.createdt,
-			--f.file,
 			comm,
 			--m.map,
 			place_name,
+			category_no,
 			point,
 			readcnt,
 			likecnt
 		FROM
-			board b,place p--, fileinfo f
+			board b join place p
+			on b.place_no=p.place_no
 		where
-			b.place_no=p.place_no
-			--and b.bidx=f.bidx
-			and	bidx = #{bidx}
+			b.bidx = #{bidx}
 	</select>	
 	
-	<!-- 3-3. 조회수 증가 질의  -->
-	<update id="updateHit"  parameterType="int">
-		UPDATE
+
+	<!-- 게시물 수정 -->
+	<update id="updateBoard" parameterType="boardVO">
+		update
 			board
-		SET
-			readcnt = readcnt + 1
-		WHERE
-			bidx = #{bidx}
+		set
+			subject=#{subject},
+			comm=#{comm},
+			point=#{point},
+			updatedt=SYSDATE
+		where
+			bidx=#{bidx}
 	</update>
+	
+	
+	
+	
+	
 	
 	
 	

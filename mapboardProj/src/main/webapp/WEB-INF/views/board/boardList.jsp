@@ -140,11 +140,11 @@
   						</c:forEach> --%>
 	  				</th>
 	  				<td width="65%">${data.place_name}</td>
-	  				<td>조회수</td>
+	  				<td>${data.createdt}</td>
 	  			</tr>
 	  			<tr>
 	  				<td colspan="2"><%-- 조회수 증가 --%>
-	  					<a href="../board/hitProc.yo?bidx=${data.bidx}&&nowPage=${PINFO.nowPage}">
+	  					<a href="../board/boardDetail.yo?bidx=${data.bidx}&nowPage=${PINFO.nowPage}">
 	  					${data.subject}
 	  					</a>
 	  				</td>

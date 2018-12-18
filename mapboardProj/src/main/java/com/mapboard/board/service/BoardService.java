@@ -19,11 +19,10 @@ public interface BoardService {
 	public BoardVO getSelectName(int place_no)throws Exception;
 	
 	public void insertBoard(BoardVO vo, HttpSession session, ArrayList list) throws Exception;
-
-	public ArrayList getBoardList(PageUtil pInfo) throws Exception;
 	
-	public PageUtil getPageInfo(int nowPage) throws Exception;
-
+	public BoardVO getBoardDetail(int bidx) throws Exception;
 	
-		
+	public void updateBoard(BoardVO vo) throws Exception;
+	
+	
 }
