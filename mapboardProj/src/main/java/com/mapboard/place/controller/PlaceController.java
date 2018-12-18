@@ -514,4 +514,29 @@ public class PlaceController {
 			}
 		}
 		
+		//내 글목록보기
+		@RequestMapping("member/memberBoardList")
+		public ModelAndView placeListTotal(
+				ModelAndView mv, 
+				PlaceVO vo, 
+				HttpSession session,HttpServletRequest req) {
+			
+			vo.setUserid((String) session.getAttribute("userid"));
+			String strPage=req.getParameter("nowPage");				
+			int nowPage=0;
+			if(strPage==null || strPage.length()==0) {	
+				nowPage=1;
+			}else {
+				nowPage=Integer.parseInt(strPage);
+			}
+			
+			PageUtil pInfo=pservice.getPageInfo_Member(vo,nowPage); 
+			ArrayList list=pservice.getMemberBoardList(vo,pInfo);
+
+			mv.addObject("LIST", list);
+			mv.addObject("PINFO", pInfo);
+			
+			return mv;
+		}
+		
 }

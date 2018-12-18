@@ -528,4 +528,31 @@
 	WHERE createMonth=#{createMonth}
 	</select>
 	
+	<!-- 내글목록구하기 -->
+	<select id="meberBoardList" resultType="PlaceVO" parameterType="PlaceVO">
+	SELECT * FROM(
+	SELECT 
+	    ROW_NUMBER() OVER(ORDER BY b.CREATEDT DESC) AS RNO,
+	    BIDX,b.USERID,SUBJECT,COMM,POINT,LIKECNT,READCNT,b.CREATEDT,b.UPDATEDT,b.STATUS,
+	    b.PLACE_NO,PLACE_NAME,CATEGORY_NO,SIGUNGU_NAME,LATITUDE,LONGITUDE
+	FROM
+	    Board b,Place p
+	WHERE 
+	    b.PLACE_NO=p.PLACE_NO
+	    AND b.STATUS='Y'
+	    AND b.USERID=#{userid})
+	WHERE
+	    RNO BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 글목록총개수구하기 -->
+	<select id="memberBoardCnt" resultType="int" parameterType="PlaceVO">
+	SELECT 
+	    count(*)
+	FROM
+	    Board b,Place p
+	WHERE 
+	    b.PLACE_NO=p.PLACE_NO
+	    AND b.STATUS='Y'
+	    AND b.USERID=#{userid}
+	</select>
 </mapper>

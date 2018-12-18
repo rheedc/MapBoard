@@ -44,5 +44,10 @@ public interface PlaceDao {
 
 	public PlaceVO getLocation(PlaceVO vo);
 
+	//내글보기를 위한 자료
+	public int getMemberBoardCnt(PlaceVO vo);
+
+	public ArrayList getMemberBoardList(PlaceVO vo);
+
 
 }

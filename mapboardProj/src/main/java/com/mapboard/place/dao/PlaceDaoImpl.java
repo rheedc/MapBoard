@@ -226,4 +226,17 @@ public class PlaceDaoImpl implements PlaceDao{
 		int movecnt_month=sqlSession.selectOne("placeSql.cnt_month_move",vo);
 		return movecnt_month;
 	}
+	
+	//내글보기 총 결과물 수를 구하기
+	public int getMemberBoardCnt(PlaceVO vo) {
+		int totalCount=0;
+		totalCount=sqlSession.selectOne("placeSql.memberBoardCnt",vo);			
+		return totalCount;
+	}
+	//내글보기 목록구하기
+	public ArrayList getMemberBoardList(PlaceVO vo) {
+		ArrayList list=new ArrayList();
+		list=(ArrayList)sqlSession.selectList("placeSql.meberBoardList", vo);
+		return list;
+	}
 }

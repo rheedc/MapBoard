@@ -35,6 +35,27 @@ public class PlaceVO extends CommonVO{
 	private int movecnt_month;
 	
 	
+	public String getCommStr() {
+		String tempComm=comm;
+		if(comm.length()>=25) {
+			tempComm=comm.substring(0,25)+"...";
+		}
+		return tempComm;
+	}
+	
+	public String getPointStr() {
+		String tempPoint="";
+		if(point==1) {
+			tempPoint="BAD";
+		}
+		if(point==3) {
+			tempPoint="SOSO";
+		}
+		if(point==5) {
+			tempPoint="GOOD";
+		}
+		return tempPoint;
+	}
 	public String getCreateMonth() {
 		return createMonth;
 	}
