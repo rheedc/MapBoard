@@ -21,7 +21,10 @@
 		text-align:center;
 		width:50%;
 	}
-
+	#map{
+		margin-left:20%;
+		width:60%; height:700px;}
+	
 	/* UI Object 가로 */
 	.hGraph {width:50%;margin:auto;opacity:0}
    	.hGraph ul{ margin:0 50px 0 50px; padding:1px 0 0 0; border:1px solid #ddd; border-top:0; border-right:0; font-size:15px; font-family:Tahoma, Geneva, sans-serif; list-style:none;}
@@ -39,6 +42,43 @@
 <script>
 	$(function(){
 		$("#view").animate({opacity:1});
+
+		//지도그리는 부분
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = { 
+	        center: new daum.maps.LatLng(${DATA.latitude} , ${DATA.longitude} ), // 지도의 중심좌표
+	        level: 9 // 지도의 확대 레벨
+	    };
+		var map = new daum.maps.Map(mapContainer, mapOption);
+		
+		<c:forEach var="LOC" items="${locInfo}"  varStatus="status">
+			// 마커가 표시될 위치입니다 
+			var markerPosition  = new daum.maps.LatLng(${LOC.latitude} , ${LOC.longitude}); 
+			// 마커를 생성합니다
+			var marker = new daum.maps.Marker({
+				map:map,
+			    position: markerPosition
+			});   
+		</c:forEach>
+		
+		// 내기준지 
+		var markerPosition  = new daum.maps.LatLng(${DATA.latitude} , ${DATA.longitude}); 
+		var marker = new daum.maps.Marker({
+		    position: markerPosition
+		});
+		
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+		
+		var iwContent = '<div>기준지</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    iwPosition = new daum.maps.LatLng(${DATA.latitude}, ${DATA.longitude}); //인포윈도우 표시 위치입니다
+		// 인포윈도우를 생성합니다
+		var infowindow = new daum.maps.InfoWindow({
+		    position : iwPosition, 
+		    content : iwContent 
+		});
+		// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+		infowindow.open(map, marker); 
 	});
 </script>
 </head>
@@ -129,6 +169,11 @@
 			
 		</ul>
 	</div>
+	<br/>
+	<table>
+		<tr><td align="center"><h4>지도에서 확인하기</h4></td></tr>
+	</table>
+	<div id="map" ></div>
 	</c:if>
 	
 </body>

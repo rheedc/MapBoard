@@ -58,5 +58,8 @@ public interface PlaceService {
 	public ArrayList getBoardSearchList(PlaceVO vo, int situation, PageUtil pInfo_boardSearch);
 
 	//리뷰
-	public String getReview(PlaceVO vo);	
+	public String getReview(PlaceVO vo);
+
+	//내가 남긴 모든 리뷰의 위치정보 가져오기
+	public ArrayList getBoardListTotal(PlaceVO vo);	
 }

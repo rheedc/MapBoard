@@ -60,4 +60,7 @@ public interface PlaceDao {
 
 	//리뷰
 	public ArrayList getReview(PlaceVO vo);
+
+	//내가 남긴 게시글의 모든 위치정보가져오기
+	public ArrayList getBoardListTotal(PlaceVO vo);
 }

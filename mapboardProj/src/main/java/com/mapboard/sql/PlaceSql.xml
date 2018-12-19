@@ -703,4 +703,17 @@
 	    AND b.STATUS='Y'
 	    AND b.USERID=#{userid}
 	</select>
+	
+	<!-- 내글목록(전체)위치정보를 얻기 위함 -->
+	<select id="meberBoardListTotal" resultType="PlaceVO" parameterType="PlaceVO">
+	SELECT 
+	    BIDX,b.USERID,SUBJECT,COMM,POINT,LIKECNT,READCNT,b.CREATEDT,b.UPDATEDT,b.STATUS,
+	    b.PLACE_NO,PLACE_NAME,CATEGORY_NO,SIGUNGU_NAME,LATITUDE,LONGITUDE
+	FROM
+	    Board b,Place p
+	WHERE 
+	    b.PLACE_NO=p.PLACE_NO
+	    AND b.STATUS='Y'
+	    AND b.USERID=#{userid}
+	</select>
 </mapper>

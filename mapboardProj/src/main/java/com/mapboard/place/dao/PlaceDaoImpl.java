@@ -292,4 +292,9 @@ public class PlaceDaoImpl implements PlaceDao{
 	public ArrayList getReview(PlaceVO vo) {
 		return (ArrayList) sqlSession.selectList("placeSql.review",vo);
 	}
+	//내가 남긴 게시물의 모든 위치정보 가져오기
+	public ArrayList getBoardListTotal(PlaceVO vo) {
+		ArrayList list=(ArrayList)sqlSession.selectList("placeSql.meberBoardListTotal", vo);
+		return list;
+	}
 }

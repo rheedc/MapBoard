@@ -509,13 +509,17 @@ public class PlaceController {
 				//월별방문건수구하기
 				monthCnt=pservice.getMonthMoveCnt(vo);
 				
-				//내가 남긴 리뷰 내용 모아보기
+				/*//내가 남긴 리뷰 내용 모아보기
 				String review=pservice.getReview(vo);
 				
 				System.out.println(review);
+				*/
 				
-				
+				//내가 리뷰를 남긴 게시글의 총 목록구하기
+				ArrayList locInfo=pservice.getBoardListTotal(vo);
+				System.out.println(locInfo.size());
 
+				mv.addObject("locInfo",locInfo);
 				mv.addObject("DATA",vo);
 				mv.addObject("monthMove",monthMove);
 				mv.addObject("monthCnt",monthCnt);

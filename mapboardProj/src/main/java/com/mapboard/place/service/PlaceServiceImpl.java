@@ -279,4 +279,9 @@ public class PlaceServiceImpl implements PlaceService{
 		}
 		return review;
 	}
+	//내가 남긴 게시글의 모든 위치정보가져오기
+	public ArrayList getBoardListTotal(PlaceVO vo) {
+		ArrayList list=pdao.getBoardListTotal(vo);
+		return list;
+	}
 }
