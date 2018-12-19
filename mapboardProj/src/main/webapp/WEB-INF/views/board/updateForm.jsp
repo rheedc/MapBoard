@@ -126,7 +126,7 @@
 				<th>장소평가</th>
 				<td id="left">
 					<input type="radio" name="point" value="5">Good
-					<input type="radio" name="point" value="3">Soso<!-- default -->
+					<input type="radio" name="point" value="3">Soso<!-- default값주기 -->
 					<input type="radio" name="point" value="1">Bad
 				</td>
 			</tr>

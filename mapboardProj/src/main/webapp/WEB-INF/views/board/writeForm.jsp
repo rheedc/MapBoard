@@ -103,10 +103,8 @@
 			<tr>
 				<th>상가명</th>
 				<td>
-					<input type="text" id="place_name" name="place_name" 
-							value="${VO.place_name}" readonly/>
-					<input type="hidden" id="place_no" name="place_no" 
-							value="${VO.place_no}"/>
+					<input type="text" id="place_name" name="place_name" value="${VO.place_name}" readonly/>
+					<input type="hidden" id="place_no" name="place_no" value="${VO.place_no}"/>
 				</td>
 			</tr>
 			<tr>
