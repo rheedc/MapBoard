@@ -303,9 +303,14 @@
 			            
 			            var content = '<div class="bAddr" style="width:340px;">' + 
 			                            '<span class="title">법정동 주소정보</span>' + 
-			                            detailAddr + 
+			                            detailAddr +
+			                            '<c:if test="${empty sessionScope.userid }">'+
+			                            '<div>*로그인을 해야 등록을 할 수 있습니다*</div>'
+			                            '</c:if>'+
+			                            '<c:if test="${not empty sessionScope.userid }">'+
 			                            '<span>'+'<input type="button" class="btn2" id="newBtn" style="width:110px;background-color: rgba(174, 218, 232, 1);"  value="신규장소등록" onclick="location.href=\'../place/newPlaceForm.yo\'"/>'+'</span>'+
 			                            '<span>'+'<input type="button" class="btn2" id="myBtn" style="width:110px;background-color: rgba(174, 218, 232, 1);"  value="내 기준지 등록" onclick="location.href=\'../place/myPlaceForm.yo\'"/>'+'</span>'+'<br/>'+
+			                            '</c:if>'+
 			                        '</div>';
                          
                         deleteCookie('mouseLat');
@@ -399,9 +404,11 @@
 			        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
 			        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
 			        " onclick=\"location.href=\'../place/boardListProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+			        "<c:if test='${not empty sessionScope.userid }'>"+
 			        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' "+
-			        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' "+
+			        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' "+			      
 			        " onclick=\"location.href=\'../place/writeFormProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+			        "</c:if>"+		
 			        "</div>",
 			        juso: "<div>${m.juso}</div>",
 			        good:"<div>good:${m.goodcnt}</div>",
@@ -491,13 +498,17 @@
 						        "<div  class='title'>상가명: ${m.place_name}</div>"+
 						        "<div>지번주소: ${m.juso}</div><div>도로주소: ${m.doro_juso}</div>"+
 						        "<div>평균평점: ${m.avgpoint}</div>"+
-						        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
+						        "<div><img src='../resources/img/good_map.png' width='8' height='8'/>GOOD:${m.goodcnt}"+
+						        " <img src='../resources/img/soso_map.png' width='8' height='8'/>SOSO:${m.sosocnt}"+
+						        " <img src='../resources/img/bad_map.png' width='8' height='8'/>BAD:${m.badcnt}</div>"+
 						        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
 						        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
 						        " onclick=\"location.href=\'../place/boardListProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+						        "<c:if test='${not empty sessionScope.userid }'>"+
 						        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' "+
 						        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' "+
 						        " onclick=\"location.href=\'../place/writeFormProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+						        "</c:if>"+
 						        "</div>",
 						        juso: "<div>${m.juso}</div>",
 						        good:"<div>good:${m.goodcnt}</div>",
@@ -569,13 +580,17 @@
 							        "<div  class='title'>상가명: ${m.place_name}</div>"+
 							        "<div>지번주소: ${m.juso}</div><div>도로주소: ${m.doro_juso}</div>"+
 							        "<div>평균평점: ${m.avgpoint}</div>"+
-							        "<div>good:${m.goodcnt} soso:${m.sosocnt} bad:${m.badcnt}</div>"+
+							        "<div><img src='../resources/img/good_map.png' width='8' height='8'/>GOOD:${m.goodcnt}"+
+							        " <img src='../resources/img/soso_map.png' width='8' height='8'/>SOSO:${m.sosocnt}"+
+							        " <img src='../resources/img/bad_map.png' width='8' height='8'/>BAD:${m.badcnt}</div>"+
 							        "<input type='button' class='btn2' id='boardListBtn' name='boardListBtn' "+
 							        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='게시글 보기' "+
 							        " onclick=\"location.href=\'../place/boardListProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+							        "<c:if test='${not empty sessionScope.userid }'>"+
 							        "<input type='button' class='btn2' id='newBoardBtn'  name='newBoardBtn' "+
 							        " style='width:100px;background-color: rgba(174, 218, 232, 1);'  value='새글쓰기' "+
 							        " onclick=\"location.href=\'../place/writeFormProc.yo?place_name=${m.place_name}&juso=${m.juso}\'\"/>"+
+							        "</c:if>"+
 							        "</div>",
 							        juso: "<div>${m.juso}</div>",
 							        good:"<div>good:${m.goodcnt}</div>",
@@ -698,10 +713,6 @@
 			$(location).attr('href', '../place/placeList.yo')
 		});
 		
-
-
-		
-		
 		// 쿠키를 set하는 과정
 		function placeSetCookie(){
 			deleteCookie('gupath');
@@ -715,11 +726,6 @@
 			setCookie('mouseLng',mouseLng, 5); 
 	    	// 쿠키에다가 gupath랑 guname 마우스 위도경도 도 넘겼다 -----------------------
 		}
-		
-		
-		
-		
-		
 		
 		// *********************** 은비 스크립트 start *************************/
 		//파라미터 정보 확인하기
@@ -991,9 +997,5 @@
 			</table>
 		</div>
 	</div>
-
-
-
-	
 </body>
 </html>
