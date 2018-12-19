@@ -89,7 +89,11 @@
 			category_no,
 			point,
 			readcnt,
-			likecnt
+			likecnt,
+			--승환추가
+			p.latitude,
+			p.longitude,
+			p.juso
 		FROM
 			board b join place p
 			on b.place_no=p.place_no
