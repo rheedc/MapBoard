@@ -142,10 +142,10 @@
 	  			<tr height="35px">
 	  				<th rowspan="3" width="15%">
 	  				<c:if test="${not empty data.fsname}">
-	  				<img src="../upload/${data.fsname}" style="height:110px; width:210px;"/>
+	  				<img src="../upload/${data.fsname}" style="height:100px; width:210px;"/>
 	  				</c:if>
 	  				<c:if test="${empty data.fsname}">
-	  				<img src="../resources/img/no_detail_img.gif" style="height:110px; width:210px;"/>
+	  				<img src="../resources/img/no_detail_img.gif" style="height:100px; width:210px;"/>
 	  				</c:if>
 	  				</th>
 	  				<td width="55%">${data.place_name}</td>
@@ -164,7 +164,6 @@
 	  	</div>
 	  	<br/>
 		</c:forEach>
-  		<br/>
   		<table align="center" width="70%">	
 			<tr>
 				<td align="center">

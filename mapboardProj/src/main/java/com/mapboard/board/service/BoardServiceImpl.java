@@ -130,5 +130,26 @@ public class BoardServiceImpl implements BoardService{
 		return cnt;
 	}
 
-	
+	//추천수 증가처리함수
+	public void updateLikeCnt(int bidx, HttpSession session) {
+		boolean addLike=false;		//추천수를 증가할지 말지를 기억하는 변수
+		ArrayList likeList=(ArrayList)session.getAttribute("AddLike");
+		
+		if(likeList==null || likeList.size()==0) {
+			addLike=true;
+			likeList=new ArrayList();
+			likeList.add(bidx);
+			session.setAttribute("AddLike", likeList);
+		}
+		else if(!likeList.contains(bidx)) {
+			addLike=true;
+			likeList.add(bidx);
+		}
+		else {
+			addLike=false;
+		}
+		if(addLike) {			
+			bDao.updateLikeCnt(bidx);
+		}
+	}	
 }

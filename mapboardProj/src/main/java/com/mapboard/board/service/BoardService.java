@@ -35,5 +35,8 @@ public interface BoardService {
 
 	//게시물 삭제처리함수
 	public int deleteBoard(BoardVO vo);
+
+	//추천수 증가처리함수
+	public void updateLikeCnt(int bidx, HttpSession session);
 	
 }

@@ -29,6 +29,9 @@ public interface BoardDao {
 
 	//게시판 삭제질의
 	public int deleteBoard(BoardVO vo);
+
+	//추천수 증가처리명령
+	public void updateLikeCnt(int bidx);
 	
 	
 }

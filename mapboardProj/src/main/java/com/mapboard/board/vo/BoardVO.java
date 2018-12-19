@@ -129,6 +129,15 @@ public class BoardVO extends CommonVO{
 	public String getComm() {
 		return comm;
 	}
+	
+	//줄바꿈처리
+	public String getCommbr() {
+		String temp=comm;
+		if(temp!=null && temp.length()!=0) {
+			temp=temp.replaceAll("\n", "<br/>");
+		}
+		return temp;
+	}
 	public void setComm(String comm) {
 		this.comm = comm;
 	}

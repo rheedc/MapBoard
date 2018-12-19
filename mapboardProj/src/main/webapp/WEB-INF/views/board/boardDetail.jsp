@@ -141,7 +141,7 @@
 	</script>
 </head>
 <body>
-<%-- 게시판 상세보기 --%>
+	<%-- 게시판 상세보기 --%>
   		<table align="center" width="70%">
   			<tr>
   				<td>
@@ -201,36 +201,41 @@
 		  </a>
 		</div>
 		</td></tr>
-  		<%-- 	<tr>
-  				<td colspan="3">
-	  				<c:forEach items="${LIST}" var="info" varStatus="row">	
-	  					<img src="../upload/${info.fsname}"  name="name_${row.index}" id="name_${row.index}" class="boardImg"/>
-	  					<input type="file" name="files" id="files${row.index}"/>
-	  					<input type="button" param="${info.bidx}" name="delete_${row.index}" class="dfBtn" value="삭제">
-  					</c:forEach>	
-  				</td>
-  			</tr> --%>
- 		
- 			
-  			<tr>
-  				<th colspan="3">
-  					<textarea id="comm" name="comm" cols="165" style="resize:none;">${VIEW.comm}</textarea>
-  				</th>
-  			</tr>
+
+		<tr>
+			<th colspan="3">${VIEW.commbr}</th>
+		</tr>
   			
   		</table>
   	
   	<!-- 지도보기 -->
   		<table align="center" width="70%">
   			<tr>
-  				<td>장소명: ${VIEW.place_name}<br/>분류명: ${categoryName}<br/>장소평가:${VIEW.point}</td>
+  				<td>
+  				장소명 : ${VIEW.place_name} || 분류명 : ${VIEW.categoryName} || 장소평가 : ${VIEW.point} || 조회수 : ${VIEW.readcnt} || 추천수 : ${VIEW.likecnt}
+  				</td>
   			</tr>
   			<tr>
   				<td>지도삽입 : map
   					<div id="map" style="width:100%;height:350px;"></div>
   				</td>  				
   			</tr>
-  	<%-- 추천하기 체크를 위한 form --%>
+  	<%-- 좋아요체크를 위한 form --%>
+	<c:if test="${not empty sessionScope.userid}">
+		<form id="LCheckfrm" action="../board/boardAddLike.yo" method="post">
+			<input type="hidden" name="bidx" value="${VIEW.bidx}">
+			<input type="hidden" name="nowPage" value="${nowPage}">
+			<input type="hidden" name="sigungu_name" value="${sigungu_name}">
+			<input type="hidden" name="place_name" value="${place_name}">
+			<input type="hidden" name="my" value="${my}">
+			
+			<table align="center" width="70%">
+				<tr align="center">
+					<td><input type="submit" id="LBtn" value="추천" class="button"></td>
+				</tr>
+			</table>
+		</form>
+	</c:if>
   	
 	<!-- 댓글쓰기 추가 form-->
   		

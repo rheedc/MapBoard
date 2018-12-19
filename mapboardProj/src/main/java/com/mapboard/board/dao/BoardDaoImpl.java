@@ -51,9 +51,6 @@ public class BoardDaoImpl implements BoardDao{
 	public BoardVO getDownload(int fidx) throws Exception {
 		return (BoardVO)sqlSession.selectOne("board.download", fidx);
 	}
-	
-		
-		
 		
 		
 	//게시물 수정
@@ -74,7 +71,10 @@ public class BoardDaoImpl implements BoardDao{
 		return cnt;
 	}
 
-
+	//추천수 증가처리명령
+	public void updateLikeCnt(int bidx) {
+		sqlSession.update("board.updateLikeCnt",bidx);		
+	}
 	
 	
 }

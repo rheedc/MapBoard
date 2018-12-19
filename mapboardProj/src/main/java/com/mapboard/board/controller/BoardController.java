@@ -138,31 +138,61 @@ public class BoardController {
 	}
 	
 	//상세보기 요청 함수(내용/첨부파일)
-		@RequestMapping("/boardDetail")
-		public ModelAndView boardDetail(@RequestParam(value="bidx") int bidx,
-												@RequestParam(value="nowPage") int nowPage,
-												HttpServletRequest req) throws Exception {		
-			//어디로 보낼지 구분하는 변수
-			String my=req.getParameter("my");
-			
-			String sigungu_name=req.getParameter("sigungu_name");
-			String place_name=req.getParameter("place_name");
-			
-			BoardVO vo =service.getBoardDetail(bidx);
-			ArrayList list = service.getFileDetail(bidx);
-			
-			//모델
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("VIEW", vo);									//내용
-			mv.addObject("LIST", list);									//첨부파일 정보
-			mv.addObject("nowPage", nowPage);			//릴레이용
-			mv.addObject("sigungu_name", sigungu_name);
-			mv.addObject("place_name", place_name);	
-			mv.addObject("my", my);
-			mv.setViewName("board/boardDetail");
-			return mv;
-		}
+	@RequestMapping("/boardDetail")
+	public ModelAndView boardDetail(@RequestParam(value="bidx") int bidx,
+											@RequestParam(value="nowPage") int nowPage,
+											HttpServletRequest req) throws Exception {		
+		//어디로 보낼지 구분하는 변수
+		String my=req.getParameter("my");
+		
+		String sigungu_name=req.getParameter("sigungu_name");
+		String place_name=req.getParameter("place_name");
+		
+		BoardVO vo =service.getBoardDetail(bidx);
+		ArrayList list = service.getFileDetail(bidx);
+		
+		//모델
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("VIEW", vo);									//내용
+		mv.addObject("LIST", list);									//첨부파일 정보
+		mv.addObject("nowPage", nowPage);			//릴레이용
+		mv.addObject("sigungu_name", sigungu_name);
+		mv.addObject("place_name", place_name);	
+		mv.addObject("my", my);
+		mv.setViewName("board/boardDetail");
+		return mv;
+	}
 
+	//추천수 증가요청 함수
+	@RequestMapping("/boardAddLike")
+	public ModelAndView boardAddLike(ModelAndView mv, HttpSession session,
+				HttpServletRequest req) throws Exception {
+	
+	
+	System.out.println("추천수 증가요청들어옴");
+	
+	//어디로 보낼지 구분하는 변수
+	String my=req.getParameter("my");
+	String sbidx = req.getParameter("bidx");
+	int bidx = Integer.parseInt(sbidx);
+	String nowPage = req.getParameter("nowPage");	//릴레이용
+	String sigungu_name=req.getParameter("sigungu_name");
+	String place_name=req.getParameter("place_name");
+	
+	service.updateLikeCnt(bidx,session);
+	
+	RedirectView rv = new RedirectView("../board/boardDetail.yo");
+	//컨트롤러에서 Redirect하면서 파라미터를 보내고 싶다면 
+	//rv.addStaticAttribute(String형태 "키값",  데이터);
+	rv.addStaticAttribute("bidx", bidx);
+	rv.addStaticAttribute("nowPage", nowPage);
+	rv.addStaticAttribute("sigungu_name", sigungu_name);
+	rv.addStaticAttribute("place_name", place_name);	
+	rv.addStaticAttribute("my", my);
+	mv.setView(rv);
+	return mv;
+	}
+	
 	//파일 다운로드 요청 처리 함수
 	@RequestMapping("/fileDownload")
 	public ModelAndView fileDownload(

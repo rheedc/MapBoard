@@ -142,6 +142,16 @@
 		bidx = #{bidx}	
 	</update>
 	
+	<!-- 추천수증가처리 -->
+	<update id="updateLikeCnt" parameterType="int">
+	UPDATE
+		board
+	SET
+		likecnt = likecnt + 1
+	WHERE
+		bidx = #{bidx}	
+	</update>
+	
 	<!-- 게시판삭제처리 -->
 	<update id="deleteBoard" parameterType="boardVO">
 	UPDATE
