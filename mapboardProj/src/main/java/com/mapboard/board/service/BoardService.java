@@ -22,10 +22,16 @@ public interface BoardService {
 	
 	public BoardVO getBoardDetail(int bidx) throws Exception;
 	
+	//첨부파일 검색(상세보기)
+	public ArrayList getFileDetail(int bidx) throws Exception; 
+	
+	//다운로드 파일 정보 검색 질의 실행 함수
+	public BoardVO getDownload(int fidx) throws Exception; 
+	
 	public void updateBoard(BoardVO vo) throws Exception;
 
 	//조회수 증가처리함수
-	public void updateHit(int bidx, HttpSession session);
+	public void updateHit(int bidx, HttpSession session) throws Exception;
 
 	//게시물 삭제처리함수
 	public int deleteBoard(BoardVO vo);

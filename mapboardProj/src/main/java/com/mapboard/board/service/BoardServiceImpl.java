@@ -76,6 +76,21 @@ public class BoardServiceImpl implements BoardService{
 		return vo;
 	}
 	
+	//첨부파일 검색(상세보기)
+	@Override
+	public ArrayList getFileDetail(int bidx)  throws Exception{
+		//첨부파일 정보 검색해서 알려준다.
+		ArrayList list = bDao.getFileDetail(bidx);
+		return list;
+	}
+	
+	//다운로드 파일 정보 검색 질의 실행 함수
+	@Override
+	public BoardVO getDownload(int fidx) throws Exception {
+		BoardVO vo = bDao.getDownload(fidx);
+		return vo;
+	}	
+	
 	//게시물 수정
 	@Override
 	public void updateBoard(BoardVO vo) throws Exception {
@@ -113,5 +128,7 @@ public class BoardServiceImpl implements BoardService{
 	public int deleteBoard(BoardVO vo) {
 		int cnt=bDao.deleteBoard(vo);
 		return cnt;
-	}	
+	}
+
+	
 }

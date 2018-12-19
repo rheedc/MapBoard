@@ -118,11 +118,11 @@ public class BoardController {
 		
 		//상세보기 데이터가져오기
 		BoardVO vo = service.getBoardDetail(bidx);
-		//ArrayList list = service.getFilInfo(bidx);
+		ArrayList list = service.getFileDetail(bidx);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("VIEW", vo);
-		//mv.addObject("LIST", list);	
+		mv.addObject("LIST", list);	
 		mv.addObject("nowPage", nowPage);
 		mv.addObject("sigungu_name", sigungu_name);
 		mv.addObject("place_name", place_name);
@@ -130,7 +130,19 @@ public class BoardController {
 		return mv;
 	}
 	
-	
+	//파일 다운로드 요청 처리 함수
+	@RequestMapping("/fileDownload")
+	public ModelAndView fileDownload(
+			@RequestParam(value="fileNo") int fidx) throws Exception {
+		
+		BoardVO vo = service.getDownload(fidx);
+		//다운로드 할 파일을 File이라는 클래스로 만들어서 제공하기로 했다.
+		File file = new File(vo.getFpath(),vo.getFsname());
+		
+		ModelAndView mv = new ModelAndView("download", "downloadFile", file); 	//sun-context.xml
+		
+		return mv;
+	}
 	
 	//수정하기
 	@RequestMapping("/updateForm")

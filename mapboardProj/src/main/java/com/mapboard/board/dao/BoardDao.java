@@ -16,6 +16,12 @@ public interface BoardDao {
 	
 	public BoardVO getBoardDetail(int bidx) throws Exception;
 	
+	//첨부파일 검색(상세보기)
+	public ArrayList getFileDetail(int bidx) throws Exception;
+	
+	//다운로드 파일 정보 검색 질의 실행 함수
+	public BoardVO getDownload(int fileNo)  throws Exception;
+	
 	public void updateBoard(BoardVO bvo) throws Exception;
 
 	//조회수 증가처리명령

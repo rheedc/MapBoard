@@ -163,11 +163,21 @@
   			</tr>
   			<tr>
   				<th colspan="3">
-  					<textarea id="body" name="body" cols="136" style="resize:none;">${VIEW.comm}</textarea>
+  					<textarea id="comm" name="comm" cols="136" style="resize:none;">${VIEW.comm}</textarea>
   				</th>
   			</tr>
+  			<%-- 첨부파일 내용 출력 
+  				mv.addObject("LIST",list);
+  			--%>
+  			<c:forEach var="file" items="${LIST}">
+		  		<tr>
+		  			<td colspan="3">
+		  				<a href="../board/fileDownload.yo?fileNo=${file.fidx}">${file.foriname}</a> ( ${file.comma} Byte )<%-- FileBoardVO len --%>
+		  			</td>
+		  		</tr>
+  			</c:forEach>
   		</table>
-  		
+  	
   	<!-- 지도보기 -->
   		<table align="center" width="70%">
   			<tr>

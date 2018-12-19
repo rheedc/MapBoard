@@ -99,8 +99,26 @@
 		where
 			b.bidx = #{bidx}
 	</select>	
+	<!-- 첨부파일 검색(상세) -->
+	<select id="fileDetail"	parameterType="int" resultType="boardVO">
+		select
+			fidx,bidx,fpath,foriname,fsname,fsize
+		from
+			fileinfo
+		WHERE
+			bidx = #{bidx}
+	</select>
 	
-
+	<!-- 다운로드 파일 정보 검색 질의 -->
+	<select id="download"	parameterType="int" resultType="boardVO">
+		select
+			fidx,bidx,fpath,foriname,fsname,fsize
+		from
+			fileinfo
+		WHERE
+			fidx = #{fidx}
+	</select>
+	
 	<!-- 게시물 수정 -->
 	<update id="updateBoard" parameterType="boardVO">
 		update

@@ -1,5 +1,7 @@
 package com.mapboard.board.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,22 @@ public class BoardDaoImpl implements BoardDao{
 		return (BoardVO)sqlSession.selectOne("board.boardDetail",bidx);
 	}
 	
+	//첨부파일 검색(상세보기)
+	@Override
+	public ArrayList getFileDetail(int bidx) throws Exception {
+		return (ArrayList)sqlSession.selectList("board.fileDetail", bidx);
+	}
+	
+	//다운로드 파일 정보 검색 질의 실행 함수
+	@Override
+	public BoardVO getDownload(int fidx) throws Exception {
+		return (BoardVO)sqlSession.selectOne("board.download", fidx);
+	}
+	
+		
+		
+		
+		
 	//게시물 수정
 	@Override
 	public void updateBoard(BoardVO vo) throws Exception {
@@ -55,4 +73,8 @@ public class BoardDaoImpl implements BoardDao{
 		int cnt=sqlSession.update("board.deleteBoard",vo);
 		return cnt;
 	}
+
+
+	
+	
 }
