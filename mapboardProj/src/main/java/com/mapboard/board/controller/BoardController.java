@@ -151,7 +151,6 @@ public class BoardController {
 	public void updateProc(BoardVO vo, ModelAndView mv, RedirectView rv) throws Exception {
 		//내용수정
 		service.updateBoard(vo);
-	
 	}
 	
 	
