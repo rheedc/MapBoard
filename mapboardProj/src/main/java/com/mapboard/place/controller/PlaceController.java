@@ -267,7 +267,7 @@ public class PlaceController {
 			
 			
 				
-			RedirectView rv	=	new RedirectView("/board/boardList.yo?place_no="+place_no);
+			RedirectView rv	=	new RedirectView("/board/boardList2.yo?place_no="+place_no);
 			System.out.println("boardViewProc controller끝");
 			mv.setView(rv);
 			return mv;

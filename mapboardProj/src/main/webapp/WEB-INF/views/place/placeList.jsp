@@ -986,7 +986,7 @@
 				</tr>
 				<tr>
 					<td align="center">
-						<input type="button" id="seoul" value="서울시 전체지도보기"/>
+						<input type="button" class="btn2" id="seoul" value="서울시 전체지도보기" style="width:150px;"/>
 					</td>
 				</tr>
 				<tr>
