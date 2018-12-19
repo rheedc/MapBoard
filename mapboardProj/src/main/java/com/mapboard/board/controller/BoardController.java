@@ -146,7 +146,12 @@ public class BoardController {
 		return mv;
 	}
 	
-	//
+	//수정하기 처리
+	@RequestMapping("/updateProc")
+	public void updateProc(BoardVO vo, ModelAndView mv, RedirectView rv) throws Exception {
+		//내용수정
+		service.updateBoard(vo);
+	}
 	
 	
 	
