@@ -57,4 +57,7 @@ public interface PlaceDao {
 	public int getBoardSearchListCnt(PlaceVO vo, int situation);
 
 	public ArrayList getBoardSearchList(PlaceVO vo, int situation);
+
+	//리뷰
+	public ArrayList getReview(PlaceVO vo);
 }

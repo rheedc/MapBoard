@@ -675,4 +675,16 @@
 	WHERE
 	    RNO BETWEEN #{start} AND #{end}
 	</select>
+	
+	<select id="review" resultType="PlaceVO" parameterType="PlaceVO">
+	SELECT 
+	    BIDX,b.USERID,SUBJECT,COMM,POINT,LIKECNT,READCNT,b.CREATEDT,b.UPDATEDT,b.STATUS,
+	    b.PLACE_NO,PLACE_NAME,CATEGORY_NO,SIGUNGU_NAME,LATITUDE,LONGITUDE
+	FROM
+	    Board b,Place p
+	WHERE 
+	    b.PLACE_NO=p.PLACE_NO
+	    AND b.STATUS='Y'
+	    AND b.USERID=#{userid}
+	</select>
 </mapper>
