@@ -2,8 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page session="false" %>
+
 <html>
 <head> 
+	<link href="https://fonts.googleapis.com/css?family=Poor+Story|Yeon+Sung" rel="stylesheet">
 	<title>Home</title>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
@@ -63,10 +65,10 @@
 		</tr>
 		<tr>
 			<td align="center">				
-				<a href="#" id="seoul"><h1 style="font-family: '나눔손글씨 펜';">지도로 즐기기</h1></a>
+				<a href="#" id="seoul"><h1 style="font-family: 'Poor Story';">지도로 즐기기</h1></a>
 			</td>
 			<td align="center">
-				<a href="/board/boardList2.yo"><h1 style="font-family: '나눔손글씨 펜';">글로 즐기기</h1></a>
+				<a href="/board/boardList2.yo"><h1 style="font-family: 'Poor Story';">글로 즐기기</h1></a>
 			</td> 
 		</tr>
 	</table>
