@@ -2,6 +2,14 @@ package com.mapboard.place.vo;
 
 import com.mapboard.common.vo.CommonVO;
 
+/**
+ * @author hong
+ *
+ */
+/**
+ * @author hong
+ *
+ */
 public class PlaceVO extends CommonVO{
 	private String place_name;
 	private int category_no;
@@ -18,8 +26,18 @@ public class PlaceVO extends CommonVO{
 	private int readcnt;
 	private String nick;
 	
+	private String fsname;
+	
 	//정보를 뿌리기 위해 추가로 필요한 변수들
 	
+	public String getFsname() {
+		return fsname;
+	}
+
+	public void setFsname(String fsname) {
+		this.fsname = fsname;
+	}
+
 	public String getNick() {
 		return nick;
 	}

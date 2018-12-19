@@ -14,8 +14,7 @@
 										text-align : center;
 										height : 42px;
 										}
-										
-		
+									
 					
 		#text-left { text-align : left;
 							padding-left:10px;

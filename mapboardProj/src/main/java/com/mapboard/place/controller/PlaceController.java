@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.mapboard.board.service.BoardService;
+import com.mapboard.board.vo.BoardVO;
 import com.mapboard.place.service.PlaceService;
 import com.mapboard.place.vo.PlaceVO;
 import com.mapboard.util.PageUtil;
@@ -21,7 +23,7 @@ public class PlaceController {
 
 	@Autowired
 	private PlaceService pservice;
-	
+
 	//PlaceListService plistService;
 	
 	// 지도에다가 상가좌표를 뿌려줄 함수입니다.
@@ -596,7 +598,9 @@ public class PlaceController {
 					situation=4;
 				}
 			}
-			
+			/*BoardVO vo2 =service.getBoardDetail(bidx);
+			ArrayList list = service.getFileDetail(bidx);
+			*/
 
 			System.out.println("userid : "+vo.getUserid());
 			System.out.println("place_name : "+place_name);

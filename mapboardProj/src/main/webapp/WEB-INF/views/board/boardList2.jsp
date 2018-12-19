@@ -140,7 +140,7 @@
 		<div class="box">
 	  		<table align="center" width="100%" class="style1">
 	  			<tr height="35px">
-	  				<th rowspan="3" width="15%">이미지</th>
+	  				<th rowspan="3" width="15%"><a href="../upload/${data.fsname}"><img src="../upload/${data.fsname}"></a></th>
 	  				<td width="55%">${data.place_name}</td>
 	  				<td width="30%">${data.createdt}</td>
 	  			</tr>
