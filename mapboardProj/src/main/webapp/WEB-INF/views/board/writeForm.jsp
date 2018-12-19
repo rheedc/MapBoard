@@ -146,6 +146,7 @@
 					<input type="file" id="files1" name="files" value="파일선택"/>
 				</td>
 			</tr>
+			
 			<tr id="copy">
 				<th colspan="2">
 					<input type="button" id="wBtn" value="글등록"/>

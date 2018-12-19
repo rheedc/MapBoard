@@ -128,6 +128,7 @@
   				</th>
   			</tr>
   		</table>
+  		
   	<!-- 지도보기 -->
   		<table align="center" width="70%">
   			<tr>

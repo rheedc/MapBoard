@@ -130,14 +130,21 @@
 					<input type="radio" name="point" value="1">Bad
 				</td>
 			</tr>
+			
 			<tr>
-				<th>파일첨부1</th>
-				<td id="left">
-					<input type="file" id="files" name="files" value="파일선택"/>
+				<th>파일첨부</th>
+				<td>
 					<input type="button" id="aBtn" value="추가"/>
 					<input type="button" id="dBtn" value="삭제"/>
 				</td>
 			</tr>
+			<tr>
+				<th>파일첨부1</th>
+				<td>
+					<input type="file" id="files1" name="files" value="파일선택"/>
+				</td>
+			</tr>
+			
 			<tr id="copy">
 				<th colspan="2">
 					<input type="button" id="mBtn" value="수정"/>
