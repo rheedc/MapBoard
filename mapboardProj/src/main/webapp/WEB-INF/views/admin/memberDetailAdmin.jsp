@@ -68,16 +68,13 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
-	$(function(){
-		<%--수정 버튼을 클릭했을 때 수정처리  --%>
-		$("#updateBtn").click(function(e){
-			$("#memForm").submit();
-		});
+	$(document).ready(function(){
 		
 		$("#listBtn").click(function(){
 			location.href = "/member/memberList.yo?nowPage=${nowPage}";
 		});
 		
+	
 	});
 	
 	</script>
@@ -85,8 +82,9 @@
 <body>
 <div class="joinFrm">
 <p id="subTitle">회원 정보 상세보기</p>
-<br>
-	<form id="memForm" method="post" action="/member/memberUpdateAdmin.yo">
+<br/>
+ <form id="memForm" name="memForm" method="post" action="/member/memberUpdateAdmin.yo">
+<!-- <form id="memForm" name="memForm" method="post" action="/member/m.yo"> -->
 		<div class="formGroup">
 			<div class="inputTitle">아이디</div>
 			<div class="detailBox">${VIEW.userid}	</div>
@@ -95,7 +93,7 @@
 		</div>
 		<div class="formGroup">
 			<div class="inputTitle">비밀번호</div>
-			<div class="detailBox">********</div>
+			<div class="detailBox">*******<font color="#eeeeee">${VIEW.passwd}</font></div>
 		</div>
 		<div class="formGroup">
 			<div class="inputTitle">이름</div>
@@ -112,8 +110,8 @@
 		<div class="formGroup">
 			<div class="inputTitle">등급</div>
 			<div class="selectBox">
-				<select name="ulevel" id="ulevel">
-	  				<option value=1>1</option>
+				<select name="ulevel" >
+	  				<option value=1 selected="selected">1</option>
 	  				<option value=10>10</option>
 	  			</select>
 			</div>
@@ -122,7 +120,7 @@
 			<div class="inputTitle">상태</div>
 			<div class="selectBox">
 				<select name="status" id="status">
-	  				<option value="Y">Y</option>
+	  				<option value="Y" selected="selected">Y</option>
 	  				<option value="N">N</option>
 	  			</select>
 			</div>
@@ -132,7 +130,7 @@
 			<input type="submit" id="updateBtn" class="actionBtn" value="수정"  />
 			<input type="button" id="listBtn" class="actionBtn" value="목록" />
 		</div>
-	</form>
+</form>
 </div>
 </body>
 </html>

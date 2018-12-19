@@ -42,25 +42,24 @@ public class MemberController {
 	//서비스 클래스를 자동주입하는 명령
 	@Autowired
 	private MemberService mservice;
-	
+	                                   
 	//회원정보 수정요청 처리
 	@RequestMapping("/memberUpdateAdmin")
-	public ModelAndView memberUpdateAdmin(MemberVO vo, ModelAndView mv) {
+	public ModelAndView mm(MemberVO vo) {
 		System.out.println("회원수정요청 처리 컨트롤러 실행 시작");
 		//파라미터 받고
 		//로직수행
 		mservice.memberUpdateAmin(vo);
-		
-		//모델
-		mv.addObject("VIEW",vo);
-		System.out.println("회원수정요청 처리 서비스 실행 결과");
-		//뷰
-		RedirectView view = new RedirectView("/admin/memberViewAdmin.yo");
+		ModelAndView mv = new ModelAndView();
+		RedirectView view = new RedirectView();
+		view.setUrl("/member/memberList.yo");
+		view.addStaticAttribute("nowPage",vo.getNowPage());
+				
 		mv.setView(view);
-		System.out.println("회원수정요청 처리 컨트롤러 실행 완료");
+		System.out.println("회원 정보 수정처리 완료");
+		
 		return mv;
 	}
-
 	
 	//회원 정보 수정 폼 보기
 	@RequestMapping("/memberDetailAdmin")
@@ -68,9 +67,7 @@ public class MemberController {
 		//파라미터 받고
 		String userid = req.getParameter("userid");
 		String nowPage=req.getParameter("nowPage");
-		System.out.println("회원정보 수정 컨트롤러 시작");
-		
-		
+				
 		//로직 수행
 		MemberVO vo= new MemberVO();
 		vo=mservice.selectMemberbyId(userid);
