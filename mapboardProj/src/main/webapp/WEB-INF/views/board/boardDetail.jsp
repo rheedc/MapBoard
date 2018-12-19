@@ -34,6 +34,12 @@
 						
 		#wide {width : 700px;
 					 }
+					 
+		.boardImg {
+						height : 300px;
+						float : left;
+						padding : 10px;
+		}					 
 		
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -157,25 +163,35 @@
 	  				</td>
 	  			</c:if>	
   			</tr>
-  			<tr>
-  				<th colspan="3">사진, 페이징처리
-  				</th>
-  			</tr>
-  			<tr>
-  				<th colspan="3">
-  					<textarea id="comm" name="comm" cols="136" style="resize:none;">${VIEW.comm}</textarea>
-  				</th>
-  			</tr>
   			<%-- 첨부파일 내용 출력 
   				mv.addObject("LIST",list);
   			--%>
-  			<c:forEach var="file" items="${LIST}">
+  			<%-- <c:forEach var="file" items="${LIST}">
 		  		<tr>
 		  			<td colspan="3">
-		  				<a href="../board/fileDownload.yo?fidx=${file.fidx}">${file.foriname}</a> ( ${file.fsize} Byte )<%-- FileBoardVO len --%>
+		  				<a href="../board/fileDownload.yo?fidx=${file.fidx}">${file.foriname}</a> ( ${file.fsize} Byte )FileBoardVO len
 		  			</td>
 		  		</tr>
-  			</c:forEach>
+  			</c:forEach> --%>
+  			
+  		
+  			<tr>
+  				<td colspan="3">
+	  				<c:forEach items="${LIST}" var="info" varStatus="row">	
+	  					<img src="../upload/${info.fsname}"  name="name_${row.index}" id="name_${row.index}" class="boardImg"/>
+	  					<%-- <input type="file" name="files" id="files${row.index}"/>
+	  					<input type="button" param="${info.bidx}" name="delete_${row.index}" class="dfBtn" value="삭제"> --%>
+  					</c:forEach>	
+  				</td>
+  			</tr>
+ 		
+ 			
+  			<tr>
+  				<th colspan="3">
+  					<textarea id="comm" name="comm" cols="165" style="resize:none;">${VIEW.comm}</textarea>
+  				</th>
+  			</tr>
+  			
   		</table>
   	
   	<!-- 지도보기 -->

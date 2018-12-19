@@ -52,8 +52,8 @@ public class BoardController {
 		vo.setPlace_no(place_no);
 		System.out.println(place_no);
 	
-		String fpath = "E:\\upload";
-
+		String fpath = ((HttpSession) req).getServletContext().getRealPath("/upload/");
+		System.out.println("path="+fpath);
 		
 		//1) 파라미터
 		ArrayList list = new ArrayList();
@@ -162,13 +162,13 @@ public class BoardController {
 	//파일 다운로드 요청 처리 함수
 	@RequestMapping("/fileDownload")
 	public ModelAndView fileDownload(
-			@RequestParam(value="fileNo") int fidx) throws Exception {
+			@RequestParam(value="fidx") int fidx) throws Exception {
 		
 		BoardVO vo = service.getDownload(fidx);
 		//다운로드 할 파일을 File이라는 클래스로 만들어서 제공하기로 했다.
 		File file = new File(vo.getFpath(),vo.getFsname());
 		
-		ModelAndView mv = new ModelAndView("download", "downloadFile", file); 	//sun-context.xml
+		ModelAndView mv = new ModelAndView("download", "downloadFile", file); 	//
 		
 		return mv;
 	}
