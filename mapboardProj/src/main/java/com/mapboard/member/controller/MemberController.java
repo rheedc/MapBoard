@@ -51,6 +51,7 @@ public class MemberController {
 		String target=req.getParameter("target");
 		String word = req.getParameter("word");
 		String strPage=req.getParameter("nowPage");
+		System.out.println(target+","+word);
 		int nowPage=1;
 		if(strPage==null || strPage.length()==0) {
 			nowPage=1;
@@ -102,6 +103,7 @@ public class MemberController {
 	//회원 정보 수정 폼 보기
 	@RequestMapping("/memberDetailAdmin")
 	public ModelAndView memberDetailAdmin(HttpServletRequest req, ModelAndView mv) {
+		System.out.println("회원수정 폼 보기 컨트롤러 실행");
 		//파라미터 받고
 		String userid = req.getParameter("userid");
 		String nowPage=req.getParameter("nowPage");

@@ -50,21 +50,22 @@
 	<script>
 	$(function(){
 		<%--조회 버튼을 클릭했을 때 --%>
-		
-		<%--$("#searchBtn").click(function(){
-			var target=$("#target").val();
-			var word=$("#word").val();
-			if(target=="total" && word==""){
-				location.href="/member/memberList.yo";
-					
-			}else{
-				location.href="/member/memberSearchAdmin.yo";
-				
+		var target=$("#target").val();
+		var word=$("#word").val();
+		$("#searchBtn").click(function(){
+			if(!word){
+				$('#target').val();
+				$("#word").val();
+				$('#nowPage').val("${PINFO.nowPage}");
+				$('#searchFrm').attr("action", "/member/memberSearchAdmin.yo");
+				$('#searchFrm').submit();
 			}
-			$("#searchFrm").submit();		
+			else{
+				location.href="/member/memberList.yo";
+				$('#searchFrm').submit();
+			}
 		});
-		--%>
-		
+	
 	});
 	
 	function memModify(id) {
@@ -82,20 +83,20 @@
 
 <br>
 	<%-- 검색부분 --%>
-	<form id="searchFrm" method="post" action="/member/memberSearchAdmin.yo">
+	<%--<form id="searchFrm" method="post" action="/member/memberSearchAdmin.yo"> --%>
+	<form id="searchFrm" method="post" >
 		<table class="searchArea">
 			<tr>
 				<td>
 				<td align="center">
 		  			<!-- 검색대상 -->
 		  			<select name="target" id="target">
-		  				<option value="total" selected="selected">전체</option>
 		  				<option value="uname">성명</option>
 		  				<option value="userid">아이디</option>
 		  				<option value="nick">닉네임</option>
 		  			</select>
 					<input type="text" name="word" id="word" class="category_no" placeholder="검색어를 입력해 주세요." size=40% /> 
-					<input type="submit" name="searchBtn" id="searchBtn" value="조회하기" class="category_no">
+					<input type="button" name="searchBtn" id="searchBtn" value="조회하기" class="category_no">
 					
 				</td>
 			</tr>
@@ -104,10 +105,11 @@
 	<br>
 	<%-- 1. 목록을 출력 --%>
 	<div id="totalCnt"> 전체 회원 수 : ${PINFO.totalCount} </div>
-	<form id="hiddenForm" method="post" action="">
+	<form id="hiddenForm" method="post" >
 				<input type="hidden" name="userid" id="userid" />
 				<input type="hidden" name="nowPage" id="nowPage"  />
 	</form>
+	
 	<table id="listArea"  class="style1">
 		<tr>
 			<th width="20%">ID</th>
@@ -117,58 +119,67 @@
 			<th width="5%">상태</th>
 			<th width="5%">등급</th>
 			<th width="10%">수정</th>
-		</tr> 
-		<c:forEach var="data" items="${MLIST}">
+		</tr>
+		<c:if test="${empty MLIST }"> 
+		<tr>
+		<td colspan=7>
+	  			<h3 align="center">해당 회원이 존재하지 않습니다</h3>
+		</td>
+  		</tr>
+  		</c:if>
+  		<c:if test="${not empty MLIST }">
+			<c:forEach var="data" items="${MLIST}">
+				<tr>
+					<td>${data.userid}</td>
+					<td>${data.uname}</td>
+					<td>${data.nick}</td>
+					<td>${data.createdt}</td>
+					<td>${data.status}</td>
+					<td>${data.ulevel}</td>
+					<td>	<input type="button" id="memModify" value="수정"  onclick="memModify('${data.userid}');" />
+					</td>
+				</tr>
+			</c:forEach>
+		</c:if>		
+		</table>
+		<br>
+		<%-- 2. 페이지 이동 기능을 추가  [이전][1][2][3][다음]--%>
+		<table id="pageArea">		
+			
 			<tr>
-				<td>${data.userid}</td>
-				<td>${data.uname}</td>
-				<td>${data.nick}</td>
-				<td>${data.createdt}</td>
-				<td>${data.status}</td>
-				<td>${data.ulevel}</td>
-				<td>	<input type="button" id="memModify" value="수정"  onclick="memModify('${data.userid}');" />
+				<td>
+				<%-- 이전링크만들기 --%>
+				<c:if test="${PINFO.nowPage eq 1}">
+					◀
+				</c:if>
+				<c:if test="${PINFO.nowPage ne 1}">
+					<%-- 링크는 목록보기를 요청 + 원하는 페이지를 알려주면 된다 --%>
+					<a href="/member/memberList.yo?nowPage=${PINFO.nowPage-1}">◀</a>		
+				</c:if>
+				
+				<%-- [1][2][3]만들기 --%>
+				<c:forEach var="page" begin="${PINFO.startPage}"  end="${PINFO.endPage }">
+					<c:if test="${PINFO.nowPage eq page }">
+				  		<a href="/member/memberList.yo?nowPage=${page}"><font color="blue">(${page})</font></a>
+				  	</c:if>
+				  	<c:if test="${PINFO.nowPage ne page }">
+				  		<a href="/member/memberList.yo?nowPage=${page}">(${page})</a>
+				  	</c:if>
+				</c:forEach>
+		
+			
+				<%-- 다음링크만들기 --%>
+				<c:if test="${PINFO.nowPage eq PINFO.totalPage}">
+					▶
+				</c:if>
+				<c:if test="${PINFO.nowPage ne PINFO.totalPage}">
+					<a href="/member/memberList.yo?nowPage=${PINFO.nowPage+1}">▶</a>	
+				</c:if>
+	
 				</td>
 			</tr>
-		</c:forEach>		
-	</table>
-	<br>
-	<%-- 2. 페이지 이동 기능을 추가  [이전][1][2][3][다음]--%>
-	<table id="pageArea">		
-		
-		<tr>
-			<td>
-			<%-- 이전링크만들기 --%>
-			<c:if test="${PINFO.nowPage eq 1}">
-				◀
-			</c:if>
-			<c:if test="${PINFO.nowPage ne 1}">
-				<%-- 링크는 목록보기를 요청 + 원하는 페이지를 알려주면 된다 --%>
-				<a href="/member/memberList.yo?nowPage=${PINFO.nowPage-1}">◀</a>		
-			</c:if>
-			
-			<%-- [1][2][3]만들기 --%>
-			<c:forEach var="page" begin="${PINFO.startPage}"  end="${PINFO.endPage }">
-				<c:if test="${PINFO.nowPage eq page }">
-			  		<a href="/member/memberList.yo?nowPage=${page}"><font color="blue">(${page})</font></a>
-			  	</c:if>
-			  	<c:if test="${PINFO.nowPage ne page }">
-			  		<a href="/member/memberList.yo?nowPage=${page}">(${page})</a>
-			  	</c:if>
-			</c:forEach>
+		</table>
 	
-		
-			<%-- 다음링크만들기 --%>
-			<c:if test="${PINFO.nowPage eq PINFO.totalPage}">
-				▶
-			</c:if>
-			<c:if test="${PINFO.nowPage ne PINFO.totalPage}">
-				<a href="/member/memberList.yo?nowPage=${PINFO.nowPage+1}">▶</a>	
-			</c:if>
-
-			</td>
-		</tr>
-	</table>
-
 </body>
 </html>
 
