@@ -63,10 +63,10 @@
 		</tr>
 		<tr>
 			<td align="center">				
-				<a href="#" id="seoul"><h1>지도로 즐기기</h1></a>
+				<a href="#" id="seoul"><h1 style="font-family: '나눔손글씨 펜';">지도로 즐기기</h1></a>
 			</td>
 			<td align="center">
-				<a href="/board/boardList.yo"><h1>글로 즐기기</h1></a>
+				<a href="/board/boardList2.yo"><h1 style="font-family: '나눔손글씨 펜';">글로 즐기기</h1></a>
 			</td> 
 		</tr>
 	</table>

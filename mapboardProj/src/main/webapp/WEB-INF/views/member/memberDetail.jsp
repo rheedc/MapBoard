@@ -75,7 +75,43 @@
 		//팝업창 경로, 팝업창 이름, 위치(화면 중앙정렬) 및 크기 등 설정
 		window.open(url,"chkForm", "status=no, width=500, height=300, resizable = no, scrollbars = no, left="+ popupX + ", top="+ popupY + ", screenX="+ popupX + ", screenY= "+ popupY);	
 	}
+		
+	
 
+	
+	//-- 송승환의 지도 추가 부분~~~~~~~~~~
+	$(function(){
+		
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new daum.maps.LatLng(${VIEW.latitude} , ${VIEW.longitude} ), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+	var map = new daum.maps.Map(mapContainer, mapOption);
+	
+	// 마커가 표시될 위치입니다 
+	var markerPosition  = new daum.maps.LatLng(${VIEW.latitude} , ${VIEW.longitude}); 
+	
+	// 마커를 생성합니다
+	var marker = new daum.maps.Marker({
+	    position: markerPosition
+	});
+	
+	// 마커가 지도 위에 표시되도록 설정합니다
+	marker.setMap(map);
+	
+	var iwContent = '<div style="padding:5px;">등록자: ${VIEW.nick} <br/>지번주소: ${VIEW.juso} </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	    iwPosition = new daum.maps.LatLng(${VIEW.latitude}, ${VIEW.longitude}); //인포윈도우 표시 위치입니다
+	
+	// 인포윈도우를 생성합니다
+	var infowindow = new daum.maps.InfoWindow({
+	    position : iwPosition, 
+	    content : iwContent 
+	});
+	  
+	// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+	infowindow.open(map, marker); 
+	});
 	</script>
 </head>
 <body>
@@ -102,12 +138,16 @@
 			<div class="inputTitle">내 기준지</div>
 			<div class="detailBox">위도: ${VIEW.latitude}, 경도: ${VIEW.longitude}<br/>주소: ${VIEW.juso}</div>
 		</div>
+		<div>
+			<div id="map" style="width:100%;height:350px;"></div>
+		</div>
 	
 		<div class="formBtn">
 			<input type="submit" id="updateBtn" class="actionBtn" value="수정"  />
 			<input type="button" id="homeBtn" class="actionBtn" value="취소" />
 			<input type="submit" id="leaveBtn" class="actionBtn" value="탈퇴" onclick="meChkAction()" />
 		</div>
+		
 
 </div> 
 </body>
