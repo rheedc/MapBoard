@@ -110,6 +110,9 @@ public class BoardController {
 		
 		System.out.println("조회수 증가요청들어옴");
 		//조회수 증가서비스실행
+		
+		//어디로 보낼지 구분하는 변수
+		String my=req.getParameter("my");
 		String sbidx = req.getParameter("bidx");
 		int bidx = Integer.parseInt(sbidx);
 		String nowPage = req.getParameter("nowPage");	//릴레이용
@@ -125,6 +128,7 @@ public class BoardController {
 		rv.addStaticAttribute("nowPage", nowPage);
 		rv.addStaticAttribute("sigungu_name", sigungu_name);
 		rv.addStaticAttribute("place_name", place_name);	
+		rv.addStaticAttribute("my", my);
 		mv.setView(rv);
 		return mv;
 	}
@@ -134,6 +138,8 @@ public class BoardController {
 		public ModelAndView boardDetail(@RequestParam(value="bidx") int bidx,
 												@RequestParam(value="nowPage") int nowPage,
 												HttpServletRequest req) throws Exception {		
+			//어디로 보낼지 구분하는 변수
+			String my=req.getParameter("my");
 			
 			String sigungu_name=req.getParameter("sigungu_name");
 			String place_name=req.getParameter("place_name");
@@ -148,7 +154,7 @@ public class BoardController {
 			mv.addObject("nowPage", nowPage);			//릴레이용
 			mv.addObject("sigungu_name", sigungu_name);
 			mv.addObject("place_name", place_name);	
-			//뷰
+			mv.addObject("my", my);
 			mv.setViewName("board/boardDetail");
 			return mv;
 		}

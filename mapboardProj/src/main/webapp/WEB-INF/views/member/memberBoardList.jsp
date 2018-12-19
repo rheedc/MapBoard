@@ -92,7 +92,7 @@
 				<td>${data.categoryName}</td>
 				<td>${data.sigungu_name}</td>
 				<td>${data.subject}</td>
-				<td><a href="../board/hitProc.yo?bidx=${data.bidx}">${data.commStr}</a></td>
+				<td><a href="../board/hitProc.yo?bidx=${data.bidx}&nowPage=${PINFO.nowPage}&my=1">${data.commStr}</a></td>
 				<td>${data.pointStr}</td>
 				<td>${data.createdt}</td>
 			</tr>

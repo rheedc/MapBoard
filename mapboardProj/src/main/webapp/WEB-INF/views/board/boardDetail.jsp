@@ -196,8 +196,14 @@
   		<table aling="center" width="70%">
   			<tr align="center">
   				<td>
-  					<input type="button" id="lBtn" value="목록보기" class="button" 
+  					<c:if test="${not empty my}">
+  					<input type="button" id="lBtn1" value="목록보기" class="button" 
+  					onclick="location.href='../../member/memberBoardList.yo?nowPage=${nowPage}'"/>
+  					</c:if>
+  					<c:if test="${empty my}">
+  					<input type="button" id="lBtn2" value="목록보기" class="button" 
   					onclick="location.href='../../board/boardList2.yo?place_no=${VIEW.place_no}&nowPage=${nowPage}&place_name=${place_name}&sigungu_name=${sigungu_name}'"/>
+  					</c:if>
   				</td>
   			</tr>
   		</table>
