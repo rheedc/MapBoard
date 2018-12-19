@@ -65,7 +65,7 @@
 			<td align="center">				
 				<a href="#" id="seoul"><h1>지도로 즐기기</h1></a>
 			</td>
-			<td>
+			<td align="center">
 				<a href="/board/boardList.yo"><h1>글로 즐기기</h1></a>
 			</td> 
 		</tr>
