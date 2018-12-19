@@ -104,32 +104,52 @@ public class BoardController {
 	
 	//상세보기
 	@RequestMapping("/hitProc")
-	public ModelAndView boardDetail(@RequestParam(value="bidx")int bidx,
-						@RequestParam(value="nowPage",defaultValue="1")int nowPage,
-						HttpSession session,
+	public ModelAndView boardHitProc(ModelAndView mv, HttpSession session,
 						HttpServletRequest req) throws Exception {
 		
-		String sigungu_name=req.getParameter("sigungu_name");
-		String place_name=req.getParameter("place_name");
 		
 		System.out.println("조회수 증가요청들어옴");
 		//조회수 증가서비스실행
+		String sbidx = req.getParameter("bidx");
+		int bidx = Integer.parseInt(sbidx);
+		String nowPage = req.getParameter("nowPage");	//릴레이용
+		
 		service.updateHit(bidx,session);
 		
-		//상세보기 데이터가져오기
-		BoardVO vo = service.getBoardDetail(bidx);
-		ArrayList list = service.getFileDetail(bidx);
+		RedirectView rv = new RedirectView("../board/boardDetail.yo");
+		//컨트롤러에서 Redirect하면서 파라미터를 보내고 싶다면 
+		//rv.addStaticAttribute(String형태 "키값",  데이터);
+		rv.addStaticAttribute("bidx", bidx);
+		rv.addStaticAttribute("nowPage", nowPage);
 		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("VIEW", vo);
-		mv.addObject("LIST", list);	
-		mv.addObject("nowPage", nowPage);
-		mv.addObject("sigungu_name", sigungu_name);
-		mv.addObject("place_name", place_name);
-		mv.setViewName("board/boardDetail");
+		mv.setView(rv);
 		return mv;
 	}
 	
+	//상세보기 요청 함수(내용/첨부파일)
+		@RequestMapping("/boardDetail")
+		public ModelAndView boardDetail(@RequestParam(value="bidx") int bidx,
+												@RequestParam(value="nowPage") int nowPage,
+												HttpServletRequest req) throws Exception {		
+			
+			String sigungu_name=req.getParameter("sigungu_name");
+			String place_name=req.getParameter("place_name");
+			
+			BoardVO vo =service.getBoardDetail(bidx);
+			ArrayList list = service.getFileDetail(bidx);
+			
+			//모델
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("VIEW", vo);									//내용
+			mv.addObject("LIST", list);									//첨부파일 정보
+			mv.addObject("nowPage", nowPage);			//릴레이용
+			mv.addObject("sigungu_name", sigungu_name);
+			mv.addObject("place_name", place_name);	
+			//뷰
+			mv.setViewName("fileBoard/boardView");
+			return mv;
+		}
+
 	//파일 다운로드 요청 처리 함수
 	@RequestMapping("/fileDownload")
 	public ModelAndView fileDownload(
