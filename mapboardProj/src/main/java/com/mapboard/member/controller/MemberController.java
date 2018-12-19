@@ -31,7 +31,8 @@ import com.mapboard.util.PageUtil;
  * 12/14: joinProc(), idCheckProc() 추가
  * 12/16: joinProc() 변경, memberDetail() 추가
  * 12/17: memberUpdateForm() 추가
- * 12/18: memberUpdateProc() 추가
+ * 12/18: memberLeaveProc() memberUpdateProc(), memberDetailAdmin()추가
+ * 12/19: memberUpdateAdmin() 추가
  */
 
 @Controller
@@ -42,6 +43,47 @@ public class MemberController {
 	@Autowired
 	private MemberService mservice;
 	
+	//회원정보 수정요청 처리
+	@RequestMapping("/memberUpdateAdmin")
+	public ModelAndView memberUpdateAdmin(MemberVO vo, ModelAndView mv) {
+		System.out.println("회원수정요청 처리 컨트롤러 실행 시작");
+		//파라미터 받고
+		//로직수행
+		mservice.memberUpdateAmin(vo);
+		
+		//모델
+		mv.addObject("VIEW",vo);
+		System.out.println("회원수정요청 처리 서비스 실행 결과");
+		//뷰
+		RedirectView view = new RedirectView("/admin/memberViewAdmin.yo");
+		mv.setView(view);
+		System.out.println("회원수정요청 처리 컨트롤러 실행 완료");
+		return mv;
+	}
+
+	
+	//회원 정보 수정 폼 보기
+	@RequestMapping("/memberDetailAdmin")
+	public ModelAndView memberDetailAdmin(HttpServletRequest req, ModelAndView mv) {
+		//파라미터 받고
+		String userid = req.getParameter("userid");
+		String nowPage=req.getParameter("nowPage");
+		System.out.println("회원정보 수정 컨트롤러 시작");
+		
+		
+		//로직 수행
+		MemberVO vo= new MemberVO();
+		vo=mservice.selectMemberbyId(userid);
+				
+		//모델
+		mv.addObject("VIEW", vo);
+		mv.addObject("nowPage",nowPage);
+		//뷰
+		mv.setViewName("/admin/memberDetailAdmin");
+		return mv;
+		
+	}
+
 	
 	//나의 정보 수정 처리
 	@RequestMapping("/memberUpdateProc")
@@ -60,12 +102,7 @@ public class MemberController {
 		System.out.println("나의 정보 수정처리 완료");
 		
 		return mv;
-		
-		
-		
 	}
-	
-	
 	
 	
 	//회원탈퇴 요청 처리
@@ -73,15 +110,12 @@ public class MemberController {
 	public ModelAndView memberLeaveProc(HttpSession session, MemberVO vo, ModelAndView mv) throws Exception {
 		//파라미터 받아서 넘기고
 		String userid = session.getAttribute("userid").toString();
-		
 		vo.setUserid(userid);
-		
-		
+			
 		//로직 처리
 		//해당 회원의 상태를 n으로 하고 상태가 n인 사용자의 세션 정보를 삭제
 		int result = mservice.leaveMemberProc(vo);
 		mservice.logout(session);
-		
 		
 		//뷰
 		RedirectView rv=null;
@@ -103,21 +137,18 @@ public class MemberController {
 		
 	}
 	
-	
 	//회원목록보기 요청 처리
 	@RequestMapping("/memberList")
 	public String memberList(@RequestParam(value="nowPage", defaultValue="1") int nowPage, HttpServletRequest req) {
 		PageUtil pInfo = mservice.getPageInfo(nowPage);
 		ArrayList list=mservice.getMemberList(pInfo);
-		System.out.println("게시물 수="+list.size());
-		
+				
 		//모델
 		req.setAttribute("PINFO",pInfo);
 		req.setAttribute("MLIST", list);
 		
 		//뷰
-		return "admin/memberList";
-		
+		return "admin/memberListAdmin";
 	}
 
 	//나의 정보 수정 폼 보여주기 요청 처리
@@ -159,7 +190,7 @@ public class MemberController {
 	public ModelAndView joinProc(MemberVO vo, ModelAndView mv, HttpServletRequest req) {
 		//파라미터는 VO로 받고
 		String userid = req.getParameter("userid");
-		System.out.println("회원가입 컨트롤러 실행 userid="+userid);
+		
 		//입력 받은 값을 DB에 insert 하는 로직
 		//해당 ID에 대한 이름을 select하는 로직=> 서비스 위임
 		mservice.insertMember(vo);
@@ -177,12 +208,10 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="/idCheckProc", method=RequestMethod.POST)
 	public String idCheckProc(@RequestBody String userid) throws Exception {
-		System.out.println("idCheckProc함수 실행 시작 아이디="+userid+" 받음");
-		
+				
 		int intResult=mservice.selectID(userid);
 		String result =Integer.toString(intResult);
 		
-		System.out.println("idCheckProc함수 실행 결과 ="+result+" 받음");
 		return result;
 	}
 	//본인확인 처리
@@ -227,7 +256,7 @@ public class MemberController {
 	//로그인 요청 처리
 	@RequestMapping("/LoginProc")
 	public ModelAndView loginProc(MemberVO vo, HttpSession session) {
-		System.out.println("loginProc실행 시작");
+		
 		//할일: 입력받은 ID,PW를 식별하여 로그인을 처리해 주는 기능
 		// 1. 파라미터 받고 MemberVO vo, HttpSession session
 		
@@ -251,8 +280,7 @@ public class MemberController {
 			//mv.addObject("msg","로그인에 실패하였습니다.");
 			
 		}
-				
-		System.out.println("loginProc실행 완료");
+	
 		return mv;
 	}
 	

@@ -15,11 +15,24 @@
 	=> 12/15: insertMember 쿼리문 추가
 	=> 12/16: selectNamebyId 쿼리문 추가
 	=> 12/17: totalCount, memeberList, meCheck 쿼리문 추가
-	=> 12/18: statusN, memberUpdate
+	=> 12/18: statusN, memberUpdate 추가
+	=> 12/19: memberUpdateAmin 추가
 
  --> 
 
 <mapper namespace="member">
+	<!-- 회원 정보 수정(관리자) 쿼리문 -->
+	<update id="memberUpdateAmin" parameterType="memberVO">
+		update
+			member
+		set
+			status=#{status},
+			ulevel=#{ulevel}
+		where
+			userid=#{userid}
+	</update>
+
+
 	<!-- 나의 정보 수정 쿼리문 -->
 	<update id="memberUpdate" parameterType="memberVO">
 		update 
@@ -54,7 +67,9 @@
 			row_number() over(order by userid asc) as rid  			
 		from 
 			member)
-					
+		where 
+			rid between #{start} and #{end}			
+		
 	</select>
 
 

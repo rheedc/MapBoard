@@ -1,10 +1,7 @@
 package com.mapboard.member.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -25,7 +22,7 @@ import com.mapboard.member.vo.MemberVO;
  * 12/16: 회원가입 처리 함수 추가
  * 12/17: 게시글 갯수, 본인확인, 사용자 이름 조회, 회원 목록 함수 추가
  * 12/18: 회원탈퇴, 나의정보 수정 함수 추가
- * 
+ * 12/19: 회원정보 수정 함수 추가
 */
 
 @Service("memberDao")
@@ -33,8 +30,14 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
-	//membersql.xml 파일의 쿼리문을 실행하고 그 결과값을 map 담아 반환한다.
 	
+	//회원 정보 수정(관리자)
+	@Override
+	public void memberUpdateAmin(MemberVO vo) {
+		sqlSession.update("member.memberUpdateAmin", vo);
+			
+	}
+
 	//회원탈퇴 처리
 	@Override
 	public int leaveMemberProc(MemberVO vo) {
@@ -52,7 +55,7 @@ public class MemberDaoImpl implements MemberDao{
 	//사용자 이름 조회 쿼리문 실행
 	@Override
 	public MemberVO selectMemberbyId(String userid) {
-		System.out.println("member DAO 사용자 정보 검색 쿼리 실행");
+		
 		return sqlSession.selectOne("member.selectMemberbyId",userid);
 	}
 

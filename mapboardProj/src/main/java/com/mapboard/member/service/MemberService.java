@@ -16,6 +16,7 @@ import com.mapboard.util.PageUtil;
  * 12/16: 5,6 함수 추가
  * 12/17: 7, 8,9 함수 추가
  * 12/18: 10,11 함수 추가
+ * 12/19: 12 추가
  */
 
 public interface MemberService {
@@ -52,5 +53,7 @@ public interface MemberService {
 	//11. 나의 정보 수정
 	public void memberUpdate(MemberVO vo);
 	
+	//12. 회원 정보 수정(관리자)
+	public void memberUpdateAmin(MemberVO vo);
 
 }

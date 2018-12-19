@@ -6,6 +6,9 @@ import com.mapboard.common.vo.CommonVO;
  * 작성자: 이덕천
  * 작성일: 2018-12-07
  * 최종수정일: 2018-12-12
+ * 이력
+ * 12/12: 최초작성
+ * 12/19: 변수 추가
  */
 
 //VO 에서 변수를 만들 때에는 jsp 파일에서 사용한 name 속성의 명칭과 동일하게 하는 것이 좋다!!
@@ -16,7 +19,29 @@ public class MemberVO extends CommonVO{
 		private String uname;
 		private String passwd;
 		private int ulevel;
+		private String target;
+		private String word;
+		private String nowPage;
 		
+		
+		public String getNowPage() {
+			return nowPage;
+		}
+		public void setNowPage(String nowPage) {
+			this.nowPage = nowPage;
+		}
+		public String getTarget() {
+			return target;
+		}
+		public void setTarget(String target) {
+			this.target = target;
+		}
+		public String getWord() {
+			return word;
+		}
+		public void setWord(String word) {
+			this.word = word;
+		}
 		public String getNick() {
 			return nick;
 		}
