@@ -23,6 +23,9 @@ public interface BoardService {
 	public BoardVO getBoardDetail(int bidx) throws Exception;
 	
 	public void updateBoard(BoardVO vo) throws Exception;
+
+	//조회수 증가처리함수
+	public void updateHit(int bidx, HttpSession session);
 	
 	
 }

@@ -111,9 +111,14 @@ public class BoardController {
 	//상세보기
 	@RequestMapping("/hitProc")
 	public ModelAndView boardDetail(@RequestParam(value="bidx")int bidx,
-						@RequestParam(value="nowPage")int nowPage) throws Exception {
-		System.out.println("controller/boardDetail");
+						@RequestParam(value="nowPage")int nowPage,
+						HttpSession session) throws Exception {
 		
+		System.out.println("조회수 증가요청들어옴");
+		//조회수 증가서비스실행
+		service.updateHit(bidx,session);
+		
+		//상세보기 데이터가져오기
 		BoardVO vo = service.getBoardDetail(bidx);
 		//ArrayList list = service.getFilInfo(bidx);
 		

@@ -83,6 +83,33 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	//조회수 증가처리함수
+	public void updateHit(int bidx, HttpSession session) {
+		
+		boolean isHit=false;		//조회수를 증가할지 말지를 기억하는 변수
+		ArrayList hitList=(ArrayList)session.getAttribute("HIT");
+		
+		//최초방문한 사람인 경우
+		if(hitList==null || hitList.size()==0) {
+			isHit=true;
+			hitList=new ArrayList();
+			hitList.add(bidx);
+			session.setAttribute("HIT", hitList);
+		}
+		//처음방문은 아니지만 해당 글은 처음보는 경우
+		else if(!hitList.contains(bidx)) {
+			isHit=true;
+			hitList.add(bidx);
+		}
+		else {
+			isHit=false;
+		}
+		//isHit가 true인 경우에만 조회수를 증가시킨다
+		if(isHit) {			
+			bDao.updateHit(bidx);
+		}
+	}
+
 	
 
 		

@@ -44,15 +44,10 @@ public class BoardDaoImpl implements BoardDao{
 		
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-
+	//조회수 증가처리명령
+	public void updateHit(int bidx) {
+		sqlSession.update("board.updateHit",bidx);
+	}
 	
 	
 }

@@ -89,7 +89,11 @@
 			category_no,
 			point,
 			readcnt,
-			likecnt
+			likecnt,
+			--승환추가
+			p.latitude,
+			p.longitude,
+			p.juso
 		FROM
 			board b join place p
 			on b.place_no=p.place_no
@@ -111,25 +115,15 @@
 			bidx=#{bidx}
 	</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 조회수증가처리 -->
+	<update id="updateHit" parameterType="int">
+	UPDATE
+		board
+	SET
+		readcnt = readcnt + 1
+	WHERE
+		bidx = #{bidx}	
+	</update>
 	
 	
 </mapper>

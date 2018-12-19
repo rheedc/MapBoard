@@ -17,6 +17,9 @@ public interface BoardDao {
 	public BoardVO getBoardDetail(int bidx) throws Exception;
 	
 	public void updateBoard(BoardVO bvo) throws Exception;
+
+	//조회수 증가처리명령
+	public void updateHit(int bidx);
 	
 	
 	
