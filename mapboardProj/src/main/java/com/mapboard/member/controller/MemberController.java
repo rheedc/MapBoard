@@ -45,7 +45,7 @@ public class MemberController {
 	                                   
 	//회원정보 수정요청 처리
 	@RequestMapping("/memberUpdateAdmin")
-	public ModelAndView mm(MemberVO vo) {
+	public ModelAndView memberUpdateAdmin(MemberVO vo) {
 		System.out.println("회원수정요청 처리 컨트롤러 실행 시작");
 		//파라미터 받고
 		//로직수행

@@ -47,6 +47,7 @@
 	#subTitle{font-size:50px; text-align:center; font-weight:bold;}
 	.alertText{color:red; font-weight:bold;padding-left:230px;}
 	#loginText{color:darkgray;font-size:20px; font-weight:bold;padding-top: 20px; }
+	#map{margin-left:30px;}
 
 	</style>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -63,7 +64,7 @@
 		});
 		
 	});
-	// 본인확인 실행 함수
+	//탈퇴 버튼 클릭 시 본인확인 팝업창 실행 함수
 	function meChkAction(){
 		//팝업창 경로
 		var url="/popup/popup_meCheck.yo";
@@ -75,12 +76,9 @@
 		//팝업창 경로, 팝업창 이름, 위치(화면 중앙정렬) 및 크기 등 설정
 		window.open(url,"chkForm", "status=no, width=500, height=300, resizable = no, scrollbars = no, left="+ popupX + ", top="+ popupY + ", screenX="+ popupX + ", screenY= "+ popupY);	
 	}
-		
-	
-
 	
 	//-- 송승환의 지도 추가 부분~~~~~~~~~~
-	$(function(){
+$(function(){
 		
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
@@ -111,42 +109,44 @@
 	  
 	// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 	infowindow.open(map, marker); 
-	});
+});
 	</script>
 </head>
 <body>
 <div class="joinFrm">
 <p id="subTitle">나의 정보 상세보기</p>
 <br>
-		<div class="formGroup">
-			<div class="inputTitle">아이디</div>
-			<div class="detailBox">${VIEW.userid}	</div>
-		</div>
-		<div class="formGroup">
-			<div class="inputTitle">비밀번호</div>
-			<div class="detailBox">********</div>
-		</div>
-		<div class="formGroup">
-			<div class="inputTitle">이름</div>
-			<div class="detailBox">${VIEW.uname}</div>
-		</div>
-		<div class="formGroup">
-			<div class="inputTitle">닉네임</div>
-			<div class="detailBox">${VIEW.nick}</div>
-		</div>
-		<div class="formGroup">
-			<div class="inputTitle">내 기준지</div>
-			<div class="detailBox">위도: ${VIEW.latitude}, 경도: ${VIEW.longitude}<br/>주소: ${VIEW.juso}</div>
-		</div>
-		<div>
-			<div id="map" style="width:100%;height:350px;"></div>
-		</div>
-	
-		<div class="formBtn">
-			<input type="submit" id="updateBtn" class="actionBtn" value="수정"  />
-			<input type="button" id="homeBtn" class="actionBtn" value="취소" />
-			<input type="submit" id="leaveBtn" class="actionBtn" value="탈퇴" onclick="meChkAction()" />
-		</div>
+	<div class="formGroup">
+		<div class="inputTitle">아이디</div>
+		<div class="detailBox">${VIEW.userid}	</div>
+	</div>
+	<div class="formGroup">
+		<div class="inputTitle">비밀번호</div>
+		<div class="detailBox">********</div>
+	</div>
+	<div class="formGroup">
+		<div class="inputTitle">이름</div>
+		<div class="detailBox">${VIEW.uname}</div>
+	</div>
+	<div class="formGroup">
+		<div class="inputTitle">닉네임</div>
+		<div class="detailBox">${VIEW.nick}</div>
+	</div>
+	<div class="formGroup">
+		<div class="inputTitle">내 기준지</div>
+		<div class="detailBox">위도: ${VIEW.latitude}, 경도: ${VIEW.longitude}<br/>주소: ${VIEW.juso}</div>
+	</div>
+	<div>
+	<c:if test="${VIEW.juso ne null}">
+		<div id="map" style="width:100%;height:350px;"></div>
+	</c:if>
+	</div>
+
+	<div class="formBtn">
+		<input type="submit" id="updateBtn" class="actionBtn" value="수정"  />
+		<input type="button" id="homeBtn" class="actionBtn" value="취소" />
+		<input type="submit" id="leaveBtn" class="actionBtn" value="탈퇴" onclick="meChkAction()" />
+	</div>
 		
 
 </div> 
