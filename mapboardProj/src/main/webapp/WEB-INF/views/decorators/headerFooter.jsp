@@ -89,7 +89,7 @@
 								<li class="dropdown">
 							    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> 마이페이지<span class="caret"></span></a>
 							    <ul class="dropdown-menu">
-							      <li><a href="/member/memberDetail.yo"> 내정보</a></li>
+							      <li><a href="/member/memberDetail.yo"> 내정보보기</a></li>
 							      <li><a href="/member/memberBoardList.yo"> 내글보기</a></li>
 							      <li><a href="/member/memberStatistics.yo"> my통계</a></li>
 							    </ul>
@@ -102,8 +102,9 @@
 								<li class="dropdown">
 							    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-lock"></span> 사이트관리<span class="caret"></span></a>
 							    <ul class="dropdown-menu">
-							      <li><a href="/member/memberList.yo"><span class="glyphicon glyphicon-user"></span> 회원관리</a></li>
-							      <li><a href="/admin/placeList.yo"><span class="glyphicon glyphicon-globe"></span> 장소관리</a></li>
+							    	<li><a href="/member/memberDetail.yo">내정보보기</a></li>
+							      	<li><a href="/member/memberList.yo"><span class="glyphicon glyphicon-user"></span> 회원관리</a></li>
+							      	<li><a href="/admin/placeList.yo"><span class="glyphicon glyphicon-globe"></span> 장소관리</a></li>
 							    </ul>
 							  	</li>
 								</c:if>
