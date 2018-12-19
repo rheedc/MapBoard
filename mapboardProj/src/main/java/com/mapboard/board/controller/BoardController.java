@@ -105,7 +105,7 @@ public class BoardController {
 	//상세보기
 	@RequestMapping("/hitProc")
 	public ModelAndView boardDetail(@RequestParam(value="bidx")int bidx,
-						@RequestParam(value="nowPage")int nowPage,
+						@RequestParam(value="nowPage",defaultValue="1")int nowPage,
 						HttpSession session,
 						HttpServletRequest req) throws Exception {
 		

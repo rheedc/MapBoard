@@ -172,7 +172,7 @@
   			<c:forEach var="file" items="${LIST}">
 		  		<tr>
 		  			<td colspan="3">
-		  				<a href="../board/fileDownload.yo?fileNo=${file.fidx}">${file.foriname}</a> ( ${file.comma} Byte )<%-- FileBoardVO len --%>
+		  				<a href="../board/fileDownload.yo?fileNo=${file.fidx}">${file.foriname}</a> ( ${file.fsize} Byte )<%-- FileBoardVO len --%>
 		  			</td>
 		  		</tr>
   			</c:forEach>

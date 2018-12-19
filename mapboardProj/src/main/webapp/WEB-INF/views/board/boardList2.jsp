@@ -194,7 +194,7 @@
 		<table align="center">
 			<tr>	
  				<td align="right">
- 					<input type="button" id="seoul" value="지도로 즐기기"/>
+ 					<a href="../place/placeList.yo">지도로 즐기기</a>
  				</td>
  			</tr>
 	  	</table>
