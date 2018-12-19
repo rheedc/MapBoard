@@ -84,7 +84,6 @@
 			b.userid,
 			b.createdt,
 			comm,
-			--m.map,
 			place_name,
 			category_no,
 			point,

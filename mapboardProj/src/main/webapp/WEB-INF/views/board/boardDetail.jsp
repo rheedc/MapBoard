@@ -148,12 +148,14 @@
   		<table align="center" width="70%" class="style1">
   			<tr>
   				<th id="text-left">작성자: ${VIEW.userid}	작성일: ${VIEW.createdt}</td>
-  				<td id="width">
-  					<input type="button" id="mBtn" value="수정"/>
-  				</td>
-  				<td id="width">
-  					<input type="button" id="dBtn" value="삭제"/>
-  				</td>
+  				<c:if test="${sessionScope.userid eq VIEW.userid}">
+	  				<td id="width">
+	  					<input type="button" id="mBtn" value="수정"/>
+	  				</td>
+	  				<td id="width">
+	  					<input type="button" id="dBtn" value="삭제"/>
+	  				</td>
+	  			</c:if>	
   			</tr>
   			<tr>
   				<th colspan="3">사진, 페이징처리
