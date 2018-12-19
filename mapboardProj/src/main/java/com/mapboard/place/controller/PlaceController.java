@@ -2,11 +2,6 @@ package com.mapboard.place.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,10 +15,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.mapboard.place.service.PlaceService;
 import com.mapboard.place.vo.PlaceVO;
 import com.mapboard.util.PageUtil;
-import com.twitter.penguin.korean.TwitterKoreanProcessorJava;
-import com.twitter.penguin.korean.tokenizer.KoreanTokenizer;
-
-import scala.collection.Seq;
 
 @Controller
 public class PlaceController {
