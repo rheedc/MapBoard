@@ -36,11 +36,11 @@
 	
 	<!-- 1-2. 게시물 등록 :-->
 	<insert id="insertBoard" parameterType="boardVO">
-		<!-- <selectKey order="BEFORE" resultType="long" keyProperty="bidx">
+		<selectKey order="BEFORE" resultType="long" keyProperty="bidx">
 			select
 				board_seq.nextval
 			from dual
-		</selectKey> -->
+		</selectKey>
 		INSERT 
 			INTO
 		board 
@@ -53,7 +53,7 @@
 			createdt,
 			status)
 		VALUES  
-			(board_seq.nextval,
+			(#{bidx},
 			#{userid},
 			#{place_no},
 			#{subject},
@@ -62,7 +62,7 @@
 			SYSDATE,
 			'Y')		
 	</insert>
-	<insert id="insertFileInfo" parameterType="BoardVO">
+	<insert id="insertFileInfo" parameterType="boardVO">
 		INSERT 
 			INTO
 		fileinfo

@@ -51,15 +51,9 @@ public class BoardController {
 		int place_no = Integer.parseInt(spno);
 		vo.setPlace_no(place_no);
 		System.out.println(place_no);
-		
-		
-		
-		
+	
 		String fpath = "E:\\upload";
-		
-//		String sbidx=req.getParameter("bidx");
-//		int bidx = Integer.parseInt(sbidx);
-//		fvo.setBidx(bidx);
+
 		
 		//1) 파라미터
 		ArrayList list = new ArrayList();
