@@ -560,7 +560,10 @@ public class PlaceController {
 			//1.파라미터 받고
 			//장소번호,시군구명,장소명,nowPage
 			String place_noStr=req.getParameter("place_no");
-			int place_no=Integer.parseInt(place_noStr);
+			int place_no=0;
+			if(place_noStr!=null) {
+				place_no=Integer.parseInt(place_noStr);
+			}
 			String sigungu_name=req.getParameter("sigungu_name");
 			String place_name=req.getParameter("place_name");
 			String strPage=req.getParameter("nowPage");				

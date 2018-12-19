@@ -197,7 +197,7 @@
   			<tr align="center">
   				<td>
   					<input type="button" id="lBtn" value="목록보기" class="button" 
-  					onclick="location.href='../../board/boardList2.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}&place_name=${place_name}&sigungu_name=${sigungu_name}'"/>
+  					onclick="location.href='../../board/boardList2.yo?place_no=${VIEW.place_no}&nowPage=${nowPage}&place_name=${place_name}&sigungu_name=${sigungu_name}'"/>
   				</td>
   			</tr>
   		</table>

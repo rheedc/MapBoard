@@ -113,6 +113,8 @@ public class BoardController {
 		String sbidx = req.getParameter("bidx");
 		int bidx = Integer.parseInt(sbidx);
 		String nowPage = req.getParameter("nowPage");	//릴레이용
+		String sigungu_name=req.getParameter("sigungu_name");
+		String place_name=req.getParameter("place_name");
 		
 		service.updateHit(bidx,session);
 		
@@ -121,7 +123,8 @@ public class BoardController {
 		//rv.addStaticAttribute(String형태 "키값",  데이터);
 		rv.addStaticAttribute("bidx", bidx);
 		rv.addStaticAttribute("nowPage", nowPage);
-		
+		rv.addStaticAttribute("sigungu_name", sigungu_name);
+		rv.addStaticAttribute("place_name", place_name);	
 		mv.setView(rv);
 		return mv;
 	}
@@ -146,7 +149,7 @@ public class BoardController {
 			mv.addObject("sigungu_name", sigungu_name);
 			mv.addObject("place_name", place_name);	
 			//뷰
-			mv.setViewName("fileBoard/boardView");
+			mv.setViewName("board/boardDetail");
 			return mv;
 		}
 
