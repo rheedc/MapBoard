@@ -17,6 +17,7 @@ public class BoardDaoImpl implements BoardDao{
 		
 	}
 	
+	
 	//1-2. 게시물 등록
 	public void insertBoard(BoardVO vo, String kind) throws Exception{
 		System.out.println("insertBoardDAO시작");
@@ -48,6 +49,10 @@ public class BoardDaoImpl implements BoardDao{
 	public void updateHit(int bidx) {
 		sqlSession.update("board.updateHit",bidx);
 	}
-	
-	
+
+	//게시판 삭제질의
+	public int deleteBoard(BoardVO vo) {
+		int cnt=sqlSession.update("board.deleteBoard",vo);
+		return cnt;
+	}
 }

@@ -125,5 +125,14 @@
 		bidx = #{bidx}	
 	</update>
 	
+	<!-- 게시판삭제처리 -->
+	<update id="deleteBoard" parameterType="boardVO">
+	UPDATE
+		board
+	SET
+		status='N'
+	WHERE
+		bidx=#{bidx}
+	</update>
 	
 </mapper>

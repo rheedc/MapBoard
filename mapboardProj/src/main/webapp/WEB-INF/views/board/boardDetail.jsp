@@ -44,13 +44,14 @@
 			//원글 수정
 			$("#mBtn").click(function(){
 				//수정폼으로 이동
-				$(location).attr("href","../board/updateForm.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}");
+				$(location).attr("href","../board/updateForm.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}&place_name=${place_name}&sigungu_name=${sigungu_name}");
 			});
 			
 			//원글 삭제
 			$("#dBtn").click(function(){
 				if(confirm("정말로 삭제하시겠습니까?")){
-					$(location).attr("href","../board/boardDelete.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}");
+					$(location).attr("href","../board/boardDelete.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}&place_name=${place_name}&sigungu_name=${sigungu_name}");
+					
 				}
 			});
 			
@@ -184,7 +185,7 @@
   			<tr align="center">
   				<td>
   					<input type="button" id="lBtn" value="목록보기" class="button" 
-  					onclick="location.href='../../board/boardList2.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}'"/>
+  					onclick="location.href='../../board/boardList2.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}&place_name=${place_name}&sigungu_name=${sigungu_name}'"/>
   				</td>
   			</tr>
   		</table>

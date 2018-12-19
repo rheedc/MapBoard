@@ -24,7 +24,7 @@ import com.mapboard.util.FileUtil;
 public class BoardController {
 	@Autowired
 	private BoardService service;
-	
+
 	
 	
 	//1-1. 글쓰기 폼보기 요청
@@ -112,7 +112,11 @@ public class BoardController {
 	@RequestMapping("/hitProc")
 	public ModelAndView boardDetail(@RequestParam(value="bidx")int bidx,
 						@RequestParam(value="nowPage")int nowPage,
-						HttpSession session) throws Exception {
+						HttpSession session,
+						HttpServletRequest req) throws Exception {
+		
+		String sigungu_name=req.getParameter("sigungu_name");
+		String place_name=req.getParameter("place_name");
 		
 		System.out.println("조회수 증가요청들어옴");
 		//조회수 증가서비스실행
@@ -126,7 +130,8 @@ public class BoardController {
 		mv.addObject("VIEW", vo);
 		//mv.addObject("LIST", list);	
 		mv.addObject("nowPage", nowPage);
-		
+		mv.addObject("sigungu_name", sigungu_name);
+		mv.addObject("place_name", place_name);
 		mv.setViewName("board/boardDetail");
 		return mv;
 	}
@@ -140,7 +145,7 @@ public class BoardController {
 		String sbidx = req.getParameter("bidx");
 		int bidx = Integer.parseInt(sbidx);
 		String nowPage = req.getParameter("nowPage");
-		
+
 		//서비스
 		BoardVO vo = service.getBoardDetail(bidx);
 		
@@ -158,11 +163,51 @@ public class BoardController {
 		service.updateBoard(vo);
 	}
 	
-	
-	
-	
-	
-	
+	//게시판 내용삭제
+	@RequestMapping("/boardDelete")
+	public ModelAndView boardDelete(@RequestParam(value="bidx") int bidx,
+			@RequestParam(value="nowPage") int nowPage,
+			HttpSession session,
+			HttpServletRequest req) {
+		
+		//파라미터 받고
+		BoardVO vo=new BoardVO();
+		ModelAndView mv=new ModelAndView();
+		
+
+		String sigungu_name=req.getParameter("sigungu_name");
+		String place_name=req.getParameter("place_name");
+		
+		/*if(req.getParameter("sigungu_name").length()>0) {
+			sigungu_name=req.getParameter("sigungu_name");
+		}
+		if(req.getParameter("place_name").length()>0) {
+			place_name=req.getParameter("place_name");
+		}*/
+		System.out.println(sigungu_name);
+		System.out.println(place_name);
+		
+		vo.setBidx(bidx);
+		
+		int cnt=service.deleteBoard(vo);
+		
+		RedirectView rv=null;
+		
+		//뷰
+		//삭제가 실패하면 상세보기
+		if(cnt==0) {
+			System.out.println("삭제실패");
+			rv=new RedirectView("../board/boardDetail.yo?nowPage="+nowPage+"&bidx="+bidx+"&sigungu_name="+sigungu_name+"&place_name="+place_name);
+		}
+		else {
+			//삭제가 성공하면 목록보기
+			System.out.println("삭제성공");
+			//검색기능을 제외하고 전체 목록으로 들어가게함(기능보다 정확하게 수정할 필요있음)
+			rv=new RedirectView("../board/boardList2.yo");
+		}
+		mv.setView(rv);
+		return mv;
+	}
 	
 	
 	

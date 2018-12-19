@@ -79,8 +79,7 @@ public class BoardServiceImpl implements BoardService{
 	//게시물 수정
 	@Override
 	public void updateBoard(BoardVO vo) throws Exception {
-		bDao.updateBoard(vo);
-		
+		bDao.updateBoard(vo);	
 	}
 
 	//조회수 증가처리함수
@@ -110,16 +109,9 @@ public class BoardServiceImpl implements BoardService{
 		}
 	}
 
-	
-
-		
-
-	
-
-
-	
-	
-	
-
-	
+	//삭제질의명령 실행
+	public int deleteBoard(BoardVO vo) {
+		int cnt=bDao.deleteBoard(vo);
+		return cnt;
+	}	
 }

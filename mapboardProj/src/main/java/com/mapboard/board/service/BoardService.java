@@ -26,6 +26,8 @@ public interface BoardService {
 
 	//조회수 증가처리함수
 	public void updateHit(int bidx, HttpSession session);
-	
+
+	//게시물 삭제처리함수
+	public int deleteBoard(BoardVO vo);
 	
 }

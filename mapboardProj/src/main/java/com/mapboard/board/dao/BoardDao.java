@@ -20,7 +20,9 @@ public interface BoardDao {
 
 	//조회수 증가처리명령
 	public void updateHit(int bidx);
-	
+
+	//게시판 삭제질의
+	public int deleteBoard(BoardVO vo);
 	
 	
 }
