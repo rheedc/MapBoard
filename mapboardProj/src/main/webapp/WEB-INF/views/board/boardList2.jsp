@@ -46,7 +46,11 @@
 	.style2:hover { 
 		background-color: #d7edf4; 
 	}
-	.container:hover{
+	.box {
+		padding-left:15%;
+		padding-right:15%;
+	}
+	.box:hover{
 		background-color: #d7edf4;
 	} 
 	</style>
@@ -128,7 +132,7 @@
   		</c:if>
   		<c:if test="${not empty LIST }">
 		<c:forEach var="data" items="${LIST}">
-		<div class="container" width="70%">
+		<div class="box">
 	  		<table align="center" width="100%" class="style1">
 	  			<tr height="35px">
 	  				<th rowspan="3" width="15%">이미지</th>

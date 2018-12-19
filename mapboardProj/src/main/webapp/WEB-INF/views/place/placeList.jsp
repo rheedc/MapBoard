@@ -919,7 +919,7 @@
 							<tr height="100px" class="hover" id="click_board_${data.bidx}">
 								<td width="350px">
 								${data.subject}<br/>								
-								${data.comm}<br/>
+								${data.commStr}<br/>
 								${data.createdt}
 								</td>
 							</tr>
