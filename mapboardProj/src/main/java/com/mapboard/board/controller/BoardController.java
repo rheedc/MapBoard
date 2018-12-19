@@ -52,7 +52,11 @@ public class BoardController {
 		vo.setPlace_no(place_no);
 		System.out.println(place_no);
 	
-		String fpath = ((HttpSession) req).getServletContext().getRealPath("/upload/");
+		/*String sPath=req.getServletPath();
+		sPath.equals("/upload/")
+		req.getRealPath("/upload/");*/
+		String fpath=req.getSession().getServletContext().getRealPath("/upload/");
+		/*String fpath = req.getServletPath().getRealPath("/upload/");*/
 		System.out.println("path="+fpath);
 		
 		//1) 파라미터

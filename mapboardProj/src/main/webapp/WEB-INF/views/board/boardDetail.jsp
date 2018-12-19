@@ -173,17 +173,44 @@
 		  			</td>
 		  		</tr>
   			</c:forEach> --%>
-  			
-  		
-  			<tr>
+  			<tr><td colspan="3">
+  		<div id="myCarousel" class="carousel slide" data-ride="carousel" style="height:500px;width:100%; padding-left:25%;padding-right:25%;" >
+		  <!-- Indicators -->
+		  <ol class="carousel-indicators">
+		  	<c:forEach var="recomm" items="${requestScope.recommList}" varStatus="status">
+		   	 <li data-target="#myCarousel" data-slide-to="${status.index}"  <c:if test="${status.index eq 0}">class="active"</c:if>></li>
+		    </c:forEach>
+		  </ol>
+  		<!-- Wrapper for slides -->
+		  <div class="carousel-inner">
+		  	<c:forEach items="${LIST}" var="info" varStatus="status">
+		    <div <c:if test="${status.index eq 0}">class="item active"</c:if> <c:if test="${status.index ne 0}">class="item"</c:if>>
+		   		<a href="../upload/${info.fsname}" style="cursor:pointer;"><img src="../upload/${info.fsname}"  name="name_${status.index}" id="name_${status.index}" style="height:500px; width:800px;" /></a>
+		   		<%-- <img src="../upload/${info.fsname}"  name="name_${status.index}" id="name_${status.index}" style="cursor:pointer;" /> --%>
+		    </div>
+			</c:forEach>
+		  </div>
+		
+		  <!-- Left and right controls -->
+		  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+		    <span class="glyphicon glyphicon-chevron-left"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+		    <span class="glyphicon glyphicon-chevron-right"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		</div>
+		</td></tr>
+  		<%-- 	<tr>
   				<td colspan="3">
 	  				<c:forEach items="${LIST}" var="info" varStatus="row">	
 	  					<img src="../upload/${info.fsname}"  name="name_${row.index}" id="name_${row.index}" class="boardImg"/>
-	  					<%-- <input type="file" name="files" id="files${row.index}"/>
-	  					<input type="button" param="${info.bidx}" name="delete_${row.index}" class="dfBtn" value="삭제"> --%>
+	  					<input type="file" name="files" id="files${row.index}"/>
+	  					<input type="button" param="${info.bidx}" name="delete_${row.index}" class="dfBtn" value="삭제">
   					</c:forEach>	
   				</td>
-  			</tr>
+  			</tr> --%>
  		
  			
   			<tr>
