@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!doctype html>
 <html lang="en">
+<!-- 
+목적 : 게시글 목록을 보는 화면
+작성자 : 조은비
+작성일 : 2018-12-19
+ -->
 <head>
 	<title>Document</title>
 	<meta charset="UTF-8">
