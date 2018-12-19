@@ -559,9 +559,20 @@
 	<!-- 게시물목록구하는 쿼리들 -->
 	<!-- 자주쓰는건 떼어놓기 -->
 	<sql id="boardList_jo">
-	SELECT * FROM(
+	SELECT * FROM
+	(
+    SELECT
+        max(f.FSNAME) fsname,b.bidx
+    FROM
+        board b,fileinfo f
+    WHERE 
+        b.STATUS='Y'
+        AND b.BIDX=f.BIDX(+)
+    group by b.bidx
+	) f,
+	(
 	SELECT
-	    ROW_NUMBER() OVER(ORDER BY b.CREATEDT DESC) AS RNO,
+        ROW_NUMBER() OVER(ORDER BY b.CREATEDT DESC) AS RNO,
 	    b.BIDX,
 	    b.PLACE_NO,
 	    b.SUBJECT,
@@ -643,37 +654,42 @@
 	<select id="boardList" resultType="PlaceVO" parameterType="PlaceVO">
 	<include refid="boardList_jo" /> 
 	    AND b.PLACE_NO=#{place_no}
-	)
+	) c
 	WHERE
 	    RNO BETWEEN #{start} AND #{end}
+	    AND f.BIDX=c.BIDX
 	</select>
 	<select id="boardSearch_st_pt" resultType="PlaceVO" parameterType="PlaceVO">
 	<include refid="boardList_jo" /> 
-	)
+	) c
 	WHERE
 	    RNO BETWEEN #{start} AND #{end}
+	    AND f.BIDX=c.BIDX
 	</select>
 	<select id="boardSearch_st_pd" resultType="PlaceVO" parameterType="PlaceVO">
 	<include refid="boardList_jo" /> 
 	    AND p.PLACE_NAME like '%' || #{place_name} || '%'
-	)
+	) c
 	WHERE
 	    RNO BETWEEN #{start} AND #{end}
+	    AND f.BIDX=c.BIDX
 	</select>
 	<select id="boardSearch_sd_pt" resultType="PlaceVO" parameterType="PlaceVO">
 	<include refid="boardList_jo" /> 
 	    AND p.SIGUNGU_NAME=#{sigungu_name}
-	)
+	) c
 	WHERE
 	    RNO BETWEEN #{start} AND #{end}
+	    AND f.BIDX=c.BIDX
 	</select>
 	<select id="boardSearch_sd_pd" resultType="PlaceVO" parameterType="PlaceVO">
 	<include refid="boardList_jo" /> 
 		AND p.SIGUNGU_NAME=#{sigungu_name} 
 	    AND p.PLACE_NAME like '%' || #{place_name} || '%'
-	)
+	) c
 	WHERE
 	    RNO BETWEEN #{start} AND #{end}
+	    AND f.BIDX=c.BIDX
 	</select>
 	
 	<select id="review" resultType="PlaceVO" parameterType="PlaceVO">

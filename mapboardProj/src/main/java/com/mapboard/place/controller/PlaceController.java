@@ -24,6 +24,9 @@ public class PlaceController {
 	@Autowired
 	private PlaceService pservice;
 
+	@Autowired
+	private BoardService service;
+	
 	//PlaceListService plistService;
 	
 	// 지도에다가 상가좌표를 뿌려줄 함수입니다.
@@ -556,7 +559,7 @@ public class PlaceController {
 		public ModelAndView boardList(
 				ModelAndView mv, 
 				PlaceVO vo, 
-				HttpServletRequest req) {
+				HttpServletRequest req) throws Exception {
 			
 			//할일
 			//1.파라미터 받고
@@ -624,9 +627,14 @@ public class PlaceController {
 				pInfo=pservice.getPageInfo_boardSearch(vo,nowPage,situation);
 				list=pservice.getBoardSearchList(vo,situation,pInfo);
 			}
+			//파일정보얻어오기
+			ArrayList fileInfo = service.getFileDetail((int) vo.getBidx());
+			
+			
 			mv.addObject("DATA", vo);
 			mv.addObject("PINFO", pInfo);
-			mv.addObject("LIST", list);	
+			mv.addObject("LIST", list);
+			mv.addObject("FILEINFO", fileInfo);
 			return mv;
 		}		
 }
