@@ -49,10 +49,21 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
 	$(function(){
-		<%--조회 버튼을 클릭했을 때 탈퇴처리하는 함수--%>
-		$("#searchBtn").click(function(){
-			$("#searchFrm").submit();
+		<%--조회 버튼을 클릭했을 때 --%>
+		
+		<%--$("#searchBtn").click(function(){
+			var target=$("#target").val();
+			var word=$("#word").val();
+			if(target=="total" && word==""){
+				location.href="/member/memberList.yo";
+					
+			}else{
+				location.href="/member/memberSearchAdmin.yo";
+				
+			}
+			$("#searchFrm").submit();		
 		});
+		--%>
 		
 	});
 	
@@ -71,19 +82,20 @@
 
 <br>
 	<%-- 검색부분 --%>
-	<form id="searchFrm" action="/member/memberSearchAdmin.yo" method="post">
+	<form id="searchFrm" method="post" action="/member/memberSearchAdmin.yo">
 		<table class="searchArea">
 			<tr>
 				<td>
 				<td align="center">
 		  			<!-- 검색대상 -->
 		  			<select name="target" id="target">
+		  				<option value="total" selected="selected">전체</option>
 		  				<option value="uname">성명</option>
 		  				<option value="userid">아이디</option>
 		  				<option value="nick">닉네임</option>
 		  			</select>
 					<input type="text" name="word" id="word" class="category_no" placeholder="검색어를 입력해 주세요." size=40% /> 
-					<input type="button" name="searchBtn" id="searchBtn" value="조회하기" class="category_no">
+					<input type="submit" name="searchBtn" id="searchBtn" value="조회하기" class="category_no">
 					
 				</td>
 			</tr>

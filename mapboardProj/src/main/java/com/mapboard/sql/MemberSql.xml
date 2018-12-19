@@ -16,11 +16,63 @@
 	=> 12/16: selectNamebyId 쿼리문 추가
 	=> 12/17: totalCount, memeberList, meCheck 쿼리문 추가
 	=> 12/18: statusN, memberUpdate 추가
-	=> 12/19: memberUpdateAmin 추가
+	=> 12/19: memberUpdateAmin, memberSearch 추가
 
  --> 
 
 <mapper namespace="member">
+
+	<!-- 자주쓰는 쿼리 구문 모음 -->
+	<sql id="searchCondition">
+		<if test='target eq "userid"'>
+		USERID LIKE '%' || #{word} || '%'
+		</if>
+		<if test='target eq "nick"'>
+		NICK LIKE '%' || #{word} || '%'
+		</if>
+		<if test='target eq "uname"'>
+		UNAME LIKE '%' || #{word} || '%'
+		</if>
+	</sql>
+	
+	<sql id="memColumn">
+		userid, uname, passwd, nick, ulevel, status, juso, latitude, longitude, createdt
+	</sql>
+	
+	<!-- ============================================================= -->
+	
+	<!--회원 검색 결과 개수 구하기 쿼리문 -->
+	<select id="memberSearchCnt" resultType="int" parameterType="memberVO">
+		select
+			count(*) as cnt
+		from 
+			member
+		where
+			<include refid="searchCondition"/>
+
+	</select>
+	
+	
+	
+	
+	
+
+	<!-- 회원 목록 검색 쿼리문 -->
+	<select id="memberSearch"  resultType="memberVO" parameterType="memberVO">
+		select * 
+		from
+			(select
+				<include refid="memColumn"/>, 
+				row_number() over(order by userid asc) as rid  			
+			from 
+				member
+			where
+			<include refid="searchCondition"/>)
+		where 
+			rid between #{start} and #{end}			
+	
+	</select>
+
 	<!-- 회원 정보 수정(관리자) 쿼리문 -->
 	<update id="memberUpdateAmin" parameterType="memberVO">
 		update
@@ -58,12 +110,11 @@
 	</update>
 
 
-
 	<!-- 회원 목록 조회 쿼리문 -->
 	<select id="memeberList" resultType="memberVO" parameterType="String">
 		select * from
 			(select
-			userid, uname, passwd, nick, ulevel, status, juso, latitude, longitude, createdt, 
+			<include refid="memColumn"/>, 
 			row_number() over(order by userid asc) as rid  			
 		from 
 			member)
@@ -71,8 +122,6 @@
 			rid between #{start} and #{end}			
 		
 	</select>
-
-
 
 
 	<!-- 게시글 총 개수 조회 쿼리문 -->
@@ -87,15 +136,13 @@
 	<!-- 회원정보 조회 쿼리문 -->
 	<select id="selectMemberbyId" resultType="memberVO" parameterType="String">
 		select
-			userid, uname, passwd, nick, ulevel, status, juso, latitude, longitude   			
+			<include refid="memColumn"/>   			
 		from 
 			member
 		where
 			userid=#{userid}
 	</select>
-	
-	
-	
+		
 	
 	<!-- 회원가입 처리 insert 쿼리문 -->
 	<insert id="insertMember" parameterType="memberVO">
@@ -142,7 +189,7 @@
 	<!-- 회원 정보 조회 쿼리문 -->
 	<select id="viewMember" resultType="memberVO">
 		select 
-			USERID, UNAME, PASSWD, NICK, ULEVEL, STATUS, JUSO, LATITUDE, LONGITUDE   
+			<include refid="memColumn"/>  
 		from
 			member 
 		where 

@@ -17,7 +17,7 @@ import com.mapboard.member.vo.MemberVO;
  * 12/16: 5,6 함수 추가
  * 12/17: 7,8,9 함수 추가
  * 12/18: 10,11 함수 추가
- * 12/19: 12 함수 추가
+ * 12/19: 12,13,14 함수 추가
  */
 
 
@@ -47,6 +47,10 @@ public interface MemberDao{
 	public void memberUpdate(MemberVO vo);
 	//12. 회원 정보 수정(관리자)
 	public void memberUpdateAmin(MemberVO vo);
+	//13. 회원 검색 실행
+	public ArrayList<?> memberSearchbyWord(MemberVO vo);
+	//14. 회원 검색 결과 총개수 구하기
+	public int memberSearchCnt(MemberVO vo);
 	
 	
 	

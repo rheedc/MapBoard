@@ -31,6 +31,20 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	protected SqlSessionTemplate sqlSession;
 	
+	//회원 검색 결과 총 개수 구하기
+	@Override
+	public int memberSearchCnt(MemberVO vo) {
+		int cnt = sqlSession.selectOne("member.memberSearchCnt", vo);
+		return cnt;
+	}
+
+	//회원 검색 실행
+	@Override
+	public ArrayList<?> memberSearchbyWord(MemberVO vo) {
+		ArrayList mlist=(ArrayList)sqlSession.selectList("member.memberSearch", vo);
+		return mlist;
+	}
+
 	//회원 정보 수정(관리자)
 	@Override
 	public void memberUpdateAmin(MemberVO vo) {

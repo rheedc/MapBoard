@@ -20,7 +20,7 @@ import com.mapboard.util.PageUtil;
  * 12/16: 회원가입 처리 함수 추가
  * 12/17: 회원목록, 게시금 총개수 구하기, 본인확인 함수 추가
  * 12/18: 회원탈퇴 함수, 나의 정보 수정 추가
- * 12/19: 회원 정보 수정(관리자) 추가
+ * 12/19: 회원 정보 수정(관리자), 회원 검색, 회원 검색 결과 총개수 추가
  */
 
 
@@ -30,6 +30,30 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDao mdao;
 	
+	//게시글 검색결과 카운트 구하기
+	@Override
+	public PageUtil memberSearchCnt(MemberVO vo, int nowPage) {
+		int totalCnt=mdao.memberSearchCnt(vo);
+		PageUtil pInfo=new PageUtil(nowPage, totalCnt, 5, 5);
+		return pInfo;
+	
+	}
+
+	//회원 검색 실행
+	@Override
+	public ArrayList memberSearchbyWord(MemberVO vo, PageUtil pInfo) {
+		//해당 게시물의 시작/끝 페이지 구하기
+		int start=(pInfo.getNowPage()-1)*pInfo.getListCount()+1;
+		int end=start+pInfo.getListCount()-1;
+		vo.setStart(start);
+		vo.setEnd(end);
+		
+		//회원 목록 데이터 구하기
+		ArrayList mlist=mdao.memberSearchbyWord(vo);		
+			
+		return mlist;
+	}
+
 	//회원 정보 수정(관리자)
 	@Override
 	public void memberUpdateAmin(MemberVO vo) {

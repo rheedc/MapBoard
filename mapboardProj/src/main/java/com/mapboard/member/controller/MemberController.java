@@ -32,7 +32,7 @@ import com.mapboard.util.PageUtil;
  * 12/16: joinProc() 변경, memberDetail() 추가
  * 12/17: memberUpdateForm() 추가
  * 12/18: memberLeaveProc() memberUpdateProc(), memberDetailAdmin()추가
- * 12/19: memberUpdateAdmin() 추가
+ * 12/19: memberUpdateAdmin(), memberSearch() 추가
  */
 
 @Controller
@@ -42,6 +42,44 @@ public class MemberController {
 	//서비스 클래스를 자동주입하는 명령
 	@Autowired
 	private MemberService mservice;
+	
+	//회원 검색 기능
+	@RequestMapping("/memberSearchAdmin")
+	public ModelAndView memberSearch(ModelAndView mv, HttpServletRequest req) {
+		//파라미터 받고
+		System.out.println("게시글 검색 컨트롤러 실행시작");
+		String target=req.getParameter("target");
+		String word = req.getParameter("word");
+		String strPage=req.getParameter("nowPage");
+		int nowPage=1;
+		if(strPage==null || strPage.length()==0) {
+			nowPage=1;
+		}else {
+			nowPage= Integer.parseInt(strPage);
+		}
+		
+		//로직: 서비스 위임
+		//검색결과가 많아 질 수 있으므로 페이지 이동 기능을 위한 데이터
+		MemberVO vo= new MemberVO();
+		vo.setTarget(target);
+		vo.setWord(word);
+		PageUtil pInfo = mservice.memberSearchCnt(vo, nowPage);
+		
+		//검색하기
+		ArrayList list = mservice.memberSearchbyWord(vo,pInfo);
+	
+		//모델로 만들어서 제공
+		//target과 word는 뷰에서 다른 페이지로 이동할 때 사용되어야 하므로 전달해야 한다.
+		mv.addObject("target", target);
+		mv.addObject("word", word);
+		mv.addObject("PINFO", pInfo);
+		mv.addObject("MLIST",list);
+		
+		//뷰
+		mv.setViewName("/admin/memberListAdmin");
+		return mv;
+	}
+	
 	                                   
 	//회원정보 수정요청 처리
 	@RequestMapping("/memberUpdateAdmin")
