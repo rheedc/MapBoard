@@ -63,7 +63,7 @@
 		from
 			(select
 				<include refid="memColumn"/>, 
-				row_number() over(order by userid asc) as rid  			
+				row_number() over(order by createdt desc) as rid  			
 			from 
 				member
 			where
@@ -115,7 +115,7 @@
 		select * from
 			(select
 			<include refid="memColumn"/>, 
-			row_number() over(order by userid asc) as rid  			
+			row_number() over(order by createdt desc) as rid  			
 		from 
 			member)
 		where 
