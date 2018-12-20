@@ -40,26 +40,48 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 <!-- 추가된 프로그램 -->
 <script>
+
+
 	$(function(){
 		$("#view").animate({opacity:1});
-
+		
+	
+		
 		//지도그리는 부분
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
 	        center: new daum.maps.LatLng(${DATA.latitude} , ${DATA.longitude} ), // 지도의 중심좌표
-	        level: 9 // 지도의 확대 레벨
+	        level: 8 // 지도의 확대 레벨
 	    };
 		var map = new daum.maps.Map(mapContainer, mapOption);
 		
 		<c:forEach var="LOC" items="${locInfo}"  varStatus="status">
+		
 			// 마커가 표시될 위치입니다 
 			var markerPosition  = new daum.maps.LatLng(${LOC.latitude} , ${LOC.longitude}); 
-			// 마커를 생성합니다
-			var marker = new daum.maps.Marker({
+			
+			// 마커 이미지의 이미지 크기 입니다 reviewcnt
+		    var imageSize = new daum.maps.Size(25,35); 
+		    
+		    // 마커 이미지를 생성합니다
+		    var imageloc="../resources/img/markLoc.png";
+		    var markerImage = new daum.maps.MarkerImage(imageloc, imageSize);
+		    
+		 	// 마커를 생성합니다
+			var marker2 = new daum.maps.Marker({
 				map:map,
-			    position: markerPosition
+			    position: markerPosition,
+			    image : markerImage 
 			});   
+
+		 	
+		 	
+			daum.maps.event.addListener(marker2, 'click', function(mouseEvent){
+				$(location).attr("href","../board/hitProc.yo?bidx="+${LOC.bidx});
+				});
+			
 		</c:forEach>
+		
 		
 		// 내기준지 
 		var markerPosition  = new daum.maps.LatLng(${DATA.latitude} , ${DATA.longitude}); 
@@ -173,7 +195,7 @@
 	<table>
 		<tr><td align="center"><h4>지도에서 확인하기</h4></td></tr>
 	</table>
-	<div id="map" ></div>
+	<div id="map"></div>
 	</c:if>
 	
 </body>

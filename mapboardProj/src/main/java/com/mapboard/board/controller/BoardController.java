@@ -119,7 +119,13 @@ public class BoardController {
 		String my=req.getParameter("my");
 		String sbidx = req.getParameter("bidx");
 		int bidx = Integer.parseInt(sbidx);
-		String nowPage = req.getParameter("nowPage");	//릴레이용
+		String strPage=req.getParameter("nowPage");				
+		int nowPage=0;
+		if(strPage==null || strPage.length()==0) {	
+			nowPage=1;
+		}else {
+			nowPage=Integer.parseInt(strPage);
+		}
 		String sigungu_name=req.getParameter("sigungu_name");
 		String place_name=req.getParameter("place_name");
 		
