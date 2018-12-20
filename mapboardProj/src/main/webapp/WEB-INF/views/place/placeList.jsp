@@ -924,7 +924,7 @@
 						<c:forEach var="data" items="${BLIST}">
 							<tr height="100px" class="hover" id="click_board_${data.bidx}">
 								<td width="350px">
-								${data.subject}<br/>								
+								<a href="../board/hitProc.yo?bidx=${data.bidx}">${data.subject}</a><br/>								
 								${data.commStr}<br/>
 								${data.createdt}
 								</td>
