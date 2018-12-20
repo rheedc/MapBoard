@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import com.mapboard.member.vo.MemberVO;
 
 /*클래스 목적: MemberDao와 관련된 함수를 정의하는 인터페이스
+ * 				DB와 커넥션을 수행한 후 memberSql.xml의 쿼리를 실행하도록 한다. 
  * 작성자:
  * 작성일:2018-12-07
  * 최종수정일: 2018-12-13
@@ -19,8 +20,6 @@ import com.mapboard.member.vo.MemberVO;
  * 12/18: 10,11 함수 추가
  * 12/19: 12,13,14 함수 추가
  */
-
-
 
 public interface MemberDao{
 	//1. 회원 로그인 체크
@@ -37,7 +36,7 @@ public interface MemberDao{
 	public MemberVO selectMemberbyId(String userid);
 	//7. 게시글 총 개수 구하기
 	public int getTotalCount();
-	//8. 게시글 목록 구하기
+	//8. 회원 목록 구하기
 	public ArrayList<?> getMemberList(MemberVO vo);
 	//9. 본인확인
 	public int selectMeChk(MemberVO vo);

@@ -35,25 +35,37 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d122d716888da016ee859c0430722a86&libraries=services,clusterer,drawing"></script>
 	<script>
+		$(function(){
+			
+			if("${msg}"==1){
+				alert("아이디 또는 비밀번호를 잘못입력하였습니다. 다시 로그인 해주세요.")
+				return false;
+			} 
+		<%--	else{
+				$("#alertText").hide();
+			}--%>
+			
+		});
 		$(document).ready(function(){
-				<%--로그인 버튼을 클릭했을 때 submit처리하는 함수  --%>
-				$("#loginBtn").click(function(e){
+			<%--로그인 버튼을 클릭했을 때 submit처리하는 함수  --%>
+			$("#loginBtn").click(function(e){
 					e.preventDefault();
 					login_validate();
-				});
-							
-				<%--회원가입 버튼을 클릭했을 때 회원가입폼 화면으로 이동시키는 함수--%>
-				$("#joinBtn").click(function(){
-					location.href = '/member/joinForm.yo';
-				});
-				
 			});
+						
+			<%--회원가입 버튼을 클릭했을 때 회원가입폼 화면으로 이동시키는 함수--%>
+			$("#joinBtn").click(function(){
+				location.href = '/member/joinForm.yo';
+			});
+				
+		});
 		function login_validate(){
 			if($("#id").val().length <1){
 				alert("아이디를 입력하세요.");
 			}else if($("#pw").val().length <1){
 				alert("비밀번호를 입력하세요.");
-			}else{
+			}				
+			else{
 				$("#loginForm").submit();
 			}
 			
@@ -74,6 +86,7 @@
 	<div class="formGroup">
 	    <input type="password" name="passwd" id="pw" placeholder="비밀번호를 입력하세요" class="formControl">
 	</div>
+		
 	<div class="formGroup">
 		<button type="button" id="loginBtn" class="actionBtn" >로그인</button>
 		<button type="button" id="joinBtn" class="actionBtn">회원가입</button>

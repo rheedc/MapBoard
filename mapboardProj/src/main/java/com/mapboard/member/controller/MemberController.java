@@ -125,6 +125,12 @@ public class MemberController {
 	//나의 정보 수정 처리
 	@RequestMapping("/memberUpdateProc")
 	public ModelAndView memberUpdateProc(HttpSession session, MemberVO vo, ModelAndView mv) {
+		System.out.println("나의 정보 수정 컨트롤러 실행 시작");
+		String passwd=vo.getPasswd();
+		String nick=vo.getNick();
+		
+		System.out.println(passwd+","+nick+",");
+				
 		//파라미터
 		String userid = session.getAttribute("userid").toString();
 		vo.setUserid(userid);
@@ -299,6 +305,7 @@ public class MemberController {
 		
 		// 2. 로직처리=> 서비스 위임, 로그인 검사=> 해당 회원이 있는지 확인
 		boolean result = mservice.loginProc(vo, session);
+		System.out.println("로그인 처리 컨트롤러 실행, 중복처리 결과= "+result);
 				
 		//3. 그 결과 받아서 모델 생성
 		ModelAndView mv= new ModelAndView();
@@ -307,14 +314,17 @@ public class MemberController {
 		if(result==true) {
 			//로그인을 성공할 경우 홈페이지로 이동
 			RedirectView rv= new RedirectView("/");
+			mv.addObject("msg","로그인에 성공하였습니다.");
 			mv.setView(rv);
-			//mv.addObject("msg","로그인에 성공하였습니다.");
+			
 		}
 		else {
 			//로그인에 실패했을 경우 로그인 폼으로 이동
-			RedirectView rv= new RedirectView("/member/LoginForm.yo");
-			mv.setView(rv);
-			//mv.addObject("msg","로그인에 실패하였습니다.");
+			mv.addObject("msg",1);
+			mv.setViewName("/member/LoginForm");
+			//RedirectView rv= new RedirectView("/member/LoginForm.yo");
+			//mv.setView(rv);
+			
 			
 		}
 	

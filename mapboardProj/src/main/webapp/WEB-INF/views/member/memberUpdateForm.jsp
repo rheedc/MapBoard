@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -74,8 +76,8 @@
 		var nick=document.getElementById("nick");
 		
 		// 본인확인 버튼 클릭 여부
-        if(idfi.value != "pwCheck"){ 	//본인확인 팝업창에서 실행한 결과값을 idCheck에 넣었다.
-			alert("본인확인 버튼을 클릭해 주세요.");
+        if(idfi.value != "pwCheck"){ 	//본인확인 팝업창에서 실행한 결과값을 ㅔㅈCheck에 넣었다.
+			alert("본인확인을 처리해 주세요.");
 			form.oldpasswd.focus();
 			return false;
 		}
@@ -134,6 +136,7 @@
                 return false;
             }
         }
+		
 		$("#modifyForm").submit();
 	
 	}//end checkValue
@@ -141,7 +144,7 @@
 	//본인확인 버튼 클릭 시 처리 기능
 	function meChkAction() {
 		var form = document.modifyForm;
-		var passwd=$("#oldpasswd").val();
+		var oldpasswd=$("#oldpasswd").val();
 		var result=0;
 				
 		if(!form.oldpasswd.value){
@@ -150,14 +153,14 @@
 			return false;
 		}
 		//아이디와 비밀번호가 같은지 확인
-		else if ("${VIEW.userid}"==form.oldpasswd.value) {
+		else if ("${VIEW.userid}"==oldpasswd) {
 	      	alert("비밀번호가 ID와 똑같습니다. 다른 비밀번호를 입력해 주세요.");
 	      	form.oldpasswd.value = "";
 	      	form.oldpasswd.focus();
 	      	return false;
     	}
 		//비밀번호 공백 사용 금지
-		else if (form.oldpasswd.value.indexOf(" ") >= 0) {
+		else if (oldpasswd.indexOf(" ") >= 0) {
             alert("비밀번호에 공백을 사용할 수 없습니다.")
             form.oldpasswd.focus()
             form.oldpasswd.select()
@@ -168,7 +171,7 @@
 				async:false,
 				type : "POST",
 				url : "/member/meCheckProc.yo",
-				data : passwd,
+				data : oldpasswd,
 				dataType : "text",
 				contentType: "application/json; charset=UTF-8",
 				error : function(error){
@@ -194,12 +197,15 @@
 							document.getElementById("passwd").focus();
 						}
 						else if(result==false){
-							document.getElementById("passwd").value="${VIEW.passwd}";
-							document.getElementById("passwdChk").value="${VIEW.passwd}";
-							document.getElementById("nick").disabled = false;
-							document.getElementById("nick").focus();
+							$("#passwd").attr("disabled", false);
+							$("#passwdChk").attr("disabled", false);
+							document.getElementById("passwd").value=oldpasswd;
+							document.getElementById("passwdChk").value=oldpasswd;
+							$("#passwd").prop("readonly",true);
+							$("#passwdChk").prop("readonly",true);
+							$("#nick").attr("disabled", false);
+							$("#nick").focus();
 						}
-						
 					}
 					else{
 						alert("에러가 발생하였습니다.")
@@ -221,7 +227,8 @@
 <p id="subTitle">회원정보수정</p>
 <br>
 
-	<form id="modifyForm" name="modifyForm"  method="post" action="/member/memberUpdateProc.yo" onsubmit="return checkValue()">
+	<form id="modifyForm" name="modifyForm"  method="get" action="/member/memberUpdateProc.yo" >
+	<!-- <form id="modifyForm" name="modifyForm"  method="post" action="/member/memberUpdateProc.yo" onsubmit="return checkValue()"> -->
 		<div class="formGroup">
 			<div class="inputTitle">아이디</div>
 			<div class="detailBox">${VIEW.userid}	</div>
@@ -261,13 +268,12 @@
 		<p class="alertText" >*특수문자는 제외하고 입력하세요.</p>
 
 		<div class="formBtn">
-			<input type="submit" id="modifyBtn" class="actionBtn" value="수정하기"  />
+			<input type="button" id="modifyBtn" class="actionBtn" value="수정하기"  onclick="checkValue();"/>
 			<input type="button" id="cancelBtn" class="actionBtn" onclick="goFirstForm()" value="취소" />
 			
 		</div>
 	</form>
-
-
 </div> 
+
 </body>
 </html>
