@@ -82,7 +82,7 @@
 			//취소하기(목록보기로 이동)
 			$("#cBtn").click(function(){
 				//boardList로 가기
-				$(location).attr("href","../board/boardList.yo");
+				$(location).attr("href","../board/boardList2.yo");
 			});
 		});
 	</script>

@@ -65,6 +65,14 @@ public class BoardController {
 			//하나씩 파일의 실제 이름을 알아내자
 			String foriname = vo.getFiles()[i].getOriginalFilename();
 			
+			//이미지 파일만 올라가도록 파일 확장자 제한하기
+			if(!(foriname.toLowerCase().endsWith(".jpg") ||
+					foriname.toLowerCase().endsWith(".jpeg") ||
+					foriname.toLowerCase().endsWith(".png") ||
+					foriname.toLowerCase().endsWith(".gif") ||
+					foriname.toLowerCase().endsWith(".bmp"))) {
+				continue;
+			}
 			//파일이 업로드 되지 않으면 다음 파일작업을 시도한다.
 			if(foriname==null || foriname.length()==0) {
 				continue;

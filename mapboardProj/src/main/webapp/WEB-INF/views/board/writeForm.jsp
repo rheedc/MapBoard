@@ -135,7 +135,7 @@
 			
 			<tr>
 				<th>파일첨부</th>
-				<td>
+				<td><font color="red">*이미지 파일만 업로드됩니다</font>
 					<input type="button" id="aBtn" value="추가"/>
 					<input type="button" id="dBtn" value="삭제"/>
 				</td>
