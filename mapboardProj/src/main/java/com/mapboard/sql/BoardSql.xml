@@ -132,6 +132,23 @@
 			bidx=#{bidx}
 	</update>
 	
+	<!-- 첨부파일 삭제 -->
+	<delete id="deleteFileInfo" parameterType="int">
+		DELETE	FROM 
+				fileinfo 
+		WHERE 
+				bidx = #{bidx} 
+	</delete>
+	
+	<!-- 게시판삭제처리 -->
+	<update id="deleteBoard" parameterType="boardVO">
+	UPDATE
+		board
+	SET
+		status='N'
+	WHERE
+		bidx=#{bidx}
+	</update>
 	<!-- 조회수증가처리 -->
 	<update id="updateHit" parameterType="int">
 	UPDATE
@@ -151,15 +168,4 @@
 	WHERE
 		bidx = #{bidx}	
 	</update>
-	
-	<!-- 게시판삭제처리 -->
-	<update id="deleteBoard" parameterType="boardVO">
-	UPDATE
-		board
-	SET
-		status='N'
-	WHERE
-		bidx=#{bidx}
-	</update>
-	
 </mapper>

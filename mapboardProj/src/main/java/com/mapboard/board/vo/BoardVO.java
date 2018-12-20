@@ -23,8 +23,8 @@ public class BoardVO extends CommonVO{
 	
 	private String place_name;
 	private int filecount;
-
-
+	private int nowPage;
+	
 	private int category_no;
 	
 	//카테고리번호로 카테고리명 추출하는 방식
@@ -159,15 +159,14 @@ public class BoardVO extends CommonVO{
 	public void setReadcnt(int readcnt) {
 		this.readcnt = readcnt;
 	}
-	
-	
-	
 
-	
+	public int getNowPage() {
+		return nowPage;
+	}
 
-
-	
-	
+	public void setNowPage(int nowPage) {
+		this.nowPage = nowPage;
+	}
 	
 
 }

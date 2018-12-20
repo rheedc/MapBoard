@@ -22,16 +22,20 @@ public interface BoardDao {
 	//다운로드 파일 정보 검색 질의 실행 함수
 	public BoardVO getDownload(int fileNo)  throws Exception;
 	
+	//게시판 수정
 	public void updateBoard(BoardVO bvo) throws Exception;
 
-	//조회수 증가처리명령
-	public void updateHit(int bidx);
+	//첨부 파일 정보 삭제
+	public void deleteFileInfo(int bidx) throws Exception;
 
 	//게시판 삭제질의
-	public int deleteBoard(BoardVO vo);
+	public int deleteBoard(BoardVO vo) throws Exception;
 
+	//조회수 증가처리명령
+	public void updateHit(int bidx) throws Exception;
+		
 	//추천수 증가처리명령
-	public void updateLikeCnt(int bidx);
+	public void updateLikeCnt(int bidx) throws Exception;
 	
 	
 }

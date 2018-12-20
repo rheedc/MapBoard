@@ -28,15 +28,22 @@ public interface BoardService {
 	//다운로드 파일 정보 검색 질의 실행 함수
 	public BoardVO getDownload(int fidx) throws Exception; 
 	
+	//게시판 수정
 	public void updateBoard(BoardVO vo) throws Exception;
-
-	//조회수 증가처리함수
-	public void updateHit(int bidx, HttpSession session) throws Exception;
+	
+	//첨부 파일의 정보 삭제
+	public void deleteFileInfo(int bidx) throws Exception;
+	
+	//첨부파일 재등록하는 함수
+	public void insertFileInfo(BoardVO vo) throws Exception;
 
 	//게시물 삭제처리함수
-	public int deleteBoard(BoardVO vo);
-
+	public int deleteBoard(BoardVO vo) throws Exception;
+	
+	//조회수 증가처리함수
+	public void updateHit(int bidx, HttpSession session) throws Exception;
+	
 	//추천수 증가처리함수
-	public void updateLikeCnt(int bidx, HttpSession session);
+	public void updateLikeCnt(int bidx, HttpSession session) throws Exception;
 	
 }

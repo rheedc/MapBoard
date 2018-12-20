@@ -96,9 +96,30 @@ public class BoardServiceImpl implements BoardService{
 	public void updateBoard(BoardVO vo) throws Exception {
 		bDao.updateBoard(vo);	
 	}
+	//첨부파일 삭제
+	@Override
+	public void deleteFileInfo(int bidx) throws Exception {
+		bDao.deleteFileInfo(bidx);
+	}
+	
+	//첨부파일 재등록
+	@Override
+	public void insertFileInfo(BoardVO vo) throws Exception {
+		System.out.println("파일등록1"+vo.getForiname());
+		bDao.insertBoard(vo,"fileInfo");
+		
+		
+	}
 
+	//삭제질의명령 실행
+	public int deleteBoard(BoardVO vo) throws Exception {
+		int cnt=bDao.deleteBoard(vo);
+		return cnt;
+	}
+	
+	
 	//조회수 증가처리함수
-	public void updateHit(int bidx, HttpSession session) {
+	public void updateHit(int bidx, HttpSession session) throws Exception {
 		
 		boolean isHit=false;		//조회수를 증가할지 말지를 기억하는 변수
 		ArrayList hitList=(ArrayList)session.getAttribute("HIT");
@@ -123,15 +144,9 @@ public class BoardServiceImpl implements BoardService{
 			bDao.updateHit(bidx);
 		}
 	}
-
-	//삭제질의명령 실행
-	public int deleteBoard(BoardVO vo) {
-		int cnt=bDao.deleteBoard(vo);
-		return cnt;
-	}
-
+	
 	//추천수 증가처리함수
-	public void updateLikeCnt(int bidx, HttpSession session) {
+	public void updateLikeCnt(int bidx, HttpSession session) throws Exception {
 		boolean addLike=false;		//추천수를 증가할지 말지를 기억하는 변수
 		ArrayList likeList=(ArrayList)session.getAttribute("AddLike");
 		
@@ -151,5 +166,7 @@ public class BoardServiceImpl implements BoardService{
 		if(addLike) {			
 			bDao.updateLikeCnt(bidx);
 		}
-	}	
+	}
+
+		
 }

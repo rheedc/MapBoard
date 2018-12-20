@@ -34,14 +34,14 @@
 			$("#mBtn").click(function(){//수정하기 버튼 클릭
 				
 				
-				if(!$("#title").val()){
+				if(!$("#subject").val()){
 					alert("제목을 입력해주세요.");
-					$("#title").focus();
+					$("#subject").focus();
 					return false;
 				}
-				if(!$("#body").val()){
+				if(!$("#comm").val()){
 					alert("내용을 입력해주세요.");
-					$("#body").focus();
+					$("#comm").focus();
 					return false;
 				}
 				if(!$('input[name="point"]').is(':checked')){
@@ -90,7 +90,7 @@
 <body>
 <h1 id="center" style="color:darkblue;">게시글 수정</h1>
 <h4 id="center">해당 장소에 대한 게시글을 수정해주세요</h4>
-	<form id="wForm" method="post" action="../board/updateProc.yo?bidx=${VIEW.bidx}&nowPage${nowPage}"
+	<form id="wForm" method="post" action="../board/updateProc.yo?bidx=${VIEW.bidx}&nowPage=${nowPage}"
 											encType="multipart/form-data">
 		<table>
 			<!-- <tr>

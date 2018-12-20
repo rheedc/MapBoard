@@ -140,8 +140,8 @@ public class BoardController {
 	//상세보기 요청 함수(내용/첨부파일)
 	@RequestMapping("/boardDetail")
 	public ModelAndView boardDetail(@RequestParam(value="bidx") int bidx,
-											@RequestParam(value="nowPage") int nowPage,
-											HttpServletRequest req) throws Exception {		
+								@RequestParam(value="nowPage") int nowPage,
+								HttpServletRequest req) throws Exception {		
 		//어디로 보낼지 구분하는 변수
 		String my=req.getParameter("my");
 		
@@ -227,9 +227,111 @@ public class BoardController {
 	
 	//수정하기 처리
 	@RequestMapping("/updateProc")
-	public void updateProc(BoardVO vo, ModelAndView mv, RedirectView rv) throws Exception {
-		//내용수정
+	public ModelAndView updateProc(BoardVO vo, ModelAndView mv,
+							HttpServletRequest req, RedirectView rv) throws Exception {
+		boolean	isUpload = false;	//	첨부 파일 유무를 판단하는 변수
+		//	확인하는 법 : 배열 변수의 내용을 하나씩 살펴서 한개라도 첨부 파일이 있으면 첨부 파일이 있는것.
+		for(int i = 0; i < vo.getFiles().length; i++) {
+			//	파일의 이름이 있는지 확인한다.
+			String tempName = vo.getFiles()[i].getOriginalFilename();
+			if(tempName != null && tempName.length() != 0) {   //	파일의 이름이 존재하므로 첨부 파일이 있는 것이다.
+				isUpload = true;
+				break;
+			}
+		}
+				
+		//	첨부 파일이 한개라도 있으면 파일을 업로드 시킨다.
+		String	fpath = req.getSession().getServletContext().getRealPath("/upload/");
+		ArrayList	fileList = new ArrayList();		//	실제 업로드된 파일의 정보를 기억할 변수
+	
+		//	한개의 업로드된 파일의 정보를 HashMap으로 만들어서
+		//	이것을 ArrayList에 묶어서 처리할 예정
+		if(isUpload == true) {
+			//	첨부 파일의 개수만큼 반복하면서 하나씩 복사한다.
+			for(int i = 0; i < vo.getFiles().length; i++) {
+				//하나씩 파일의 실제이름을 알아내자
+				String foriname = vo.getFiles()[i].getOriginalFilename();
+				
+				//파일이 업로드되지 않으면 다음 파일작업을 시도한다
+				if(foriname==null || foriname.length()==0 ) {
+					continue;
+				}
+				
+				String fsname= FileUtil.renameTo(fpath, foriname);
+				
+				File file = new File(fpath, fsname);
+				
+				//transferTo()를 이용해서 복사
+				try {
+					vo.getFiles()[i].transferTo(file);
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("강제 복사 에러 = "+e);
+				}
+				
+				//이제 하나의 파일이 업로드된 상태이다
+				//업로드된 파일의 정보를  Map 묶자(path, oriName, saveName,len)
+				HashMap map = new HashMap();
+				//map.put("path",path);
+				map.put("foriname",foriname);
+				map.put("fsname",fsname);
+				map.put("fsize",file.length());
+				
+				fileList.add(map);
+			}//for
+		}//if
+		
+		//	내용 수정하고
+		//		데이터베이스를 이용해서 UPDATE 처리하고
 		service.updateBoard(vo);
+	
+		//	항상 실행하는 것이 아니고 첨부 파일이 존재할 경우에만 실행하는 부분이다.
+		if(isUpload == true) {
+			
+			//	1.	과거에 업로드된 파일을 삭제하자.
+			//		1)	과거에 업로드된 파일의 정보를 디비에서 알아내고
+			ArrayList list = service.getFileDetail((int)vo.getBidx());
+			if(list != null && list.size()!=0 ) {
+				for(int i=0; i<list.size(); i++) {
+					//2)	그 파일을 File 객체로 만들어서(첨부파일은 여러개 있으므로...)
+					//	한개씩 파일의 정보를 꺼내자.
+					BoardVO tempVo = (BoardVO)list.get(i);
+					File tempFile = new File(fpath, tempVo.getFsname());
+					
+					//3)	삭제한다.
+					tempFile.delete();
+				}//for
+			}//if
+	
+			//	2.	기존 첨부 파일의 정보를 지우고
+			service.deleteFileInfo((int)vo.getBidx());
+			
+			
+			//	3.	데이터베이스에  재 등록한다.
+			for(int i = 0; i < fileList.size(); i++) {
+				BoardVO vo1 = new BoardVO();
+				vo1.setBidx(vo.getBidx());
+				vo1.setFpath(fpath);
+				
+				//앞에서 선택한 파일들  정보를 이용해서 등록하자.
+				HashMap tempmap = (HashMap) fileList.get(i);
+				//map.put("path",path);
+				vo1.setForiname((String)tempmap.get("foriname"));
+				vo1.setFsname((String)tempmap.get("fsname"));
+				vo1.setFsize((java.lang.Long)tempmap.get("fsize"));
+				
+				service.insertFileInfo(vo1);
+			}//for
+		}//if – fService.updateBoard(vo);이후
+		
+		
+		//	뷰
+		// RedirectView rv = new RedirectView("요청내용");
+		rv.setUrl("../board/boardDetail.yo");//상세보기
+		rv.addStaticAttribute("bidx",vo.getBidx());
+		rv.addStaticAttribute("nowPage", vo.getNowPage());
+		mv.setView(rv);
+		return mv;
 	}
 	
 	//게시판 내용삭제
@@ -237,7 +339,7 @@ public class BoardController {
 	public ModelAndView boardDelete(@RequestParam(value="bidx") int bidx,
 			@RequestParam(value="nowPage") int nowPage,
 			HttpSession session,
-			HttpServletRequest req) {
+			HttpServletRequest req) throws Exception {
 		
 		//파라미터 받고
 		BoardVO vo=new BoardVO();

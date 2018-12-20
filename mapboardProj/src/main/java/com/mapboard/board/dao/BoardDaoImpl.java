@@ -27,6 +27,7 @@ public class BoardDaoImpl implements BoardDao{
 			sqlSession.insert("board.insertBoard", vo);
 		}
 		else if(kind.equals("fileInfo")) {
+			System.out.println("파일등록"+vo.getForiname());
 			sqlSession.insert("board.insertFileInfo",vo);
 		}
 		
@@ -59,22 +60,33 @@ public class BoardDaoImpl implements BoardDao{
 		sqlSession.update("board.updateBoard", vo);
 		
 	}
-
-	//조회수 증가처리명령
-	public void updateHit(int bidx) {
-		sqlSession.update("board.updateHit",bidx);
+	
+	//파일 삭제
+	@Override
+	public void deleteFileInfo(int bidx) throws Exception {
+		sqlSession.delete("board.deleteFileInfo", bidx);
 	}
+	
 
 	//게시판 삭제질의
 	public int deleteBoard(BoardVO vo) {
 		int cnt=sqlSession.update("board.deleteBoard",vo);
 		return cnt;
 	}
-
+	
+	
+	//조회수 증가처리명령
+	public void updateHit(int bidx) {
+		sqlSession.update("board.updateHit",bidx);
+	}
+	
 	//추천수 증가처리명령
 	public void updateLikeCnt(int bidx) {
 		sqlSession.update("board.updateLikeCnt",bidx);		
 	}
+
+	
+	
 	
 	
 }
